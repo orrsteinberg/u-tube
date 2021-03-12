@@ -15,6 +15,16 @@ const GlobalStyles = createGlobalStyle`
 
   body {
     color: ${({ theme }) => theme.colors.text.primary};
+    background: ${({ theme }) => theme.colors.bg.primary};
+  }
+
+  a {
+    color: ${({ theme }) => theme.colors.text.secondary};
+    text-decoration: none;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.text.primary};
+    }
   }
 
 `;
