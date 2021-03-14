@@ -4,10 +4,11 @@ export const theme = {
   },
   colors: {
     general: {
-      white: "#fff",
-      black: "#222222",
+      light: "#fff",
+      dark: "#222222",
       red: "#e9434d",
       faded: "#5f6d8c",
+      accent: "#3e8d95"
     },
     text: {
       primary: "#d8deed",
@@ -18,6 +19,7 @@ export const theme = {
       primary: "#101c36",
       secondary: "#2a3658",
       tertiary: "#223054",
+      darker: "#040912"
     },
   },
   typography: {
