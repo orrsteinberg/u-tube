@@ -17,9 +17,15 @@ const NavItem = styled.div`
   align-items: center;
   width: 100%;
   padding: 0.75rem 1.5rem;
+  background: ${({ theme, active }) =>
+    active ? theme.colors.bg.secondary : "none"};
+  color: ${({ theme, active }) =>
+    active ? theme.colors.text.primary : theme.colors.text.secondary};
+  font-weight: ${({ active }) => (active ? "bold" : "regular")};
 
   &:hover {
     background: ${({ theme }) => theme.colors.bg.tertiary};
+    color: ${({ theme }) => theme.colors.text.primary};
   }
 
   svg {
@@ -46,6 +52,8 @@ const NavItem = styled.div`
 
 const NavGroup = styled.div`
   margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.bg.secondary};
 `;
 
 const Nav = styled.nav`
@@ -53,12 +61,10 @@ const Nav = styled.nav`
   z-index: 2;
   width: 80px;
   height: ${({ theme }) => `calc(100vh - ${theme.sizes.headerHeight})`};
-  background: ${({ theme }) => theme.colors.bg.secondary};
-  color: ${({ theme }) => theme.colors.text.secondary};
+  background: ${({ theme }) => theme.colors.bg.primary};
   display: flex;
   flex-direction: column;
   padding-top: 2rem;
-  border-top-right-radius: 25px;
   transition: transform 0.2s;
   transform: ${({ showOnMobile }) =>
     showOnMobile ? "translateX(0)" : "translateX(-200px)"};
@@ -69,7 +75,7 @@ const Nav = styled.nav`
   }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    width: 240px;
+    width: 235px;
   }
 `;
 
@@ -78,7 +84,7 @@ const Sidemenu = ({ showOnMobile }) => {
     <Nav showOnMobile={showOnMobile}>
       <NavGroup>
         <Link to="/">
-          <NavItem>
+          <NavItem active>
             <MdHome /> <span>Home</span>
           </NavItem>
         </Link>

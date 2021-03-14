@@ -7,6 +7,7 @@ const GlobalStyles = createGlobalStyle`
   html {
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+    font-size: 0.9rem;
   }
 
   *, *::before, *::after {
@@ -15,7 +16,7 @@ const GlobalStyles = createGlobalStyle`
 
   body {
     color: ${({ theme }) => theme.colors.text.primary};
-    background: ${({ theme }) => theme.colors.bg.primary};
+    background: ${({ theme }) => theme.colors.bg.darker};
   }
 
   a {
