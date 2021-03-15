@@ -1,6 +1,7 @@
 export const theme = {
   sizes: {
-    headerHeight: "10vh",
+    headerHeight: "9vh",
+    decorBarHeight: "3px",
   },
   colors: {
     general: {
@@ -8,7 +9,8 @@ export const theme = {
       dark: "#222222",
       red: "#e9434d",
       faded: "#5f6d8c",
-      accent: "#3e8d95"
+      accent1: "#9fd1fb",
+      accent2: "#ce83f7",
     },
     text: {
       primary: "#d8deed",
@@ -19,7 +21,7 @@ export const theme = {
       primary: "#101c36",
       secondary: "#2a3658",
       tertiary: "#223054",
-      darker: "#040912"
+      darker: "#040912",
     },
   },
   typography: {
