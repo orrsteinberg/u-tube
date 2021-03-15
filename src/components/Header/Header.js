@@ -58,6 +58,7 @@ const SearchForm = styled.form`
 `;
 
 const ToggleButton = styled(Button)`
+  font-size: 3rem;
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }
@@ -99,6 +100,10 @@ const HeaderLogo = styled(YouTubeLogo)`
 `;
 
 const HeaderElement = styled.header`
+  position: fixed;
+  z-index: 4;
+  top: 0;
+  width: 100%;
   background: ${({ theme }) => theme.colors.bg.primary};
   height: ${({ theme }) => theme.sizes.headerHeight};
   display: flex;
@@ -116,7 +121,7 @@ const HeaderSearch = () => {
         type="text"
         name="search"
         placeholder={"Search"}
-        autocomplete="off"
+        autoComplete="off"
       />
       <button type="submit">
         <MdSearch />
