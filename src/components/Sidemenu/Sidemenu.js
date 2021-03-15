@@ -58,7 +58,7 @@ const NavGroup = styled.div`
 
 const Nav = styled.nav`
   position: fixed;
-  z-index: 2;
+  z-index: 3;
   width: 80px;
   height: ${({ theme }) => `calc(100vh - ${theme.sizes.headerHeight})`};
   background: ${({ theme }) => theme.colors.bg.primary};
