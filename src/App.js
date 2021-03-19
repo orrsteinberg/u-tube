@@ -5,6 +5,7 @@ import styled, { ThemeProvider } from "styled-components";
 import { theme } from "./utils/theme";
 import GlobalStyles from "./globalStyles";
 import HomeView from "./views/HomeView/HomeView";
+import WatchView from "./views/WatchView/WatchView";
 import Header from "./components/Header/Header";
 import Sidemenu from "./components/Sidemenu/Sidemenu";
 
@@ -83,6 +84,12 @@ const App = () => {
         <Route path="/" exact>
           <Layout>
             <HomeView />
+          </Layout>
+        </Route>
+
+        <Route path="/watch" exact>
+          <Layout>
+            <WatchView />
           </Layout>
         </Route>
 
