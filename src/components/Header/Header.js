@@ -96,6 +96,7 @@ const HeaderLogo = styled(YouTubeLogo)`
     display: block;
     width: 50px;
     margin-left: 0.5rem;
+    max-height: 45px;
   }
 `;
 
