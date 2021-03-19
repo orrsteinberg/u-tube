@@ -7,7 +7,7 @@ export const theme = {
     general: {
       light: "#fff",
       dark: "#222222",
-      red: "#e9434d",
+      red: "#e82f2f",
       faded: "#5f6d8c",
       accent1: "#9fd1fb",
       accent2: "#ce83f7",
