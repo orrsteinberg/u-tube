@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
+import Comment from "../Comment/Comment";
+
 const NewComment = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 
   img {
     border-radius: 50%;
@@ -68,6 +70,9 @@ const Comments = () => {
           <button type="submit">Comment</button>
         </form>
       </NewComment>
+      {[...Array(8)].map((x, i) => (
+        <Comment key={i} />
+      ))}
     </CommentsContainer>
   );
 };
