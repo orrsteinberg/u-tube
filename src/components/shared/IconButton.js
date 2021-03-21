@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Button = styled.button`
+const IconButton = styled.button`
   background: none;
   border: none;
   font-size: 2rem;
@@ -19,4 +19,4 @@ const Button = styled.button`
   }
 `;
 
-export default Button;
+export default IconButton;

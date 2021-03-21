@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MdThumbUp, MdThumbDown } from "react-icons/md";
 
-import Button from "../../components/shared/Button";
+import IconButton from "../../../components/shared/IconButton";
 import {
   DetailsContainer,
   StatisticsContainer,
@@ -18,15 +18,15 @@ const Statistics = () => {
       <span>8,091,680 views • Jun 28, 2020</span>
       <LikesBox>
         <span>
-          <Button>
+          <IconButton>
             <MdThumbUp />
-          </Button>
+          </IconButton>
           46K
         </span>
         <span>
-          <Button>
+          <IconButton>
             <MdThumbDown />
-          </Button>
+          </IconButton>
           90
         </span>
       </LikesBox>

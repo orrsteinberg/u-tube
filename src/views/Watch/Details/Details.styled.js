@@ -11,7 +11,7 @@ export const DetailsContainer = styled.div`
     font-weight: normal;
 
     @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-      font-size: 2rem;
+      font-size: 1.75rem;
     }
   }
 
