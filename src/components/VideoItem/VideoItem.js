@@ -2,10 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MdPlayArrow } from "react-icons/md";
 
-import { VideoItemContainer, Thumbnail, Duration, Details, Meta, Statistics } from "./VideoItem.styled";
+import {
+  VideoItemContainer,
+  Thumbnail,
+  Duration,
+  Details,
+  Meta,
+  Statistics,
+} from "./VideoItem.styled";
 
-
-const VideoItem= () => {
+const VideoItem = ({ hideChannel }) => {
   const title =
     Math.floor(Math.random() * 10) > 5
       ? "Video Title"
@@ -21,14 +27,16 @@ const VideoItem= () => {
         </Thumbnail>
       </Link>
       <Details>
-        <Link to="/">
-          <img src="https://picsum.photos/40" alt="channel avatar" />
-        </Link>
+        {!hideChannel && (
+          <Link to="/">
+            <img src="https://picsum.photos/40" alt="channel avatar" />
+          </Link>
+        )}
         <Meta>
           <Link to="/watch">
             <h3>{title}</h3>
           </Link>
-          <Link to="/">Channel Title</Link>
+          {!hideChannel && <Link to="/">Channel Title</Link>}
           <Statistics>
             <span>18M views{" • "}</span>
             <span>2 months ago</span>

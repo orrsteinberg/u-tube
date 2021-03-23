@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const VideoItemContainer = styled.div`
   margin: 0 auto 1.5rem auto;
-  max-width: 260px;
+  max-width: 230px;
 `;
 
 export const Thumbnail = styled.div`
@@ -44,7 +44,7 @@ export const Thumbnail = styled.div`
   }
 
   img {
-    height: 100%;
+    width: 100%;
     display: block;
   }
 `;
@@ -65,11 +65,11 @@ export const Details = styled.div`
   img {
     border-radius: 50%;
     object-fit: contain;
+    margin-right: 0.75rem;
   }
 `;
 
 export const Meta = styled.div`
-  padding-left: 0.75rem;
   color: ${({ theme }) => theme.colors.text.secondary};
 
   h3 {
