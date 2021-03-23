@@ -1,47 +1,19 @@
 import styled from "styled-components";
 
-export const MetadataBox = styled.div`
-  color: ${({ theme }) => theme.colors.text.secondary};
-
-  p {
-    margin: 0.25rem 0;
-  }
-`;
-
-export const ItemBody = styled.div`
-  padding-top: 0.25rem;
-  padding-left: 0.75rem;
-
-  h3 {
-    line-height: 1;
-    margin: 0;
-    font-weight: normal;
-  }
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    padding-top: 0;
-  }
-`;
-
-export const Duration = styled.div`
-  position: absolute;
-  right: 0.5rem;
-  bottom: 0.25rem;
-  background: rgba(0, 0, 0, 0.8);
-  padding: 0.25rem 0.5rem;
+export const HorizontalVideoItemContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  max-width: 600px;
 `;
 
 export const Thumbnail = styled.div`
+  flex-basis: 50%;
   position: relative;
   overflow: hidden;
   border-bottom: 3px solid ${({ theme }) => theme.colors.bg.tertiary};
   cursor: pointer;
-  max-width: 60%;
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    min-width: 168px;
-    max-width: 168px;
-  }
+  width: 100%;
 
   ::before {
     content: "";
@@ -83,9 +55,34 @@ export const Thumbnail = styled.div`
   }
 `;
 
-export const HorizontalVideoItemContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 0.75rem;
-  width: 100%;
+export const Duration = styled.div`
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.25rem;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0.25rem 0.5rem;
+`;
+
+export const ItemBody = styled.div`
+  flex-basis: 50%;
+  padding-top: 0.25rem;
+  padding-left: 0.75rem;
+
+  h3 {
+    line-height: 1;
+    margin: 0;
+    font-weight: normal;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding-top: 0;
+  }
+`;
+
+export const MetadataBox = styled.div`
+  color: ${({ theme }) => theme.colors.text.secondary};
+
+  p {
+    margin: 0.25rem 0;
+  }
 `;
