@@ -1,15 +1,15 @@
 import React from "react";
 
+import { VideoRow } from "../../components/shared";
 import VideoItem from "../../components/VideoItem/VideoItem";
-import { VideosRow } from "./Home.styled";
 
 const HomeView = () => {
   return (
-    <VideosRow>
+    <VideoRow>
       {[...Array(20)].map((x, i) => (
         <VideoItem key={i} />
       ))}
-    </VideosRow>
+    </VideoRow>
   );
 };
 
