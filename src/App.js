@@ -7,6 +7,7 @@ import GlobalStyles from "./globalStyles";
 import Layout from "./components/Layout/Layout";
 import Home from "./views/Home/Home";
 import Watch from "./views/Watch/Watch";
+import Channel from "./views/Channel/Channel";
 
 const App = () => {
   return (
@@ -22,6 +23,12 @@ const App = () => {
         <Route path="/watch" exact>
           <Layout>
             <Watch />
+          </Layout>
+        </Route>
+
+        <Route path="/Channel" exact>
+          <Layout>
+            <Channel />
           </Layout>
         </Route>
 
