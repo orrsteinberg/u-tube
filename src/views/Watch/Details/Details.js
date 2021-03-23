@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MdThumbUp, MdThumbDown } from "react-icons/md";
 
-import IconButton from "../../../components/shared/IconButton";
+import { IconButton } from "../../../components/shared";
 import {
   DetailsContainer,
   StatisticsContainer,

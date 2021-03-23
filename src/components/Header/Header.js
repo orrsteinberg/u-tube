@@ -1,8 +1,14 @@
 import React from "react";
 import { MdMenu, MdSearch, MdApps } from "react-icons/md";
 
-import IconButton from "../shared/IconButton";
-import { HeaderElement, ToggleButton, HeaderLogo, HeaderIcons, SearchForm } from "./Header.styled";
+import { IconButton } from "../shared";
+import {
+  HeaderElement,
+  ToggleButton,
+  HeaderLogo,
+  HeaderIcons,
+  SearchForm,
+} from "./Header.styled";
 
 const HeaderSearch = () => {
   return (

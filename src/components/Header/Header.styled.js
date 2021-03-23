@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { shade } from "polished";
 
 import { ReactComponent as YouTubeLogo } from "../../logo.svg";
-import IconButton from "../shared/IconButton";
+import { IconButton } from "../shared";
 
 export const HeaderElement = styled.header`
   position: fixed;
