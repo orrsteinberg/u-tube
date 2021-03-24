@@ -2,18 +2,28 @@ import styled from "styled-components";
 
 export const HorizontalVideoItemContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
-  margin-bottom: 0.75rem;
-  max-width: 600px;
+  font-size: ${({ fullWidth }) => (fullWidth ? "1.1rem" : "1rem")};
+  margin: 1.5rem auto;
+  max-width: 80%;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin: 0 0 0.75rem 0;
+    max-width: ${({ fullWidth }) => (fullWidth ? "680px" : "600px")};
+  }
 `;
 
 export const Thumbnail = styled.div`
-  flex-basis: 50%;
   position: relative;
   overflow: hidden;
   border-bottom: 3px solid ${({ theme }) => theme.colors.bg.tertiary};
   cursor: pointer;
-  width: 100%;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    flex-basis: 50%;
+    width: 100%;
+  }
 
   ::before {
     content: "";
@@ -64,14 +74,18 @@ export const Duration = styled.div`
 `;
 
 export const ItemBody = styled.div`
-  flex-basis: 50%;
   padding-top: 0.25rem;
-  padding-left: 0.75rem;
 
   h3 {
     line-height: 1;
     margin: 0;
-    font-weight: normal;
+    font-weight: ${({ fullWidth }) => (fullWidth ? "bold" : "normal")};
+    color: ${({ theme }) => theme.colors.text.primary};
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    flex-basis: 50%;
+    padding-left: 0.75rem;
   }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {

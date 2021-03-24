@@ -2,7 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MdPlayArrow } from "react-icons/md";
 
-import { HorizontalVideoItemContainer, Thumbnail, Duration, ItemBody, MetadataBox } from "./HorizontalVideoItem.styled";
+import {
+  HorizontalVideoItemContainer,
+  Thumbnail,
+  Duration,
+  ItemBody,
+  MetadataBox,
+} from "./HorizontalVideoItem.styled";
 
 const Metadata = () => {
   return (
@@ -16,21 +22,23 @@ const Metadata = () => {
   );
 };
 
-const HorizontalVideoItem = () => {
+const HorizontalVideoItem = ({ fullWidth }) => {
   const title =
     Math.floor(Math.random() * 10) > 5
       ? "Video Title"
       : "Video Title Can Actually Be a Long One!";
 
   return (
-    <HorizontalVideoItemContainer>
+    <HorizontalVideoItemContainer fullWidth={fullWidth}>
       <Thumbnail>
         <img src="https://picsum.photos/275/155" alt="Media thumbnail" />
         <Duration>3:52</Duration>
         <MdPlayArrow />
       </Thumbnail>
       <ItemBody>
-        <h3>{title}</h3>
+        <Link to="/watch">
+          <h3>{title}</h3>
+        </Link>
         <Metadata />
       </ItemBody>
     </HorizontalVideoItemContainer>
