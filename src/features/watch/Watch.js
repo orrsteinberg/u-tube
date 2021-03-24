@@ -1,7 +1,7 @@
 import React from "react";
 
 import Details from "./Details/Details";
-import Comments from "../../components/Comments/Comments";
+import Comments from "./Comments/Comments";
 import HorizontalVideoItem from "../../components/HorizontalVideoItem/HorizontalVideoItem";
 import { WatchViewContainer, MainCol, Player, RelatedVideosCol } from "./Watch.styled";
 

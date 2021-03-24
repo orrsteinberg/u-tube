@@ -1,6 +1,6 @@
 import React from "react";
 
-import Comment from "../Comment/Comment";
+import Comment from "./Comment";
 import { CommentsContainer, NewComment } from "./Comments.styled";
 
 

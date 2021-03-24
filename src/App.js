@@ -5,12 +5,13 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "./utils/theme";
 import GlobalStyles from "./globalStyles";
 import Layout from "./components/Layout/Layout";
-import Home from "./views/Home/Home";
-import Watch from "./views/Watch/Watch";
-import Channel from "./views/Channel/Channel";
-import Search from "./views/Search/Search";
+import Home from "./features/home/Home";
+import Watch from "./features/watch/Watch";
+import Channel from "./features/channel/Channel";
+import Search from "./features/search/Search";
 
 const App = () => {
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
@@ -40,7 +41,9 @@ const App = () => {
         </Route>
 
         <Route>
-          <h1>Not Found</h1>
+          <Layout>
+            <h1>Not Found</h1>
+          </Layout>
         </Route>
       </Switch>
     </ThemeProvider>
