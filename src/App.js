@@ -8,6 +8,7 @@ import Layout from "./components/Layout/Layout";
 import Home from "./views/Home/Home";
 import Watch from "./views/Watch/Watch";
 import Channel from "./views/Channel/Channel";
+import Search from "./views/Search/Search";
 
 const App = () => {
   return (
@@ -26,9 +27,15 @@ const App = () => {
           </Layout>
         </Route>
 
-        <Route path="/Channel" exact>
+        <Route path="/channel" exact>
           <Layout>
             <Channel />
+          </Layout>
+        </Route>
+
+        <Route path="/search" exact>
+          <Layout>
+            <Search />
           </Layout>
         </Route>
 
