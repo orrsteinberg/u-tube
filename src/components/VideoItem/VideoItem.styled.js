@@ -55,6 +55,7 @@ export const Duration = styled.div`
   bottom: 0.25rem;
   background: rgba(0, 0, 0, 0.8);
   padding: 0.25rem 0.5rem;
+  color: ${({ theme }) => theme.colors.text.primary};
 `;
 
 export const Details = styled.div`
@@ -66,6 +67,7 @@ export const Details = styled.div`
     border-radius: 50%;
     object-fit: contain;
     margin-right: 0.75rem;
+    width: 40px;
   }
 `;
 
@@ -77,6 +79,7 @@ export const Meta = styled.div`
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     color: ${({ theme }) => theme.colors.text.primary};
+    font-weight: normal;
   }
 `;
 
@@ -89,5 +92,9 @@ export const Statistics = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-right: 0.25rem;
+  }
+
+  #viewCount {
+    text-transform: uppercase;
   }
 `;
