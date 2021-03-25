@@ -29,6 +29,10 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
+  .count {
+    text-transform: uppercase;
+  }
+
 `;
 
 export default GlobalStyles;
