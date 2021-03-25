@@ -14,9 +14,21 @@ const initialState = {
 export const fetchHomeVideos = createAsyncThunk(
   "home/fetchHomeVideos",
   async (_, { getState }) => {
+    // Get videos
     const pageToken = getState().home.pageToken;
-    const response = await api.getHomeVideos(pageToken);
-    return response.data;
+    const videosResponse = await api.getHomeVideos(pageToken);
+
+    // Channel avatars are not included in the API response so we have to make another request
+    const channelIds = videosResponse.data.items.map(
+      (v) => v.snippet.channelId
+    );
+    const channelsResponse = await api.getChannelsById(channelIds);
+
+    return {
+      videos: videosResponse.data.items,
+      channels: channelsResponse.data.items,
+      pageToken: videosResponse.data.nextPageToken,
+    };
   }
 );
 
@@ -32,8 +44,34 @@ const homeSlice = createSlice({
     },
     [fetchHomeVideos.fulfilled]: (state, action) => {
       state.status = "succeeded";
-      state.videos = state.videos.concat(action.payload.items);
-      state.pageToken = action.payload.nextPageToken;
+
+      // Create array of channel avatar objects with id and url keys
+      const channelAvatars = action.payload.channels.map((channel) => ({
+        id: channel.id,
+        url: channel.snippet.thumbnails.default.url,
+      }));
+
+      // Customize data shape
+      const newVideos = action.payload.videos.map((video, idx) => {
+        return {
+          id: video.id,
+          title: video.snippet.title,
+          thumbnail: video.snippet.thumbnails.medium.url,
+          channelId: video.snippet.channelId,
+          channelTitle: video.snippet.channelTitle,
+          viewCount: video.statistics.viewCount,
+          publishedAt: video.snippet.publishedAt,
+          duration: video.contentDetails.duration,
+          // Find the appropriate channel avatar url by its id
+          channelAvatar: channelAvatars.find(
+            (c) => c.id === video.snippet.channelId
+          ).url,
+        };
+      });
+
+      // Update videos and page token
+      state.videos = state.videos.concat(newVideos);
+      state.pageToken = action.payload.pageToken;
     },
     [fetchHomeVideos.rejected]: (state, action) => {
       state.status = "failed";
@@ -43,7 +81,7 @@ const homeSlice = createSlice({
 });
 
 // Selectors
-export const selectAllVideos = (state) => state.home.videos;
+export const selectHomeVideos = (state) => state.home.videos;
 export const selectHomeStatus = (state) => state.home.status;
 
 export default homeSlice.reducer;

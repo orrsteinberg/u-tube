@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { MdPlayArrow } from "react-icons/md";
+import moment from "moment";
+import numeral from "numeral";
 
 import {
   VideoItemContainer,
@@ -12,17 +14,29 @@ import {
 } from "./VideoItem.styled";
 
 const VideoItem = ({ video, hideChannel }) => {
-  // Destructure data
-  const { title, channelId, channelTitle, publishedAt } = video.snippet;
-  const { url: thumbnailURL } = video.snippet.thumbnails.medium;
-  const { duration } = video.contentDetails;
-  const { viewCount } = video.statistics;
+  // Destructure
+  const {
+    id,
+    title,
+    thumbnail,
+    channelId,
+    channelTitle,
+    channelAvatar,
+  } = video;
+
+  // Format data
+  const viewCount = numeral(video.viewCount).format("0.a");
+
+  const publishedAt = moment(video.publishedAt).fromNow();
+
+  const durationInSeconds = moment.duration(video.duration).asSeconds();
+  const duration = moment.utc(durationInSeconds * 1000).format("mm:ss");
 
   return (
     <VideoItemContainer>
-      <Link to="/watch">
+      <Link to={`/watch/${id}`}>
         <Thumbnail>
-          <img src={thumbnailURL} alt={`${title} video thumbnail`} />
+          <img src={thumbnail} alt={`${title} video thumbnail`} />
           <Duration>{duration}</Duration>
           <MdPlayArrow />
         </Thumbnail>
@@ -30,11 +44,11 @@ const VideoItem = ({ video, hideChannel }) => {
       <Details>
         {!hideChannel && (
           <Link to={`/channel/${channelId}`}>
-            <img src="https://picsum.photos/40" alt="channel avatar" />
+            <img src={channelAvatar} alt={`${channelTitle} avatar`} />
           </Link>
         )}
         <Meta>
-          <Link to="/watch">
+          <Link to={`/watch/${id}`}>
             <h3>{title}</h3>
           </Link>
           {!hideChannel && (
@@ -42,7 +56,8 @@ const VideoItem = ({ video, hideChannel }) => {
           )}
           <Statistics>
             <span>
-              {viewCount}
+              <span id="viewCount">{viewCount}</span>
+              {" views "}
               {" • "}
             </span>
             <span>{publishedAt}</span>

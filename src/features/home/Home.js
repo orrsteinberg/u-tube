@@ -3,15 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 
 import {
   fetchHomeVideos,
-  selectAllVideos,
+  selectHomeVideos,
   selectHomeStatus,
 } from "./homeSlice";
 import { VideoRow } from "../../components/shared";
 import VideoItem from "../../components/VideoItem/VideoItem";
 
 const HomeView = () => {
-  const videos = useSelector(selectAllVideos);
   const status = useSelector(selectHomeStatus);
+  const videos = useSelector(selectHomeVideos);
   const dispatch = useDispatch();
 
   useEffect(() => {
