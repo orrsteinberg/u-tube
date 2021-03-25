@@ -1,82 +1,103 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { MdThumbUp, MdThumbDown } from "react-icons/md";
+import moment from "moment";
+import numeral from "numeral";
 
 import { IconButton } from "../../../components/shared";
 import {
   DetailsContainer,
   StatisticsContainer,
   LikesBox,
-  ChannelContainer,
-  ChannelData,
+  ChannelDetailsContainer,
+  ChannelDetailsContent,
   DescriptionContainer,
 } from "./Details.styled";
 
-const Statistics = () => {
+const Statistics = ({ likeCount, dislikeCount, viewCount, publishedAt }) => {
   return (
     <StatisticsContainer>
-      <span>8,091,680 views • Jun 28, 2020</span>
+      <span>
+        <span className="count">{viewCount}</span>
+        {" views "}
+        {" • "}
+        {publishedAt}
+        {" as Jun 28, 2020"}
+      </span>
       <LikesBox>
-        <span>
+        <span className="count">
           <IconButton>
             <MdThumbUp />
           </IconButton>
-          46K
+          {likeCount}
         </span>
-        <span>
+        <span className="count">
           <IconButton>
             <MdThumbDown />
           </IconButton>
-          90
+          {dislikeCount}
         </span>
       </LikesBox>
     </StatisticsContainer>
   );
 };
 
-const Channel = () => {
+const ChannelDetails = ({ channel }) => {
+  const { id, title, subscriberCount, avatar } = channel;
   return (
-    <ChannelContainer>
-      <Link to="/">
-        <img src="https://picsum.photos/50" alt="Channel avatar" />
+    <ChannelDetailsContainer>
+      <Link to={`/channel/${id}`}>
+        <img src={avatar} alt={`${title} avatar`} />
       </Link>
-      <ChannelData>
-        <Link to="/">
-          <h3>Channel Title</h3>
+      <ChannelDetailsContent>
+        <Link to={`/channel/${id}`}>
+          <h3>{title}</h3>
         </Link>
-        <span>2.3M Subscribers</span>
-      </ChannelData>
+        <span>{subscriberCount} Subscribers</span>
+      </ChannelDetailsContent>
       <button>Subscribe</button>
-    </ChannelContainer>
+    </ChannelDetailsContainer>
   );
 };
 
-const Description = () => {
+const Description = ({ description }) => {
   return (
     <DescriptionContainer>
-      <p>
-        Elit suscipit quibusdam deleniti aliquid velit dicta Ullam
-        exercitationem atque porro dignissimos laudantium assumenda Nam eaque
-        vitae provident ipsa aut, eaque nemo recusandae? Eos repudiandae! Elit
-        distinctio in exercitationem sequi earum. Voluptas temporibus sapiente
-        corrupti praesentium distinctio praesentium Rerum explicabo aspernatur
-        expedita tenetur quaerat Nemo dolorum quod porro est repellendus
-        voluptatem Enim obcaecati placeat saepe error animi. Et quas nulla at
-        placeat esse doloribus aliquam? Quis cupiditate nisi modi quia fuga
-        Fugiat enim eum dolor
-      </p>
+      <p>{description}</p>
       <button>Show less</button>
     </DescriptionContainer>
   );
 };
 
-const Details = () => {
+const Details = ({ video }) => {
+  let {
+    title,
+    description,
+    likeCount,
+    dislikeCount,
+    viewCount,
+    publishedAt,
+    channel,
+  } = video;
+
+  // Format data
+  viewCount = numeral(video.viewCount).format("0.a");
+  likeCount = numeral(video.likeCount).format("0.a");
+  dislikeCount = numeral(video.dislikeCount).format("0.a");
+
+  publishedAt = moment(video.publishedAt).fromNow();
+
   return (
     <DetailsContainer>
-      <h1>Positive Mood JAZZ - Sunny Jazz Cafe and Bossa Nova Music</h1>
-      <Statistics />
-      <Channel />
-      <Description />
+      <h1>{title}</h1>
+      <Statistics
+        viewCount={viewCount}
+        publishedAt={publishedAt}
+        likeCount={likeCount}
+        dislikeCount={dislikeCount}
+      />
+      <ChannelDetails channel={channel} />
+      <Description description={description} />
     </DetailsContainer>
   );
 };

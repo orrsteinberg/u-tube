@@ -21,13 +21,13 @@ const App = () => {
           </Layout>
         </Route>
 
-        <Route path="/watch" exact>
+        <Route path="/watch/:id" exact>
           <Layout>
             <Watch />
           </Layout>
         </Route>
 
-        <Route path="/channel" exact>
+        <Route path="/channel/:id" exact>
           <Layout>
             <Channel />
           </Layout>

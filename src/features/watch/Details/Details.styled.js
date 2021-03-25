@@ -58,7 +58,7 @@ export const LikesBox = styled.div`
   color: ${({ theme }) => theme.colors.text.primary};
 `;
 
-export const ChannelContainer = styled.div`
+export const ChannelDetailsContainer = styled.div`
   display: flex;
   align-items: center;
   color: ${({ theme }) => theme.colors.text.tertiary};
@@ -97,7 +97,7 @@ export const ChannelContainer = styled.div`
   }
 `;
 
-export const ChannelData = styled.div`
+export const ChannelDetailsContent = styled.div`
   margin-left: 0.75rem;
 `;
 
