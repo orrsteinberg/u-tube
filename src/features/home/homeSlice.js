@@ -83,5 +83,6 @@ const homeSlice = createSlice({
 // Selectors
 export const selectHomeVideos = (state) => state.home.videos;
 export const selectHomeStatus = (state) => state.home.status;
+export const selectHomeError = (state) => state.home.error;
 
 export default homeSlice.reducer;

@@ -5,6 +5,7 @@ import {
   fetchHomeVideos,
   selectHomeVideos,
   selectHomeStatus,
+  selectHomeError,
 } from "./homeSlice";
 import { VideoRow } from "../../components/shared";
 import VideoItem from "../../components/VideoItem/VideoItem";
@@ -12,18 +13,21 @@ import VideoItem from "../../components/VideoItem/VideoItem";
 const HomeView = () => {
   const status = useSelector(selectHomeStatus);
   const videos = useSelector(selectHomeVideos);
+  const error = useSelector(selectHomeError);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchHomeVideos());
-  }, [dispatch]);
+    if (videos.length === 0) {
+      dispatch(fetchHomeVideos());
+    }
+  }, [dispatch, videos]);
 
   return (
     <VideoRow>
       {status === "loading" && "Loading videos..."}
-      {videos.map((video) => (
-        <VideoItem video={video} key={video.id} />
-      ))}
+      {status === "failed" && <h2>{error}</h2>}
+      {status === "succeeded" &&
+        videos.map((video) => <VideoItem video={video} key={video.id} />)}
     </VideoRow>
   );
 };

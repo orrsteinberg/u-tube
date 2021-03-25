@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const VideoItemContainer = styled.div`
   margin: 0 auto 1.5rem auto;
-  max-width: 230px;
+  max-width: 256px;
 `;
 
 export const Thumbnail = styled.div`
@@ -92,9 +92,5 @@ export const Statistics = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-right: 0.25rem;
-  }
-
-  #viewCount {
-    text-transform: uppercase;
   }
 `;

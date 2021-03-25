@@ -56,7 +56,7 @@ const VideoItem = ({ video, hideChannel }) => {
           )}
           <Statistics>
             <span>
-              <span id="viewCount">{viewCount}</span>
+              <span className="count">{viewCount}</span>
               {" views "}
               {" • "}
             </span>
