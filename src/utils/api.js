@@ -18,6 +18,14 @@ const api = {
       },
     });
   },
+  getVideoById: async (videoId) => {
+    return await request("/videos", {
+      params: {
+        part: "snippet,statistics",
+        id: videoId,
+      },
+    });
+  },
   getChannelsById: async (channelIds) => {
     const commaSeperatedIds = channelIds.reduce(
       (str, id) => (str === "" ? id : `${str},${id}`),
@@ -28,6 +36,14 @@ const api = {
       params: {
         part: "snippet",
         id: commaSeperatedIds,
+      },
+    });
+  },
+  getChannelById: async (channelId) => {
+    return await request("/channels", {
+      params: {
+        part: "snippet,statistics",
+        id: channelId,
       },
     });
   },
