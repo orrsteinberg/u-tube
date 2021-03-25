@@ -18,6 +18,19 @@ const api = {
       },
     });
   },
+  getChannelsById: async (channelIds) => {
+    const commaSeperatedIds = channelIds.reduce(
+      (str, id) => (str === "" ? id : `${str},${id}`),
+      "" // start with an empty string
+    );
+
+    return await request("/channels", {
+      params: {
+        part: "snippet",
+        id: commaSeperatedIds,
+      },
+    });
+  },
 };
 
 export default api;
