@@ -11,7 +11,6 @@ import Channel from "./features/channel/Channel";
 import Search from "./features/search/Search";
 
 const App = () => {
-
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
