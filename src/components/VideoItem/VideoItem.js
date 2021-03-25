@@ -11,24 +11,25 @@ import {
   Statistics,
 } from "./VideoItem.styled";
 
-const VideoItem = ({ hideChannel }) => {
-  const title =
-    Math.floor(Math.random() * 10) > 5
-      ? "Video Title"
-      : "Video Title Can Actually Be a Prettttttttttttty Long One!";
+const VideoItem = ({ video, hideChannel }) => {
+  // Destructure data
+  const { title, channelId, channelTitle, publishedAt } = video.snippet;
+  const { url: thumbnailURL } = video.snippet.thumbnails.medium;
+  const { duration } = video.contentDetails;
+  const { viewCount } = video.statistics;
 
   return (
     <VideoItemContainer>
       <Link to="/watch">
         <Thumbnail>
-          <img src="https://picsum.photos/275/155" alt="video thumbnail" />
-          <Duration>3:52</Duration>
+          <img src={thumbnailURL} alt={`${title} video thumbnail`} />
+          <Duration>{duration}</Duration>
           <MdPlayArrow />
         </Thumbnail>
       </Link>
       <Details>
         {!hideChannel && (
-          <Link to="/">
+          <Link to={`/channel/${channelId}`}>
             <img src="https://picsum.photos/40" alt="channel avatar" />
           </Link>
         )}
@@ -36,10 +37,15 @@ const VideoItem = ({ hideChannel }) => {
           <Link to="/watch">
             <h3>{title}</h3>
           </Link>
-          {!hideChannel && <Link to="/">Channel Title</Link>}
+          {!hideChannel && (
+            <Link to={`/channel/${channelId}`}>{channelTitle}</Link>
+          )}
           <Statistics>
-            <span>18M views{" • "}</span>
-            <span>2 months ago</span>
+            <span>
+              {viewCount}
+              {" • "}
+            </span>
+            <span>{publishedAt}</span>
           </Statistics>
         </Meta>
       </Details>
