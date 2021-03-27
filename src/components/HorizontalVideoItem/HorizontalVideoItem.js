@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { MdPlayArrow } from "react-icons/md";
+import moment from "moment";
+import numeral from "numeral";
 
+import { truncateTitle } from "../../utils/helpers";
 import {
   HorizontalVideoItemContainer,
   Thumbnail,
@@ -10,36 +13,55 @@ import {
   MetadataBox,
 } from "./HorizontalVideoItem.styled";
 
-const Metadata = () => {
+const Metadata = ({ channelId, channelTitle, viewCount, publishedAt }) => {
   return (
     <MetadataBox>
-      <Link to="/">
-        <p>Channel Name</p>
+      <Link to={`/channel/${channelId}`}>
+        <p>{channelTitle}</p>
       </Link>
-      <span>18M views{" • "}</span>
-      <span>2 months ago</span>
+      <span>
+        <span className="count">{viewCount}</span>
+        {" views "}
+        {" • "}
+      </span>
+      <span>{publishedAt}</span>
     </MetadataBox>
   );
 };
 
-const HorizontalVideoItem = ({ fullWidth }) => {
-  const title =
-    Math.floor(Math.random() * 10) > 5
-      ? "Video Title"
-      : "Video Title Can Actually Be a Long One!";
+const HorizontalVideoItem = ({ video, fullWidth }) => {
+  // Destructure
+  const { id, thumbnail, channelId, channelTitle } = video;
+
+  // Format data
+  const title = truncateTitle(video.title);
+
+  const viewCount = numeral(video.viewCount).format("0.a");
+
+  const publishedAt = moment(video.publishedAt).fromNow();
+
+  const durationInSeconds = moment.duration(video.duration).asSeconds();
+  const duration = moment.utc(durationInSeconds * 1000).format("mm:ss");
 
   return (
     <HorizontalVideoItemContainer fullWidth={fullWidth}>
       <Thumbnail>
-        <img src="https://picsum.photos/275/155" alt="Media thumbnail" />
-        <Duration>3:52</Duration>
-        <MdPlayArrow />
+        <Link to={`/watch/${id}`}>
+          <img src={thumbnail} alt={`${title} video thumbnail`} />
+          <Duration>{duration}</Duration>
+          <MdPlayArrow />
+        </Link>
       </Thumbnail>
       <ItemBody>
-        <Link to="/watch">
+        <Link to={`/watch/${id}`}>
           <h3>{title}</h3>
         </Link>
-        <Metadata />
+        <Metadata
+          channelId={channelId}
+          channelTitle={channelTitle}
+          viewCount={viewCount}
+          publishedAt={publishedAt}
+        />
       </ItemBody>
     </HorizontalVideoItemContainer>
   );

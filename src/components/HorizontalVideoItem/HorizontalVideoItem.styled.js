@@ -71,6 +71,7 @@ export const Duration = styled.div`
   bottom: 0.25rem;
   background: rgba(0, 0, 0, 0.8);
   padding: 0.25rem 0.5rem;
+  color: ${({ theme }) => theme.colors.text.primary};
 `;
 
 export const ItemBody = styled.div`
@@ -79,7 +80,7 @@ export const ItemBody = styled.div`
   h3 {
     line-height: 1;
     margin: 0;
-    font-weight: ${({ fullWidth }) => (fullWidth ? "bold" : "normal")};
+    font-size: 1rem;
     color: ${({ theme }) => theme.colors.text.primary};
   }
 
