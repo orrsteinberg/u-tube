@@ -27,7 +27,7 @@ const initialState = {
     status: "idle", // "idle" | "loading" | "succeeded" | "failed"
     error: null,
   },
-  comments: {
+  commentSection: {
     comments: [],
     status: "idle", // "idle" | "loading" | "succeeded" | "failed"
     error: null,
@@ -69,7 +69,10 @@ export const fetchRelatedVideos = createAsyncThunk(
 
 export const fetchComments = createAsyncThunk(
   "watch/fetchComments",
-  async (videoId) => {}
+  async (videoId) => {
+    const commentsResponse = await api.getCommentsByVideoId(videoId);
+    return commentsResponse.data.items;
+  }
 );
 
 // State slice
@@ -139,14 +142,46 @@ const watchSlice = createSlice({
       state.relatedVideos.status = "failed";
       state.relatedVideos.error = action.error.message;
     },
-    [fetchComments.pending]: (state, action) => {},
-    [fetchComments.fulfilled]: (state, action) => {},
-    [fetchComments.rejected]: (state, action) => {},
+    [fetchComments.pending]: (state, action) => {
+      state.commentSection.status = "loading";
+    },
+    [fetchComments.fulfilled]: (state, action) => {
+      state.commentSection.status = "succeeded";
+
+      // Customize data shape
+      const comments = action.payload.map((comment) => {
+        const {
+          authorDisplayName,
+          authorChannelId: { value: authorChannelId },
+          authorProfileImageUrl,
+          publishedAt,
+          textDisplay,
+          textOriginal,
+        } = comment.snippet.topLevelComment.snippet;
+
+        return {
+          id: comment.id,
+          authorDisplayName,
+          authorChannelId,
+          authorProfileImageUrl,
+          publishedAt,
+          textDisplay,
+          textOriginal,
+        };
+      });
+
+      state.commentSection.comments = comments;
+    },
+    [fetchComments.rejected]: (state, action) => {
+      state.commentSection.status = "failed";
+      state.commentSection.error = action.error.message;
+    },
   },
 });
 
 // Selectors
 export const selectVideoToWatch = (state) => state.watch;
 export const selectRelatedVideos = (state) => state.watch.relatedVideos;
+export const selectCommentSection = (state) => state.watch.commentSection;
 
 export default watchSlice.reducer;

@@ -1,13 +1,11 @@
 import React from "react";
 
 import Comment from "./Comment";
-import { CommentsContainer, NewComment } from "./Comments.styled";
+import { CommentsContainer, NewComment } from "./CommentSection.styled";
 
-
-const Comments = () => {
+const CommentSection = ({ comments }) => {
   return (
     <CommentsContainer>
-      <h2>3,692 Comments</h2>
       <NewComment>
         <img src="https://picsum.photos/40" alt="avatar" />
         <form>
@@ -15,11 +13,11 @@ const Comments = () => {
           <button type="submit">Comment</button>
         </form>
       </NewComment>
-      {[...Array(8)].map((x, i) => (
-        <Comment key={i} />
+      {comments.map((comment) => (
+        <Comment comment={comment} key={comment.id} />
       ))}
     </CommentsContainer>
   );
 };
 
-export default Comments;
+export default CommentSection;

@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const CommentsContainer = styled.div`
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.colors.bg.secondary};
+  padding-top: 1rem;
 `;
 
 export const NewComment = styled.div`

@@ -5,11 +5,13 @@ import { useParams } from "react-router-dom";
 import {
   fetchVideoToWatch,
   fetchRelatedVideos,
+  fetchComments,
   selectVideoToWatch,
   selectRelatedVideos,
+  selectCommentSection,
 } from "./watchSlice";
 import Details from "./Details/Details";
-import Comments from "./Comments/Comments";
+import CommentSection from "./CommentSection/CommentSection";
 import HorizontalVideoItem from "../../components/HorizontalVideoItem/HorizontalVideoItem";
 import {
   WatchViewContainer,
@@ -26,12 +28,18 @@ const Watch = () => {
     status: relatedVideosStatus,
     error: relatedVideosError,
   } = useSelector(selectRelatedVideos);
+  const {
+    comments,
+    status: commentSectionStatus,
+    error: commentSectionError,
+  } = useSelector(selectCommentSection);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchVideoToWatch(id));
     dispatch(fetchRelatedVideos(id));
+    dispatch(fetchComments(id));
   }, [id, dispatch]);
 
   return (
@@ -54,12 +62,16 @@ const Watch = () => {
             <Details video={currentVideo} />
           </>
         )}
-        <Comments />
+        {commentSectionStatus === "loading" && <p>Loading...</p>}
+        {commentSectionStatus === "failed" && <p>{commentSectionError}</p>}
+        {commentSectionStatus === "succeeded" && (
+          <CommentSection comments={comments} />
+        )}
       </MainCol>
       <RelatedVideosCol>
         <h2>Related videos:</h2>
         {relatedVideosStatus === "loading" && <p>Loading videos...</p>}
-        {relatedVideosStatus === "failed" && <p>{error}</p>}
+        {relatedVideosStatus === "failed" && <p>{relatedVideosError}</p>}
         {relatedVideosStatus === "succeeded" &&
           videos.map((video) => (
             <HorizontalVideoItem video={video} key={video.id} />

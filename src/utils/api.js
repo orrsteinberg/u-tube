@@ -50,6 +50,14 @@ const api = {
       },
     });
   },
+  getChannelById: async (channelId) => {
+    return await request("/channels", {
+      params: {
+        part: "snippet,statistics",
+        id: channelId,
+      },
+    });
+  },
   getChannelsById: async (channelIds) => {
     const commaSeperatedIds = channelIds.reduce(
       (str, id) => (str === "" ? id : `${str},${id}`),
@@ -63,11 +71,12 @@ const api = {
       },
     });
   },
-  getChannelById: async (channelId) => {
-    return await request("/channels", {
+  getCommentsByVideoId: async (videoId) => {
+    return await request("/commentThreads", {
       params: {
-        part: "snippet,statistics",
-        id: channelId,
+        part: "snippet",
+        videoId,
+        maxResults: 15,
       },
     });
   },
