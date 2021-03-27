@@ -52,7 +52,7 @@ const homeSlice = createSlice({
       }));
 
       // Customize data shape
-      const newVideos = action.payload.videos.map((video, idx) => {
+      const newVideos = action.payload.videos.map((video) => {
         return {
           id: video.id,
           title: video.snippet.title,
