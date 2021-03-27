@@ -54,7 +54,17 @@ export const fetchVideoToWatch = createAsyncThunk(
 
 export const fetchRelatedVideos = createAsyncThunk(
   "watch/fetchRelatedVideos",
-  async (videoId) => {}
+  async (videoId) => {
+    // Get list of related video IDs
+    const relatedVideosResponse = await api.getRelatedVideos(videoId);
+    const relatedVideosIds = relatedVideosResponse.data.items.map(
+      (item) => item.id.videoId
+    );
+
+    // Get videos by ID so we can have their contentData (needed for video duration)
+    const videosResponse = await api.getVideosById(relatedVideosIds);
+    return videosResponse.data.items;
+  }
 );
 
 export const fetchComments = createAsyncThunk(
@@ -103,9 +113,32 @@ const watchSlice = createSlice({
       state.status = "failed";
       state.error = action.error.message;
     },
-    [fetchRelatedVideos.pending]: (state, action) => {},
-    [fetchRelatedVideos.fulfilled]: (state, action) => {},
-    [fetchRelatedVideos.rejected]: (state, action) => {},
+    [fetchRelatedVideos.pending]: (state, action) => {
+      state.relatedVideos.status = "loading";
+    },
+    [fetchRelatedVideos.fulfilled]: (state, action) => {
+      state.relatedVideos.status = "succeeded";
+
+      // Customize data shape
+      const videos = action.payload.map((video) => {
+        return {
+          id: video.id,
+          title: video.snippet.title,
+          thumbnail: video.snippet.thumbnails.medium.url,
+          channelId: video.snippet.channelId,
+          channelTitle: video.snippet.channelTitle,
+          viewCount: video.statistics.viewCount,
+          publishedAt: video.snippet.publishedAt,
+          duration: video.contentDetails.duration,
+        };
+      });
+
+      state.relatedVideos.videos = videos;
+    },
+    [fetchRelatedVideos.rejected]: (state, action) => {
+      state.relatedVideos.status = "failed";
+      state.relatedVideos.error = action.error.message;
+    },
     [fetchComments.pending]: (state, action) => {},
     [fetchComments.fulfilled]: (state, action) => {},
     [fetchComments.rejected]: (state, action) => {},
@@ -113,9 +146,7 @@ const watchSlice = createSlice({
 });
 
 // Selectors
-export const selectCurrentVideo = (state) => state.watch.currentVideo;
+export const selectVideoToWatch = (state) => state.watch;
 export const selectRelatedVideos = (state) => state.watch.relatedVideos;
-export const selectComments = (state) => state.watch.comments;
-export const seletchWatchStatus = (state) => state.watch.status;
 
 export default watchSlice.reducer;

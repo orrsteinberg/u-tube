@@ -26,10 +26,34 @@ const api = {
       },
     });
   },
+  getVideosById: async (videoIds) => {
+    // Convert array of video IDs to a comma-seperated string
+    const commaSeperatedIds = videoIds.reduce(
+      (str, id) => (str === "" ? id : `${str},${id}`),
+      "" // start with an empty string
+    );
+
+    return await request("/videos", {
+      params: {
+        part: "snippet,statistics,contentDetails",
+        id: commaSeperatedIds,
+      },
+    });
+  },
+  getRelatedVideos: async (videoId) => {
+    return await request("/search", {
+      params: {
+        type: "video",
+        part: "snippet",
+        relatedToVideoId: videoId,
+        maxResults: 10,
+      },
+    });
+  },
   getChannelsById: async (channelIds) => {
     const commaSeperatedIds = channelIds.reduce(
       (str, id) => (str === "" ? id : `${str},${id}`),
-      "" // start with an empty string
+      ""
     );
 
     return await request("/channels", {
