@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { MdThumbUp, MdThumbDown } from "react-icons/md";
 import moment from "moment";
@@ -18,11 +18,10 @@ const Statistics = ({ likeCount, dislikeCount, viewCount, publishedAt }) => {
   return (
     <StatisticsContainer>
       <span>
-        <span className="count">{viewCount}</span>
+        {viewCount}
         {" views "}
         {" • "}
         {publishedAt}
-        {" as Jun 28, 2020"}
       </span>
       <LikesBox>
         <span className="count">
@@ -43,7 +42,9 @@ const Statistics = ({ likeCount, dislikeCount, viewCount, publishedAt }) => {
 };
 
 const ChannelDetails = ({ channel }) => {
-  const { id, title, subscriberCount, avatar } = channel;
+  const { id, title, avatar } = channel;
+  const subscriberCount = numeral(channel.subscriberCount).format("0,0");
+
   return (
     <ChannelDetailsContainer>
       <Link to={`/channel/${id}`}>
@@ -61,31 +62,42 @@ const ChannelDetails = ({ channel }) => {
 };
 
 const Description = ({ description }) => {
+  const [isExpended, setIsExpanded] = useState(false);
+
+  const handleToggleClick = () => setIsExpanded(!isExpended);
+
+  // Split description on every newline char so we can format it nicely
+  const fullText = description.split("\n");
+  const miniText = fullText.slice(0, 4);
+
+  const textToDisplay = isExpended ? fullText : miniText;
+
+  // Only display expansion toggle if the truncated version is shorter than the original description
+  const toggleButton =
+    miniText < fullText ? (
+      <button onClick={handleToggleClick}>
+        Show {isExpended ? "less" : "more"}
+      </button>
+    ) : null;
+
   return (
     <DescriptionContainer>
-      <p>{description}</p>
-      <button>Show less</button>
+      {textToDisplay.map((lineOfText, i) => (
+        <p key={i}>{lineOfText}</p>
+      ))}
+      {toggleButton}
     </DescriptionContainer>
   );
 };
 
 const Details = ({ video }) => {
-  let {
-    title,
-    description,
-    likeCount,
-    dislikeCount,
-    viewCount,
-    publishedAt,
-    channel,
-  } = video;
+  const { title, description, channel } = video;
 
   // Format data
-  viewCount = numeral(video.viewCount).format("0.a");
-  likeCount = numeral(video.likeCount).format("0.a");
-  dislikeCount = numeral(video.dislikeCount).format("0.a");
-
-  publishedAt = moment(video.publishedAt).fromNow();
+  const viewCount = numeral(video.viewCount).format("0,0");
+  const likeCount = numeral(video.likeCount).format("0.a");
+  const dislikeCount = numeral(video.dislikeCount).format("0.a");
+  const publishedAt = moment(video.publishedAt).format("MMM D, YYYY");
 
   return (
     <DetailsContainer>

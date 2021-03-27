@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { lighten } from "polished";
 
 export const DetailsContainer = styled.div`
   padding-bottom: 0.5rem;
@@ -56,6 +57,10 @@ export const LikesBox = styled.div`
   min-width: 130px;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.text.primary};
+
+  span {
+    margin-left: 0.75rem;
+  }
 `;
 
 export const ChannelDetailsContainer = styled.div`
@@ -102,16 +107,20 @@ export const ChannelDetailsContent = styled.div`
 `;
 
 export const DescriptionContainer = styled.div`
-  padding-left: calc(50px + 0.75rem);
+  padding-left: 0.25rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.bg.secondary};
 
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding-left: calc(50px + 0.75rem);
+  }
+
   p {
     margin: 0;
-    padding-right: 1rem;
     max-width: 500px;
-    letter-spacing: 0.6px;
-    color: ${({ theme }) => theme.colors.text.primary};
+    letter-spacing: 0.4px;
+    line-height: 1.5;
+    color: ${({ theme }) => lighten(0.15, theme.colors.text.secondary)};
   }
 
   button {
