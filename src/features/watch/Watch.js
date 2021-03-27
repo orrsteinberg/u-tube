@@ -4,8 +4,9 @@ import { useParams } from "react-router-dom";
 
 import {
   fetchVideoToWatch,
-  selectCurrentVideo,
-  seletchWatchStatus,
+  fetchRelatedVideos,
+  selectVideoToWatch,
+  selectRelatedVideos,
 } from "./watchSlice";
 import Details from "./Details/Details";
 import Comments from "./Comments/Comments";
@@ -19,22 +20,30 @@ import {
 
 const Watch = () => {
   const { id } = useParams();
-  const status = useSelector(seletchWatchStatus);
-  const video = useSelector(selectCurrentVideo);
+  const { currentVideo, status, error } = useSelector(selectVideoToWatch);
+  const {
+    videos,
+    status: relatedVideosStatus,
+    error: relatedVideosError,
+  } = useSelector(selectRelatedVideos);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchVideoToWatch(id));
+    dispatch(fetchRelatedVideos(id));
   }, [id, dispatch]);
 
   return (
     <WatchViewContainer>
       <MainCol>
+        {status === "loading" && <p>Loading...</p>}
+        {status === "failed" && <p>{error}</p>}
         {status === "succeeded" && (
           <>
             <Player>
               <iframe
-                src={`https://www.youtube.com/embed/${video.id}`}
+                src={`https://www.youtube.com/embed/${currentVideo.id}`}
                 frameBorder="0"
                 title="Video title"
                 allowFullScreen
@@ -42,16 +51,19 @@ const Watch = () => {
                 height="100%"
               ></iframe>
             </Player>
-            <Details video={video} />
+            <Details video={currentVideo} />
           </>
         )}
         <Comments />
       </MainCol>
       <RelatedVideosCol>
         <h2>Related videos:</h2>
-        {[...Array(10)].map((x, i) => (
-          <HorizontalVideoItem key={i} />
-        ))}
+        {relatedVideosStatus === "loading" && <p>Loading videos...</p>}
+        {relatedVideosStatus === "failed" && <p>{error}</p>}
+        {relatedVideosStatus === "succeeded" &&
+          videos.map((video) => (
+            <HorizontalVideoItem video={video} key={video.id} />
+          ))}
       </RelatedVideosCol>
     </WatchViewContainer>
   );
