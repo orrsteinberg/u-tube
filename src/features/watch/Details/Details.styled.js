@@ -59,7 +59,12 @@ export const LikesBox = styled.div`
   color: ${({ theme }) => theme.colors.text.primary};
 
   span {
-    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+
+    @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+      margin-right: 0;
+      margin-left: 0.75rem;
+    }
   }
 `;
 

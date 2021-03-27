@@ -80,8 +80,12 @@ export const ItemBody = styled.div`
   h3 {
     line-height: 1;
     margin: 0;
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: ${({ theme }) => theme.colors.text.primary};
+
+    @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+      font-size: 1rem;
+    }
   }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
