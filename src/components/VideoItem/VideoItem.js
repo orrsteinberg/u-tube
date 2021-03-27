@@ -4,6 +4,7 @@ import { MdPlayArrow } from "react-icons/md";
 import moment from "moment";
 import numeral from "numeral";
 
+import { truncateTitle } from "../../utils/helpers";
 import {
   VideoItemContainer,
   Thumbnail,
@@ -15,16 +16,11 @@ import {
 
 const VideoItem = ({ video, hideChannel }) => {
   // Destructure
-  const {
-    id,
-    title,
-    thumbnail,
-    channelId,
-    channelTitle,
-    channelAvatar,
-  } = video;
+  const { id, thumbnail, channelId, channelTitle, channelAvatar } = video;
 
   // Format data
+  const title = truncateTitle(video.title);
+
   const viewCount = numeral(video.viewCount).format("0.a");
 
   const publishedAt = moment(video.publishedAt).fromNow();

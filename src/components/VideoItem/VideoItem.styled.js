@@ -79,7 +79,7 @@ export const Meta = styled.div`
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     color: ${({ theme }) => theme.colors.text.primary};
-    font-weight: normal;
+    font-size: 1.05rem;
   }
 `;
 
