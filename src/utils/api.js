@@ -13,7 +13,7 @@ const api = {
       params: {
         part: "snippet,contentDetails,statistics",
         chart: "mostPopular",
-        maxResults: 6,
+        maxResults: 24,
         pageToken,
       },
     });
@@ -46,14 +46,24 @@ const api = {
         type: "video",
         part: "snippet",
         relatedToVideoId: videoId,
-        maxResults: 10,
+        maxResults: 18,
+      },
+    });
+  },
+  getChannelVideos: async (channelId) => {
+    return await request("/search", {
+      params: {
+        type: "video",
+        part: "snippet",
+        channelId,
+        maxResults: 24,
       },
     });
   },
   getChannelById: async (channelId) => {
     return await request("/channels", {
       params: {
-        part: "snippet,statistics",
+        part: "snippet,statistics,contentDetails",
         id: channelId,
       },
     });
