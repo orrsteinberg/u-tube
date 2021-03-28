@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import { MdMenu, MdSearch, MdApps } from "react-icons/md";
 
+import userAvatar from "../../user.svg";
 import { IconButton } from "../shared";
 import {
   HeaderElement,
@@ -11,11 +13,31 @@ import {
 } from "./Header.styled";
 
 const HeaderSearch = () => {
+  const [query, setQuery] = useState("");
+  const inputRef = useRef();
+  const history = useHistory();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Clear and remove focus from input after submission
+    setQuery("");
+    inputRef.current.blur();
+
+    history.push(`/search?q=${query}`);
+  };
+
+  const handleInputChange = ({ target }) => {
+    setQuery(target.value);
+  };
+
   return (
-    <SearchForm>
+    <SearchForm onSubmit={handleSubmit}>
       <input
+        ref={inputRef}
         type="text"
         name="search"
+        value={query}
+        onChange={handleInputChange}
         placeholder={"Search"}
         autoComplete="off"
       />
@@ -38,7 +60,7 @@ const Header = ({ handleMenuToggle }) => {
         <IconButton>
           <MdApps />
         </IconButton>
-        <img src="https://picsum.photos/40" alt="avatar" />
+        <img src={userAvatar} alt="User avatar" />
       </HeaderIcons>
     </HeaderElement>
   );
