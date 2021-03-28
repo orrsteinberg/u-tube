@@ -4,6 +4,7 @@ import { MdThumbUp, MdThumbDown } from "react-icons/md";
 import moment from "moment";
 import numeral from "numeral";
 
+import { truncateDescription } from "../../../utils/helpers";
 import { IconButton } from "../../../components/shared";
 import {
   DetailsContainer,
@@ -66,26 +67,27 @@ const Description = ({ description }) => {
 
   const handleToggleClick = () => setIsExpanded(!isExpended);
 
-  // Split description on every newline char so we can format it nicely
-  const fullText = description.split("\n");
-  const miniText = fullText.slice(0, 4);
+  // Truncate description if necessary, only show
+  const shortDescription = truncateDescription(description);
+  const showToggle =
+    shortDescription.length < description.length ? true : false;
 
-  const textToDisplay = isExpended ? fullText : miniText;
-
-  // Only display expansion toggle if the truncated version is shorter than the original description
-  const toggleButton =
-    miniText < fullText ? (
-      <button onClick={handleToggleClick}>
-        Show {isExpended ? "less" : "more"}
-      </button>
-    ) : null;
+  // Display the appropriate version (short or full description)
+  // and split description on every newline char so we can format it nicely
+  const displayText = isExpended
+    ? description.split("\n")
+    : shortDescription.split("\n");
 
   return (
     <DescriptionContainer>
-      {textToDisplay.map((lineOfText, i) => (
+      {displayText.map((lineOfText, i) => (
         <p key={i}>{lineOfText}</p>
       ))}
-      {toggleButton}
+      {showToggle && (
+        <button onClick={handleToggleClick}>
+          Show {isExpended ? "less" : "more"}
+        </button>
+      )}
     </DescriptionContainer>
   );
 };
