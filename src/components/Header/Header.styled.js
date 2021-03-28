@@ -56,7 +56,7 @@ export const HeaderIcons = styled.div`
 `;
 
 export const ToggleButton = styled(IconButton)`
-  font-size: 3rem;
+  font-size: 2.5rem;
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }

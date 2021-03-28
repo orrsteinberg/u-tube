@@ -43,7 +43,7 @@ const VideoItem = ({ video, hideChannel }) => {
             <img src={channelAvatar} alt={`${channelTitle} avatar`} />
           </Link>
         )}
-        <Meta>
+        <Meta hideChannel={hideChannel}>
           <Link to={`/watch/${id}`}>
             <h3>{title}</h3>
           </Link>

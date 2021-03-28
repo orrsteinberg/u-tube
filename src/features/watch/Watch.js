@@ -69,7 +69,7 @@ const Watch = () => {
         )}
       </MainCol>
       <RelatedVideosCol>
-        <h2>Related videos:</h2>
+        <h2>Related videos</h2>
         {relatedVideosStatus === "loading" && <p>Loading videos...</p>}
         {relatedVideosStatus === "failed" && <p>{relatedVideosError}</p>}
         {relatedVideosStatus === "succeeded" &&

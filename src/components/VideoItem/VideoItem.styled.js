@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const VideoItemContainer = styled.div`
-  margin: 0 auto 1.5rem auto;
+  margin: 0 auto 1.75rem auto;
   max-width: 256px;
 `;
 
@@ -61,7 +61,7 @@ export const Duration = styled.div`
 export const Details = styled.div`
   display: flex;
   align-items: flex-start;
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
 
   img {
     border-radius: 50%;
@@ -75,11 +75,11 @@ export const Meta = styled.div`
   color: ${({ theme }) => theme.colors.text.secondary};
 
   h3 {
-    line-height: 1;
-    margin-top: 0.5rem;
+    line-height: 1.2;
+    margin-top: ${({ hideChannel }) => (hideChannel ? "0" : "0.25rem")};
     margin-bottom: 0.5rem;
     color: ${({ theme }) => theme.colors.text.primary};
-    font-size: 1.05rem;
+    font-size: 1.075rem;
   }
 `;
 
