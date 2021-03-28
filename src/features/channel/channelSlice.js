@@ -9,6 +9,7 @@ const initialState = {
   title: "",
   avatar: null,
   subscriberCount: null,
+  videoCount: null,
   isSubscribed: false,
   channelVideos: {
     videos: [],
@@ -57,12 +58,13 @@ const channelSlice = createSlice({
 
       const { title } = action.payload.snippet;
       const { url: avatar } = action.payload.snippet.thumbnails.default;
-      const { subscriberCount } = action.payload.statistics;
+      const { subscriberCount, videoCount } = action.payload.statistics;
 
       // Update state
       state.title = title;
       state.avatar = avatar;
       state.subscriberCount = subscriberCount || null;
+      state.videoCount = videoCount;
       state.isSubscribed = false; // Default to false for now
     },
     [fetchChannelData.rejected]: (state, action) => {

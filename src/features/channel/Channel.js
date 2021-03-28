@@ -21,6 +21,7 @@ const Channel = () => {
     title,
     avatar,
     subscriberCount: rawSubscriberCount,
+    videoCount: rawVideoCount,
   } = useSelector(selectChannelData);
   const {
     status: channelVideosStatus,
@@ -30,6 +31,7 @@ const Channel = () => {
 
   // Format data
   const subscriberCount = numeral(rawSubscriberCount).format("0,0");
+  const videoCount = numeral(rawVideoCount).format("0,0");
 
   const dispatch = useDispatch();
 
@@ -43,11 +45,12 @@ const Channel = () => {
       {status === "loading" && <p>Loading...</p>}
       {status === "failed" && <p>{error}</p>}
       {status === "succeeded" && (
-        <ChannelHeader bannerUrl="https://picsum.photos/300">
+        <ChannelHeader>
           <img src={avatar} alt={`${title} avatar`} />
           <ChannelHeaderText>
             <h1>{title}</h1>
             <p>{subscriberCount} Subscribers</p>
+            <p>{videoCount} Videos</p>
           </ChannelHeaderText>
           <button>Subscribe</button>
         </ChannelHeader>
