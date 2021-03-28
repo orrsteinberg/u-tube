@@ -174,7 +174,14 @@ const watchSlice = createSlice({
     },
     [fetchComments.rejected]: (state, action) => {
       state.commentSection.status = "failed";
-      state.commentSection.error = action.error.message;
+
+      let errorMessage = action.error.message;
+
+      if (errorMessage === "Request failed with status code 403") {
+        errorMessage = "Comments have been disabled for this video";
+      }
+
+      state.commentSection.error = errorMessage;
     },
   },
 });
