@@ -76,7 +76,7 @@ const api = {
 
     return await request("/channels", {
       params: {
-        part: "snippet",
+        part: "snippet,statistics",
         id: commaSeperatedIds,
       },
     });
@@ -87,6 +87,16 @@ const api = {
         part: "snippet",
         videoId,
         maxResults: 15,
+      },
+    });
+  },
+  getSearchResults: async (query) => {
+    return await request("/search", {
+      params: {
+        part: "snippet",
+        maxResults: 20,
+        q: query,
+        type: "video,channel",
       },
     });
   },
