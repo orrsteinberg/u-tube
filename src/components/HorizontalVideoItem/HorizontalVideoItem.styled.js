@@ -84,7 +84,7 @@ export const ItemBody = styled.div`
     color: ${({ theme }) => theme.colors.text.primary};
 
     @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
-      font-size: 1rem;
+      font-size: ${({ fullWidth }) => (fullWidth ? "1.3rem" : "1rem")};
     }
   }
 
