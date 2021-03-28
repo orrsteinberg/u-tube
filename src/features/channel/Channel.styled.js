@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ChannelHeader = styled.header`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
   background: ${({ theme }) => theme.colors.bg.primary};
   border-radius: 10px;
@@ -10,10 +10,19 @@ export const ChannelHeader = styled.header`
   overflow: hidden;
   margin-bottom: 2rem;
 
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    flex-direction: row;
+  }
+
   img {
     border-radius: 50%;
     object-fit: contain;
     width: 100px;
+    margin: auto;
+
+    @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+      margin: 0;
+    }
   }
 
   button {
@@ -37,7 +46,13 @@ export const ChannelHeader = styled.header`
 `;
 
 export const ChannelHeaderText = styled.div`
-  margin-left: 1rem;
+  margin: 0.5rem auto 1.25rem auto;
+  text-align: center;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin: 0 0 0 1rem;
+    text-align: left;
+  }
 
   h1 {
     margin: 0;
