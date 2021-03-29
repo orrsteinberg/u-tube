@@ -6,7 +6,7 @@ export const HorizontalVideoItemContainer = styled.div`
   align-items: flex-start;
   font-size: ${({ fullWidth }) => (fullWidth ? "1.1rem" : "1rem")};
   margin: 1.5rem auto;
-  max-width: 80%;
+  max-width: 90%;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     margin: 0 0 0.75rem 0;
@@ -103,5 +103,14 @@ export const MetadataBox = styled.div`
 
   p {
     margin: 0.25rem 0;
+  }
+`;
+
+export const Text = styled.p`
+  font-size: 1rem;
+  display: none;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    display: block;
   }
 `;
