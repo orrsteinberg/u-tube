@@ -82,6 +82,7 @@ const searchSlice = createSlice({
             viewCount: video.statistics.viewCount,
             publishedAt: video.snippet.publishedAt,
             duration: video.contentDetails.duration,
+            description: video.snippet.description,
           };
         });
 
