@@ -7,6 +7,24 @@ export const Main = styled.main`
 `;
 
 export const ViewContainer = styled.div`
+  /* Custom Scrollbar */
+  &::-webkit-scrollbar {
+    width: 11px;
+  }
+  & {
+    scrollbar-width: thin;
+    scrollbar-color: ${({ theme }) =>
+      `${theme.colors.bg.primary} ${theme.colors.bg.tertiary}`};
+  }
+  &::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors.bg.tertiary};
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.bg.primary};
+    border-radius: 6px;
+    border: 3px solid ${({ theme }) => theme.colors.bg.tertiary};
+  }
+
   flex: 1;
   position: relative;
   padding-top: ${({ theme }) => `calc(1rem + ${theme.sizes.decorBarHeight})`};
@@ -15,6 +33,7 @@ export const ViewContainer = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
 
+  /* Decorative bar */
   ::before {
     content: "";
     position: fixed;
@@ -30,6 +49,7 @@ export const ViewContainer = styled.div`
     );
   }
 
+  /* Darken and disable background when mobile menu is open */
   ::after {
     content: "";
     background: transparent;
