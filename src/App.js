@@ -16,13 +16,13 @@ const App = () => {
       <GlobalStyles />
       <Switch>
         <Route path="/" exact>
-          <Layout>
+          <Layout activeTab={"home"}>
             <Home />
           </Layout>
         </Route>
 
         <Route path="/watch/:id" exact>
-          <Layout>
+          <Layout watchView>
             <Watch />
           </Layout>
         </Route>

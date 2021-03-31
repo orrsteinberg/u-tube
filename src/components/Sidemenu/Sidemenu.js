@@ -12,12 +12,12 @@ import {
 
 import { Nav, NavGroup, NavItem } from "./Sidemenu.styled";
 
-const Sidemenu = ({ showOnMobile }) => {
+const Sidemenu = ({ showOnMobile, activeTab, watchView }) => {
   return (
-    <Nav showOnMobile={showOnMobile}>
+    <Nav showOnMobile={showOnMobile} watchView={watchView}>
       <NavGroup>
         <Link to="/">
-          <NavItem active>
+          <NavItem active={activeTab === "home"}>
             <MdHome /> <span>Home</span>
           </NavItem>
         </Link>
