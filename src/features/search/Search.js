@@ -19,11 +19,11 @@ const Search = () => {
 
   return (
     <>
-      <h1>Search results for "{query}"</h1>
       {status === "loading" && <p>Searching...</p>}
       {status === "failed" && <p>{error}</p>}
       {status === "succeeded" && (
         <>
+          <h1>Search results for "{query}"</h1>
           {channels.map((channel) => (
             <HorizontalChannelItem
               fullWidth
