@@ -12,6 +12,8 @@ import {
 import { VideoRow } from "../../components/shared";
 import { ChannelHeader, ChannelHeaderText } from "./Channel.styled";
 import VideoItem from "../../components/VideoItem/VideoItem";
+import SkeletonVideoItem from "../../components/skeletons/SkeletonVideoItem";
+import SkeletonChannelHeader from "../../components/skeletons/SkeletonChannelHeader";
 
 const Channel = () => {
   const { id } = useParams();
@@ -42,7 +44,7 @@ const Channel = () => {
 
   return (
     <>
-      {status === "loading" && <p>Loading...</p>}
+      {status === "loading" && <SkeletonChannelHeader />}
       {status === "failed" && <p>{error}</p>}
       {status === "succeeded" && (
         <ChannelHeader>
@@ -56,7 +58,10 @@ const Channel = () => {
         </ChannelHeader>
       )}
       <VideoRow>
-        {channelVideosStatus === "loading" && <p>Loading...</p>}
+        {channelVideosStatus === "loading" &&
+          [...Array(20)].map((_, i) => (
+            <SkeletonVideoItem hideChannel key={i} />
+          ))}
         {channelVideosStatus === "failed" && <p>{channelVideosError}</p>}
         {channelVideosStatus === "succeeded" &&
           videos.map((video) => (
