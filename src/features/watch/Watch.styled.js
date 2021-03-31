@@ -9,10 +9,9 @@ export const MainCol = styled.div`
   flex-basis: 100%;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
-    flex-basis: 66%;
+    flex-basis: 65%;
   }
 `;
-
 
 export const Player = styled.div`
   position: relative;
@@ -40,6 +39,6 @@ export const RelatedVideosCol = styled.div`
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
     margin-top: 0;
     padding-left: 1rem;
-    flex-basis: 33%;
+    flex-basis: 35%;
   }
 `;
