@@ -4,6 +4,10 @@ export const CommentsContainer = styled.div`
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.colors.bg.secondary};
   padding-top: 1rem;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    border-bottom: none;
+  }
 `;
 
 export const NewComment = styled.div`
@@ -27,7 +31,7 @@ export const NewComment = styled.div`
       background: none;
       border-bottom: 3px solid ${({ theme }) => theme.colors.bg.secondary};
       margin-left: 1rem;
-      margin-right: 1rem;
+      margin-right: 0.5rem;
       color: ${({ theme }) => theme.colors.text.primary};
       padding: 0.25rem 0;
       font-size: 1.1rem;

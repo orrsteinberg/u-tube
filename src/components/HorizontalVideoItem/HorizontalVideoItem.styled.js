@@ -9,8 +9,10 @@ export const HorizontalVideoItemContainer = styled.div`
   max-width: 90%;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
-    margin: 0 0 0.75rem 0;
+    flex-wrap: nowrap;
     max-width: ${({ fullWidth }) => (fullWidth ? "680px" : "600px")};
+    margin: ${({ fullWidth }) =>
+      fullWidth ? "0 0 1.25rem 0" : "0 0 0.75rem 0"};
   }
 `;
 
@@ -75,10 +77,11 @@ export const Duration = styled.div`
 `;
 
 export const ItemBody = styled.div`
+  flex: 1;
   padding-top: 0.25rem;
 
   h3 {
-    line-height: 1;
+    line-height: 1.2;
     margin: 0;
     font-size: 1.2rem;
     color: ${({ theme }) => theme.colors.text.primary};
@@ -89,7 +92,6 @@ export const ItemBody = styled.div`
   }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
-    flex-basis: 50%;
     padding-left: 0.75rem;
   }
 

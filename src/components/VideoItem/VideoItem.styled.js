@@ -77,7 +77,7 @@ export const Meta = styled.div`
   h3 {
     line-height: 1.2;
     margin-top: ${({ hideChannel }) => (hideChannel ? "0" : "0.25rem")};
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
     color: ${({ theme }) => theme.colors.text.primary};
     font-size: 1.075rem;
   }
@@ -85,7 +85,7 @@ export const Meta = styled.div`
 
 export const Statistics = styled.div`
   display: flex;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 
   span {
     display: flex;

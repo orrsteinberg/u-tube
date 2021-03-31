@@ -6,6 +6,7 @@ export const CommentContainer = styled.div`
   align-items: flex-start;
   margin-bottom: 2rem;
   max-width: 90%;
+  overflow: hidden;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
     max-width: 80%;
