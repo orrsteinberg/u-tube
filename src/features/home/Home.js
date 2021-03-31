@@ -1,33 +1,26 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import {
-  fetchHomeVideos,
-  selectHomeVideos,
-  selectHomeStatus,
-  selectHomeError,
-} from "./homeSlice";
+import { fetchHomeVideos, selectHome } from "./homeSlice";
 import { VideoRow } from "../../components/shared";
 import VideoItem from "../../components/VideoItem/VideoItem";
+import SkeletonVideoItem from "../../components/skeletons/SkeletonVideoItem";
 
 const HomeView = () => {
-  const status = useSelector(selectHomeStatus);
-  const videos = useSelector(selectHomeVideos);
-  const error = useSelector(selectHomeError);
+  const { status, videos, error } = useSelector(selectHome);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (videos.length === 0) {
-      dispatch(fetchHomeVideos());
-    }
-  }, [dispatch, videos]);
+    dispatch(fetchHomeVideos());
+  }, [dispatch]);
 
   return (
     <VideoRow>
-      {status === "loading" && "Loading videos..."}
-      {status === "failed" && <h2>{error}</h2>}
+      {status === "loading" &&
+        [...Array(20)].map((_, i) => <SkeletonVideoItem key={i} />)}
       {status === "succeeded" &&
         videos.map((video) => <VideoItem video={video} key={video.id} />)}
+      {status === "failed" && <h2>{error}</h2>}
     </VideoRow>
   );
 };
