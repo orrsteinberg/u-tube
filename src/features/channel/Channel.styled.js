@@ -6,7 +6,7 @@ export const ChannelHeader = styled.header`
   align-items: center;
   background: ${({ theme }) => theme.colors.bg.primary};
   border-radius: 10px;
-  padding: 1rem;
+  padding: 1.5rem;
   overflow: hidden;
   margin-bottom: 2rem;
 
@@ -16,8 +16,7 @@ export const ChannelHeader = styled.header`
 
   img {
     border-radius: 50%;
-    object-fit: contain;
-    width: 100px;
+    max-width: 100px;
     margin: auto;
 
     @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {

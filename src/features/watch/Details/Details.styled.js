@@ -6,14 +6,10 @@ export const DetailsContainer = styled.div`
 
   h1 {
     margin: 1rem 0 0.5rem 0;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     letter-spacing: 0.6px;
     line-height: 1;
     font-weight: normal;
-
-    @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-      font-size: 1.75rem;
-    }
   }
 
   span {

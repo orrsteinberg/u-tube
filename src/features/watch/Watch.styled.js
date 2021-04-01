@@ -38,7 +38,7 @@ export const RelatedVideosCol = styled.div`
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
     margin-top: 0;
-    padding-left: 1rem;
+    padding-left: 1.75rem;
     flex-basis: 35%;
   }
 `;

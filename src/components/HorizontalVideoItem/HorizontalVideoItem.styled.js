@@ -23,8 +23,7 @@ export const Thumbnail = styled.div`
   cursor: pointer;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
-    flex-basis: 50%;
-    width: 100%;
+    flex-basis: 42%;
   }
 
   ::before {
@@ -79,6 +78,7 @@ export const Duration = styled.div`
 export const ItemBody = styled.div`
   flex: 1;
   padding-top: 0.25rem;
+  padding-right: 1.5rem;
 
   h3 {
     line-height: 1.2;
