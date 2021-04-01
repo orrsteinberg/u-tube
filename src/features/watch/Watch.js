@@ -13,6 +13,8 @@ import {
 import Details from "./Details/Details";
 import CommentSection from "./CommentSection/CommentSection";
 import HorizontalVideoItem from "../../components/HorizontalVideoItem/HorizontalVideoItem";
+import SkeletonWatchVideo from "../../components/skeletons/SkeletonWatchVideo";
+import SkeletonHorizontalVideoItem from "../../components/skeletons/SkeletonHorizontalVideoItem";
 import {
   WatchViewContainer,
   MainCol,
@@ -45,7 +47,7 @@ const Watch = () => {
   return (
     <WatchViewContainer>
       <MainCol>
-        {status === "loading" && <p>Loading...</p>}
+        {status === "loading" && <SkeletonWatchVideo />}
         {status === "failed" && <p>{error}</p>}
         {status === "succeeded" && (
           <>
@@ -62,7 +64,7 @@ const Watch = () => {
             <Details video={currentVideo} />
           </>
         )}
-        {commentSectionStatus === "loading" && <p>Loading...</p>}
+        {commentSectionStatus === "loading" && <h3>Loading comments...</h3>}
         {commentSectionStatus === "failed" && <p>{commentSectionError}</p>}
         {commentSectionStatus === "succeeded" && (
           <CommentSection comments={comments} />
@@ -70,7 +72,8 @@ const Watch = () => {
       </MainCol>
       <RelatedVideosCol>
         <h2>Related videos</h2>
-        {relatedVideosStatus === "loading" && <p>Loading videos...</p>}
+        {relatedVideosStatus === "loading" &&
+          [...Array(20)].map((_, i) => <SkeletonHorizontalVideoItem key={i} />)}
         {relatedVideosStatus === "failed" && <p>{relatedVideosError}</p>}
         {relatedVideosStatus === "succeeded" &&
           videos.map((video) => (

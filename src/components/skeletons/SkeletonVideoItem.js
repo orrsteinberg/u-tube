@@ -1,11 +1,17 @@
 import React from "react";
+import styled from "styled-components";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 import { theme } from "../../utils/theme";
 
+const SkeletonContainer = styled.div`
+  width: 256px;
+  margin: 0 auto 1rem auto;
+`;
+
 const SkeletonVideoItem = ({ hideChannel }) => {
   return (
-    <div style={{ width: "256px", margin: "1rem auto" }}>
+    <SkeletonContainer>
       <SkeletonTheme
         color={theme.colors.bg.tertiary}
         highlightColor={theme.colors.bg.secondary}
@@ -20,10 +26,10 @@ const SkeletonVideoItem = ({ hideChannel }) => {
               width={40}
             />
           )}
-          <Skeleton style={{ margin: "0.75rem 0" }} height={40} width="80%" />
+          <Skeleton style={{ margin: "0.75rem 0" }} height={50} width="80%" />
         </div>
       </SkeletonTheme>
-    </div>
+    </SkeletonContainer>
   );
 };
 
