@@ -120,8 +120,9 @@ export const DescriptionContainer = styled.div`
     margin: 0;
     max-width: 500px;
     letter-spacing: 0.4px;
-    line-height: 1.5;
+    line-height: 1.4;
     color: ${({ theme }) => lighten(0.15, theme.colors.text.secondary)};
+    white-space: pre-line;
   }
 
   button {

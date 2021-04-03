@@ -67,22 +67,17 @@ const Description = ({ description }) => {
 
   const handleToggleClick = () => setIsExpanded(!isExpended);
 
-  // Truncate description if necessary, only show
+  // Truncate description, and if it's still the same length, hide toggle button
   const shortDescription = truncateDescription(description);
   const showToggle =
     shortDescription.length < description.length ? true : false;
 
   // Display the appropriate version (short or full description)
-  // and split description on every newline char so we can format it nicely
-  const displayText = isExpended
-    ? description.split("\n")
-    : shortDescription.split("\n");
+  const displayText = isExpended ? description : shortDescription;
 
   return (
     <DescriptionContainer>
-      {displayText.map((lineOfText, i) => (
-        <p key={i}>{lineOfText}</p>
-      ))}
+      <p>{displayText}</p>
       {showToggle && (
         <button onClick={handleToggleClick}>
           Show {isExpended ? "less" : "more"}
