@@ -68,12 +68,20 @@ export const SearchForm = styled.form`
   border: 1px solid ${({ theme }) => theme.colors.bg.secondary};
   border-radius: 3px;
 
+  &:focus-within {
+    background: ${({ theme }) => shade(0.5, theme.colors.bg.primary)};
+    //background: ${({ theme }) => theme.colors.bg.secondary};
+  }
+
   input {
-    border: none;
+    border: 2px solid transparent;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
     background: none;
     color: ${({ theme }) => theme.colors.text.primary};
     padding-left: 1rem;
     font-size: 1.1rem;
+    transition: border 0.2s;
 
     &::placeholder {
       color: ${({ theme }) => theme.colors.text.secondary};
@@ -81,6 +89,7 @@ export const SearchForm = styled.form`
 
     &:focus {
       outline: none;
+      border: 2px solid ${({ theme }) => theme.colors.text.primary};
     }
 
     @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -91,6 +100,7 @@ export const SearchForm = styled.form`
   button {
     background: ${({ theme }) => shade(0.4, theme.colors.bg.primary)};
     border: none;
+    border-bottom: 2px solid transparent;
     color: ${({ theme }) => theme.colors.text.secondary};
     display: flex;
     justify-content: center;
@@ -98,9 +108,20 @@ export const SearchForm = styled.form`
     font-size: 1.75rem;
     cursor: pointer;
     padding: 0.25rem 1rem;
+    transition: border 0.2s;
+
+    &:hover {
+      border-bottom: 2px solid ${({ theme }) => theme.colors.text.secondary};
+    }
+
+    &:active {
+      border-bottom: none;
+    }
 
     &:focus {
       outline: none;
+      border-bottom: 2px solid ${({ theme }) => theme.colors.text.secondary};
+      background: ${({ theme }) => shade(0.5, theme.colors.bg.primary)};
     }
   }
 

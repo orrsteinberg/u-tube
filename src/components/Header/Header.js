@@ -19,6 +19,8 @@ const HeaderSearch = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (query === "" || query.trim() === "") return;
+
     // Clear and remove focus from input after submission
     setQuery("");
     inputRef.current.blur();
