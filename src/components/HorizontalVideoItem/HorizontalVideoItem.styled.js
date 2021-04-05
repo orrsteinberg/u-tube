@@ -10,9 +10,13 @@ export const HorizontalVideoItemContainer = styled.div`
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     flex-wrap: nowrap;
-    max-width: ${({ fullWidth }) => (fullWidth ? "680px" : "600px")};
+    max-width: ${({ fullWidth }) => (fullWidth ? "80%" : "600px")};
     margin: ${({ fullWidth }) =>
       fullWidth ? "0 0 1.25rem 0" : "0 0 0.75rem 0"};
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    max-width: ${({ fullWidth }) => (fullWidth ? "70%" : "600px")};
   }
 `;
 
@@ -111,6 +115,7 @@ export const MetadataBox = styled.div`
 export const Text = styled.p`
   font-size: 1rem;
   display: none;
+  color: ${({ theme }) => theme.colors.text.tertiary};
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
     display: block;
