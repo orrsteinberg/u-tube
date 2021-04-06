@@ -12,7 +12,7 @@ const initialState = {
 
 // Async thunks
 export const fetchSearchResults = createAsyncThunk(
-  "watch/fetchSearchResults",
+  "search/fetchSearchResults",
   async (query) => {
     // Get search results
     const searchResponse = await api.getSearchResults(query);
