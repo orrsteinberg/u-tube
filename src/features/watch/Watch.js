@@ -10,6 +10,7 @@ import {
   selectRelatedVideos,
   selectCommentSection,
 } from "./watchSlice";
+import { NUM_RELATED_VIDS_TO_FETCH } from "../../utils/constants";
 import Details from "./Details/Details";
 import CommentSection from "./CommentSection/CommentSection";
 import HorizontalVideoItem from "../../components/HorizontalVideoItem/HorizontalVideoItem";
@@ -73,7 +74,9 @@ const Watch = () => {
       <RelatedVideosCol>
         <h2>Related videos</h2>
         {relatedVideosStatus === "loading" &&
-          [...Array(20)].map((_, i) => <SkeletonHorizontalVideoItem key={i} />)}
+          [...Array(NUM_RELATED_VIDS_TO_FETCH)].map((_, i) => (
+            <SkeletonHorizontalVideoItem key={i} />
+          ))}
         {relatedVideosStatus === "failed" && <p>{relatedVideosError}</p>}
         {relatedVideosStatus === "succeeded" &&
           videos.map((video) => (
