@@ -18,7 +18,9 @@ const Layout = ({ children, activeTab, watchView }) => {
           activeTab={activeTab}
           watchView={watchView}
         />
-        <ViewContainer menuIsOpen={showMenuOnMobile}>{children}</ViewContainer>
+        <ViewContainer id="view-container" menuIsOpen={showMenuOnMobile}>
+          {children}
+        </ViewContainer>
       </Main>
     </>
   );
