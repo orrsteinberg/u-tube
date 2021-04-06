@@ -1,5 +1,12 @@
 import axios from "axios";
 
+import {
+  NUM_VIDS_TO_FETCH,
+  NUM_RELATED_VIDS_TO_FETCH,
+  NUM_COMMENTS_TO_FETCH,
+  NUM_SEARCH_RESULTS_TO_FETCH,
+} from "./constants";
+
 const request = axios.create({
   baseURL: "https://youtube.googleapis.com/youtube/v3/",
   params: {
@@ -13,7 +20,7 @@ const api = {
       params: {
         part: "snippet,contentDetails,statistics",
         chart: "mostPopular",
-        maxResults: 24,
+        maxResults: NUM_VIDS_TO_FETCH,
         pageToken,
       },
     });
@@ -46,17 +53,19 @@ const api = {
         type: "video",
         part: "snippet",
         relatedToVideoId: videoId,
-        maxResults: 18,
+        maxResults: NUM_RELATED_VIDS_TO_FETCH,
       },
     });
   },
-  getChannelVideos: async (channelId) => {
+  getChannelVideos: async (channelId, pageToken) => {
     return await request("/search", {
       params: {
         type: "video",
         part: "snippet",
         channelId,
-        maxResults: 24,
+        order: "date",
+        maxResults: NUM_VIDS_TO_FETCH,
+        pageToken,
       },
     });
   },
@@ -86,7 +95,7 @@ const api = {
       params: {
         part: "snippet",
         videoId,
-        maxResults: 15,
+        maxResults: NUM_COMMENTS_TO_FETCH,
       },
     });
   },
@@ -94,7 +103,7 @@ const api = {
     return await request("/search", {
       params: {
         part: "snippet",
-        maxResults: 20,
+        maxResults: NUM_SEARCH_RESULTS_TO_FETCH,
         q: query,
         type: "video,channel",
       },
