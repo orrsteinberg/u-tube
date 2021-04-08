@@ -7,7 +7,7 @@ import numeral from "numeral";
 import { truncateTitle, truncateDescription } from "../../utils/helpers";
 import {
   HorizontalVideoItemContainer,
-  Thumbnail,
+  ThumbnailLink,
   Duration,
   ItemBody,
   MetadataBox,
@@ -49,13 +49,11 @@ const HorizontalVideoItem = ({ video, fullWidth }) => {
 
   return (
     <HorizontalVideoItemContainer fullWidth={fullWidth}>
-      <Thumbnail>
-        <Link to={`/watch/${id}`}>
-          <img src={thumbnail} alt={`${title} video thumbnail`} />
-          <Duration>{duration}</Duration>
-          <MdPlayArrow />
-        </Link>
-      </Thumbnail>
+      <ThumbnailLink to={`/watch/${id}`}>
+        <img src={thumbnail} alt={`${title} video thumbnail`} />
+        <Duration>{duration}</Duration>
+        <MdPlayArrow />
+      </ThumbnailLink>
       <ItemBody fullWidth={fullWidth}>
         <Link to={`/watch/${id}`}>
           <h3>{title}</h3>

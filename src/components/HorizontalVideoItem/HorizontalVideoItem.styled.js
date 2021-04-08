@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const HorizontalVideoItemContainer = styled.div`
   display: flex;
@@ -10,9 +11,12 @@ export const HorizontalVideoItemContainer = styled.div`
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     flex-wrap: nowrap;
-    max-width: ${({ fullWidth }) => (fullWidth ? "80%" : "600px")};
     margin: ${({ fullWidth }) =>
       fullWidth ? "0 0 1.25rem 0" : "0 0 0.75rem 0"};
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    max-width: ${({ fullWidth }) => (fullWidth ? "80%" : "600px")};
   }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
@@ -20,7 +24,8 @@ export const HorizontalVideoItemContainer = styled.div`
   }
 `;
 
-export const Thumbnail = styled.div`
+export const ThumbnailLink = styled(Link)`
+  flex-shrink: 0;
   position: relative;
   overflow: hidden;
   border-bottom: 3px solid ${({ theme }) => theme.colors.bg.tertiary};
@@ -80,8 +85,6 @@ export const Duration = styled.div`
 `;
 
 export const ItemBody = styled.div`
-  flex: 1;
-  padding-top: 0.25rem;
   padding-right: 1.5rem;
 
   h3 {
