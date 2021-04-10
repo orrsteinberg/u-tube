@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 import {
   fetchVideoToWatch,
@@ -24,7 +25,7 @@ import {
 } from "./Watch.styled";
 
 const Watch = () => {
-  const { id } = useParams();
+  const { id: urlParamId } = useParams();
   const { currentVideo, status, error } = useSelector(selectVideoToWatch);
   const {
     videos,
@@ -40,13 +41,19 @@ const Watch = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchVideoToWatch(id));
-    dispatch(fetchRelatedVideos(id));
-    dispatch(fetchComments(id));
-  }, [id, dispatch]);
+    // Only fetch required data if it's a new video
+    if (urlParamId !== currentVideo.id) {
+      dispatch(fetchVideoToWatch(urlParamId));
+      dispatch(fetchRelatedVideos(urlParamId));
+      dispatch(fetchComments(urlParamId));
+    }
+  }, [urlParamId, currentVideo, dispatch]);
 
   return (
     <WatchViewContainer>
+      <Helmet>
+        <title>{currentVideo.title || "Watch"} | U-Tube</title>
+      </Helmet>
       <MainCol>
         {status === "loading" && <SkeletonWatchVideo />}
         {status === "failed" && <p>{error}</p>}
