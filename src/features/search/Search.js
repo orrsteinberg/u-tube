@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 import { getQueryStringParams } from "../../utils/helpers";
 import {
@@ -30,6 +31,9 @@ const Search = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{queryParam} | U-Tube</title>
+      </Helmet>
       <h1>Search results for "{queryParam}"</h1>
       {status === "loading" && (
         <>

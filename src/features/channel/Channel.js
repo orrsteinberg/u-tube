@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { Helmet } from "react-helmet";
 import numeral from "numeral";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -63,6 +64,9 @@ const Channel = () => {
       // Target parent container by id to detect scroll
       scrollableTarget="view-container"
     >
+      <Helmet>
+        <title>{title || "View Channel"} | U-Tube</title>
+      </Helmet>
       {status === "loading" && <SkeletonChannelHeader />}
       {status === "failed" && <p>{error}</p>}
       {status === "succeeded" && (
