@@ -4,6 +4,7 @@ import api from "../../utils/api";
 
 // State shape
 const initialState = {
+  currentQuery: null,
   status: "idle", // "idle" | "loading" | "succeeded" | "failed"
   error: null,
   channels: [],
@@ -48,7 +49,14 @@ export const fetchSearchResults = createAsyncThunk(
 const searchSlice = createSlice({
   name: "search",
   initialState,
-  reducers: {},
+  reducers: {
+    updateSearchView: (state, action) => {
+      state.currentQuery = action.payload;
+      state.videos = [];
+      state.channels = [];
+      state.error = null;
+    },
+  },
   extraReducers: {
     // Using Immer under the hood so we're not mutating the actual state
     [fetchSearchResults.pending]: (state, action) => {
@@ -86,7 +94,7 @@ const searchSlice = createSlice({
           };
         });
 
-      // if there were no videos or channel found, set to empty array rather than undefined
+      // Update state, if there were no results set to an empty array rather than undefined
       state.videos = videos || [];
       state.channels = channels || [];
     },
@@ -96,6 +104,9 @@ const searchSlice = createSlice({
     },
   },
 });
+
+// Actions
+export const { updateSearchView } = searchSlice.actions;
 
 // Selectors
 export const selectSearch = (state) => state.search;

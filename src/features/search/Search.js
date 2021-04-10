@@ -3,27 +3,54 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 
 import { getQueryStringParams } from "../../utils/helpers";
-import { fetchSearchResults, selectSearch } from "./searchSlice";
+import {
+  updateSearchView,
+  fetchSearchResults,
+  selectSearch,
+} from "./searchSlice";
 import HorizontalVideoItem from "../../components/HorizontalVideoItem/HorizontalVideoItem";
 import HorizontalChannelItem from "../../components/HorizontalChannelItem/HorizontalChannelItem";
 
 const Search = () => {
-  // Parse query from URL
-  const { q: query } = getQueryStringParams(useLocation().search);
-  const { status, error, channels, videos } = useSelector(selectSearch);
+  const { currentQuery, status, error, channels, videos } = useSelector(
+    selectSearch
+  );
   const dispatch = useDispatch();
 
+  // Parse query from URL
+  const { q: queryParam } = getQueryStringParams(useLocation().search);
+
   useEffect(() => {
-    dispatch(fetchSearchResults(query));
-  }, [query, dispatch]);
+    // If it's a new search, clear previous results
+    if (currentQuery !== queryParam) {
+      dispatch(updateSearchView(queryParam));
+      dispatch(fetchSearchResults(queryParam));
+    }
+  }, [currentQuery, queryParam, dispatch]);
 
   return (
     <>
-      {status === "loading" && <p>Searching...</p>}
+      <h1>Search results for "{queryParam}"</h1>
+      {status === "loading" && (
+        <>
+          {channels.length > 0 &&
+            channels.map((channel) => (
+              <HorizontalChannelItem
+                fullWidth
+                channel={channel}
+                key={channel.id}
+              />
+            ))}
+          {videos.length > 0 &&
+            videos.map((video) => (
+              <HorizontalVideoItem fullWidth video={video} key={video.id} />
+            ))}
+          <h3>Searching...</h3>
+        </>
+      )}
       {status === "failed" && <p>{error}</p>}
       {status === "succeeded" && (
         <>
-          <h1>Search results for "{query}"</h1>
           {channels.map((channel) => (
             <HorizontalChannelItem
               fullWidth
