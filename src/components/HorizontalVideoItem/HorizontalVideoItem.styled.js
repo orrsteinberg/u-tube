@@ -7,7 +7,7 @@ export const HorizontalVideoItemContainer = styled.div`
   align-items: flex-start;
   font-size: ${({ fullWidth }) => (fullWidth ? "1.1rem" : "1rem")};
   margin: 1.5rem auto;
-  max-width: 90%;
+  max-width: 95%;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     flex-wrap: nowrap;
@@ -85,6 +85,7 @@ export const Duration = styled.div`
 `;
 
 export const ItemBody = styled.div`
+  padding-top: 0.5rem;
   padding-right: 1.5rem;
 
   h3 {
@@ -99,6 +100,7 @@ export const ItemBody = styled.div`
   }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding-top: 0rem;
     padding-left: 0.75rem;
   }
 
