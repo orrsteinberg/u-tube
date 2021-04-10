@@ -88,7 +88,7 @@ const channelSlice = createSlice({
   reducers: {
     clearChannelView: (state, action) => {
       state.status = "loading";
-      state.channelVideos.status = "loading";
+      state.error = null;
       state.channelVideos.videos = [];
     },
   },
