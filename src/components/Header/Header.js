@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { MdMenu, MdSearch, MdApps } from "react-icons/md";
 
-import userAvatar from "../../user.svg";
+import { selectUser } from "../../features/auth/authSlice";
 import { IconButton } from "../shared";
 import {
   HeaderElement,
@@ -11,6 +12,7 @@ import {
   HeaderIcons,
   SearchForm,
 } from "./Header.styled";
+import Avatar from "../Avatar/Avatar";
 
 const HeaderSearch = () => {
   const [query, setQuery] = useState("");
@@ -51,6 +53,8 @@ const HeaderSearch = () => {
 };
 
 const Header = ({ handleMenuToggle }) => {
+  const user = useSelector(selectUser);
+
   return (
     <HeaderElement>
       <ToggleButton onClick={handleMenuToggle}>
@@ -62,7 +66,7 @@ const Header = ({ handleMenuToggle }) => {
         <IconButton>
           <MdApps />
         </IconButton>
-        <img src={userAvatar} alt="User avatar" />
+        <Avatar size="md" src={user?.avatar} alt={user?.name} />
       </HeaderIcons>
     </HeaderElement>
   );
