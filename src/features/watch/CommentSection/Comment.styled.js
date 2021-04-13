@@ -13,8 +13,6 @@ export const CommentContainer = styled.div`
   }
 
   img {
-    border-radius: 50%;
-    width: 40px;
     margin-right: 1rem;
   }
 `;

@@ -14,6 +14,7 @@ import {
   ChannelDetailsContent,
   DescriptionContainer,
 } from "./Details.styled";
+import Avatar from "../../../components/Avatar/Avatar";
 
 const Statistics = ({ likeCount, dislikeCount, viewCount, publishedAt }) => {
   return (
@@ -49,7 +50,7 @@ const ChannelDetails = ({ channel }) => {
   return (
     <ChannelDetailsContainer>
       <Link to={`/channel/${id}`}>
-        <img src={avatar} alt={`${title} avatar`} />
+        <Avatar size="lg" src={avatar} alt={title} />
       </Link>
       <ChannelDetailsContent>
         <Link to={`/channel/${id}`}>

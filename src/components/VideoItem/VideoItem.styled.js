@@ -68,10 +68,7 @@ export const Details = styled.div`
   margin-top: 0.5rem;
 
   img {
-    border-radius: 50%;
-    object-fit: contain;
     margin-right: 0.75rem;
-    width: 40px;
   }
 `;
 

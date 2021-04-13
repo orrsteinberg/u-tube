@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 
 import { CommentContainer, CommentBody, Author, Text } from "./Comment.styled";
+import Avatar from "../../../components/Avatar/Avatar";
 
 const Comment = ({ comment }) => {
   const {
@@ -17,7 +18,7 @@ const Comment = ({ comment }) => {
   return (
     <CommentContainer>
       <Link to={`/channel/${authorChannelId}`}>
-        <img src={authorProfileImageUrl} alt="avatar" />
+        <Avatar size="md" src={authorProfileImageUrl} alt={authorDisplayName} />
       </Link>
       <CommentBody>
         <Author>

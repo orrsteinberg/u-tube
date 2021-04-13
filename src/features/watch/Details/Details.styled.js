@@ -70,12 +70,6 @@ export const ChannelDetailsContainer = styled.div`
   color: ${({ theme }) => theme.colors.text.tertiary};
   padding: 0.75rem 0;
 
-  img {
-    border-radius: 50%;
-    object-fit: contain;
-    width: 50px;
-  }
-
   h3 {
     line-height: 1;
     color: ${({ theme }) => theme.colors.text.primary};

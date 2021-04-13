@@ -13,6 +13,7 @@ import {
   Meta,
   Statistics,
 } from "./VideoItem.styled";
+import Avatar from "../Avatar/Avatar";
 
 const VideoItem = ({ video, hideChannel }) => {
   // Destructure
@@ -40,7 +41,7 @@ const VideoItem = ({ video, hideChannel }) => {
       <Details>
         {!hideChannel && (
           <Link to={`/channel/${channelId}`}>
-            <img src={channelAvatar} alt={`${channelTitle} avatar`} />
+            <Avatar size="md" src={channelAvatar} alt={channelTitle} />
           </Link>
         )}
         <Meta hideChannel={hideChannel}>
