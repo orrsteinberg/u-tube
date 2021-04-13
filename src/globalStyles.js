@@ -6,7 +6,7 @@ const GlobalStyles = createGlobalStyle`
 
   html {
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     font-size: 0.9rem;
   }
 
