@@ -36,9 +36,6 @@ export const HeaderIcons = styled.div`
   justify-content: space-between;
 
   img {
-    width: 40px;
-    object-fit: contain;
-    border-radius: 50%;
     margin-left: 0.2rem;
 
     @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {

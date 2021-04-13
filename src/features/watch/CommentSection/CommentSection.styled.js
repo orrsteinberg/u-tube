@@ -15,12 +15,6 @@ export const NewComment = styled.div`
   align-items: center;
   margin-bottom: 2rem;
 
-  img {
-    border-radius: 50%;
-    width: 50px;
-    object-fit: contain;
-  }
-
   form {
     display: flex;
     flex: 1;
