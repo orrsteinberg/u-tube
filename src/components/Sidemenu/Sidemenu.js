@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   MdHome,
@@ -8,11 +9,23 @@ import {
   MdHistory,
   MdVideocam,
   MdWatchLater,
+  MdPerson,
 } from "react-icons/md";
+import { IoMdLogOut } from "react-icons/io";
 
-import { Nav, NavGroup, NavItem } from "./Sidemenu.styled";
+import { Nav, NavGroup, NavItem, AuthButton } from "./Sidemenu.styled";
+import { selectUser } from "../../features/auth/authSlice";
+import { login } from "../../features/auth/authSlice";
 
 const Sidemenu = ({ showOnMobile, activeTab, watchView }) => {
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  const handleAuth = () => dispatch(login());
+
+  const authIcon = user ? <IoMdLogOut /> : <MdPerson />;
+  const authText = user ? "Log out" : "Log in";
+
   return (
     <Nav showOnMobile={showOnMobile} watchView={watchView}>
       <NavGroup>
@@ -33,27 +46,22 @@ const Sidemenu = ({ showOnMobile, activeTab, watchView }) => {
         </Link>
       </NavGroup>
       <NavGroup>
-        <Link to="/">
-          <NavItem>
-            <MdVideoLibrary /> <span>Library</span>
-          </NavItem>
-        </Link>
-        <Link to="/">
-          <NavItem>
-            <MdHistory /> <span>History</span>
-          </NavItem>
-        </Link>
-        <Link to="/">
-          <NavItem>
-            <MdVideocam /> <span>My Videos</span>
-          </NavItem>
-        </Link>
-        <Link to="/">
-          <NavItem>
-            <MdWatchLater /> <span>Watch Later</span>
-          </NavItem>
-        </Link>
+        <NavItem disabled>
+          <MdVideoLibrary /> <span>Library</span>
+        </NavItem>
+        <NavItem disabled>
+          <MdHistory /> <span>History</span>
+        </NavItem>
+        <NavItem disabled>
+          <MdVideocam /> <span>My Videos</span>
+        </NavItem>
+        <NavItem disabled>
+          <MdWatchLater /> <span>Watch Later</span>
+        </NavItem>
       </NavGroup>
+      <AuthButton as="button" onClick={handleAuth}>
+        {authIcon} <span>{authText}</span>
+      </AuthButton>
     </Nav>
   );
 };

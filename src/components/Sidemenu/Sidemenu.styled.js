@@ -1,4 +1,10 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+export const NavGroup = styled.div`
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.bg.secondary};
+`;
 
 export const NavItem = styled.div`
   display: flex;
@@ -12,6 +18,13 @@ export const NavItem = styled.div`
     active ? theme.colors.text.primary : theme.colors.text.secondary};
   font-weight: ${({ active }) => (active ? "bold" : "regular")};
 
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      color: ${({ theme }) => theme.colors.text.tertiary};
+      cursor: default;
+    `}
+
   &:hover {
     background: ${({ theme }) => theme.colors.bg.tertiary};
     color: ${({ theme }) => theme.colors.text.primary};
@@ -24,6 +37,14 @@ export const NavItem = styled.div`
   span {
     display: none;
   }
+`;
+
+export const AuthButton = styled(NavItem)`
+  border: 0;
+  box-shadow: inset 5px 0px 0px 1px ${({ theme }) => theme.colors.text.tertiary};
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.text.primary};
+  font-weight: bold;
 `;
 
 export const Nav = styled.nav`
@@ -40,12 +61,12 @@ export const Nav = styled.nav`
   transform: ${({ showOnMobile }) =>
     showOnMobile ? "translateX(0)" : "translateX(-200px)"};
 
-  // Show compact version of nav items on the watch view
+  // Show compact version of nav items on the Watch view
   & ${NavItem} {
     @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
       ${({ watchView }) =>
         !watchView &&
-        `
+        css`
           justify-content: flex-start;
 
           svg {
@@ -87,10 +108,4 @@ export const Nav = styled.nav`
     border-radius: 6px;
     border: 3px solid ${({ theme }) => theme.colors.bg.primary};
   }
-`;
-
-export const NavGroup = styled.div`
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.bg.secondary};
 `;
