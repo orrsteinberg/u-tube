@@ -15,13 +15,15 @@ import { IoMdLogOut } from "react-icons/io";
 
 import { Nav, NavGroup, NavItem, AuthButton } from "./Sidemenu.styled";
 import { selectUser } from "../../features/auth/authSlice";
-import { login } from "../../features/auth/authSlice";
+import { login, logout } from "../../features/auth/authSlice";
 
 const Sidemenu = ({ showOnMobile, activeTab, watchView }) => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  const handleAuth = () => dispatch(login());
+  const handleAuth = () => {
+    user ? dispatch(logout()) : dispatch(login());
+  };
 
   const authIcon = user ? <IoMdLogOut /> : <MdPerson />;
   const authText = user ? "Log out" : "Log in";
@@ -35,12 +37,12 @@ const Sidemenu = ({ showOnMobile, activeTab, watchView }) => {
           </NavItem>
         </Link>
         <Link to="/">
-          <NavItem>
+          <NavItem active={activeTab === "trending"}>
             <MdWhatshot /> <span>Trending</span>
           </NavItem>
         </Link>
-        <Link to="/">
-          <NavItem>
+        <Link to="/subscriptions">
+          <NavItem active={activeTab === "subscriptions"}>
             <MdSubscriptions /> <span>Subscriptions</span>
           </NavItem>
         </Link>
