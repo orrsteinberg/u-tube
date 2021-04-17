@@ -18,6 +18,7 @@ import { ChannelHeader, ChannelHeaderText } from "./Channel.styled";
 import VideoItem from "../../components/VideoItem/VideoItem";
 import SkeletonVideoItem from "../../components/skeletons/SkeletonVideoItem";
 import SkeletonChannelHeader from "../../components/skeletons/SkeletonChannelHeader";
+import Avatar from "../../components/Avatar/Avatar";
 
 const Channel = () => {
   const { id: urlParamId } = useParams();
@@ -53,8 +54,10 @@ const Channel = () => {
   }, [urlParamId, channelId, dispatch]);
 
   // Format data
-  const subscriberCount = numeral(rawSubscriberCount).format("0,0");
-  const videoCount = numeral(rawVideoCount).format("0,0");
+  const videoCount =
+    rawVideoCount === 0 ? "No" : numeral(rawVideoCount).format("0,0");
+  const subscriberCount =
+    rawSubscriberCount === 0 ? "No" : numeral(rawSubscriberCount).format("0,0");
 
   return (
     <InfiniteScroll
@@ -71,11 +74,15 @@ const Channel = () => {
       {status === "failed" && <p>{error}</p>}
       {status === "succeeded" && (
         <ChannelHeader>
-          <img src={avatar} alt={`${title} avatar`} />
+          <Avatar src={avatar} alt={title} />
           <ChannelHeaderText>
             <h1>{title}</h1>
-            <p>{subscriberCount} Subscribers</p>
-            <p>{videoCount} Videos</p>
+            <p>
+              {subscriberCount === "1"
+                ? `1 subscriber`
+                : `${subscriberCount} subscribers`}
+            </p>
+            <p>{videoCount === "1" ? `1 video` : `${videoCount} videos`}</p>
           </ChannelHeaderText>
           <button>Subscribe</button>
         </ChannelHeader>
