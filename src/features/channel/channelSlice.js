@@ -42,7 +42,7 @@ export const fetchInitialChannelVideos = createAsyncThunk(
   "channel/fetchInitialChannelVideos",
   async (channelId) => {
     // Get list of video IDs (without pageToken so we start from 0)
-    const channelVideosResponse = await api.getChannelVideos(channelId);
+    const channelVideosResponse = await api.getVideosByChannelId(channelId);
     const channelVideosIds = channelVideosResponse.data.items.map(
       (item) => item.id.videoId
     );
@@ -63,7 +63,7 @@ export const fetchChannelVideos = createAsyncThunk(
     const pageToken = getState().channel.channelVideos.pageToken;
 
     // Get list of video IDs (with pageToken so we continute from previous fetch)
-    const channelVideosResponse = await api.getChannelVideos(
+    const channelVideosResponse = await api.getVideosByChannelId(
       channelId,
       pageToken
     );
