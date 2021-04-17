@@ -1,6 +1,13 @@
 import styled from "styled-components";
 
 export const AvatarImg = styled.img`
-    width: ${({ size }) => size === "sm" ? "30px" : size === "md" ? "40px" : "50px"};
-    border-radius: 50%;
+  width: ${({ size }) =>
+    size === "sm"
+      ? "30px"
+      : size === "md"
+      ? "40px"
+      : size === "lg"
+      ? "50px"
+      : "auto"};
+  border-radius: 50%;
 `;
