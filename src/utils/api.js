@@ -57,7 +57,7 @@ const api = {
       },
     });
   },
-  getChannelVideos: async (channelId, pageToken) => {
+  getVideosByChannelId: async (channelId, pageToken) => {
     return await request("/search", {
       params: {
         type: "video",
@@ -107,6 +107,17 @@ const api = {
         q: query,
         type: "video,channel",
         regionCode: "US",
+      },
+    });
+  },
+  getSubscriptions: async (accessToken) => {
+    return await request("/subscriptions", {
+      params: {
+        part: "snippet,contentDetails",
+        mine: true,
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       },
     });
   },
