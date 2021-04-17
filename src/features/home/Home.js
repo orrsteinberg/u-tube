@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Helmet } from "react-helmet";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { fetchHomeVideos, selectHome } from "./homeSlice";
@@ -29,6 +30,9 @@ const HomeView = () => {
       // Target parent container by id to detect scroll
       scrollableTarget="view-container"
     >
+      <Helmet>
+        <title>Home | U-Tube</title>
+      </Helmet>
       <VideoRow>
         {status === "loading" && (
           <>
