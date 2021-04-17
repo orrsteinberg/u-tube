@@ -4,34 +4,48 @@ import numeral from "numeral";
 
 import {
   HorizontalChannelItemContainer,
-  ChannelAvatar,
   ChannelDetails,
 } from "./HorizontalChannelItem.styled";
+import Avatar from "../Avatar/Avatar";
 
-const HorizontalChannelItem = ({ channel }) => {
+const HorizontalChannelItem = ({ channel, subscription }) => {
   const { id, title, avatar } = channel;
-  //
+
   // Format data
-  const subscriberCount = numeral(channel.subscriberCount).format("0,0");
-  const videoCount = numeral(channel.videoCount).format("0,0");
+  const videoCount =
+    channel.videoCount === 0 ? "No" : numeral(channel.videoCount).format("0,0");
+  const subscriberCount =
+    channel.subscriberCount === 0
+      ? "No"
+      : numeral(channel.subscriberCount).format("0,0");
+  const newVideoCount =
+    channel.newVideoCount === 0
+      ? "No"
+      : numeral(channel.newVideoCount).format("0,0");
 
   return (
     <HorizontalChannelItemContainer>
-      <ChannelAvatar>
-        <Link to={`/channel/${id}`}>
-          <img src={avatar} alt={`${title} avatar`} />
-        </Link>
-      </ChannelAvatar>
+      <Link to={`/channel/${id}`}>
+        <Avatar src={avatar} alt={title} />
+      </Link>
       <ChannelDetails>
         <Link to={`/channel/${id}`}>
           <h3>{title}</h3>
         </Link>
-        <p>
-          <span className="count">{videoCount}</span> Videos
-        </p>
-        <p>
-          <span className="count">{subscriberCount}</span> Subscribers
-        </p>
+        <p>{videoCount === "1" ? `1 video` : `${videoCount} videos`}</p>
+        {subscription ? (
+          <p>
+            {newVideoCount === "1"
+              ? `1 new video`
+              : `${newVideoCount} new videos`}
+          </p>
+        ) : (
+          <p>
+            {subscriberCount === "1"
+              ? `1 subscriber`
+              : `${subscriberCount} subscribers`}
+          </p>
+        )}
       </ChannelDetails>
     </HorizontalChannelItemContainer>
   );

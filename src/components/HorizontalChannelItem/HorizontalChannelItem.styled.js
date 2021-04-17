@@ -15,17 +15,6 @@ export const HorizontalChannelItemContainer = styled.div`
   }
 `;
 
-export const ChannelAvatar = styled.div`
-  border-radius: 50%;
-  object-fit: contain;
-  overflow: hidden;
-  cursor: pointer;
-
-  img {
-    display: block;
-  }
-`;
-
 export const ChannelDetails = styled.div`
   padding-top: 0.25rem;
   padding-left: 0.75rem;
