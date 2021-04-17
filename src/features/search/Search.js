@@ -40,7 +40,6 @@ const Search = () => {
           {channels.length > 0 &&
             channels.map((channel) => (
               <HorizontalChannelItem
-                fullWidth
                 channel={channel}
                 key={channel.id}
               />
