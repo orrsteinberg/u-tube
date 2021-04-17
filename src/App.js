@@ -9,6 +9,7 @@ import Home from "./features/home/Home";
 import Watch from "./features/watch/Watch";
 import Channel from "./features/channel/Channel";
 import Search from "./features/search/Search";
+import Subscriptions from "./features/subscriptions/Subscriptions";
 
 const App = () => {
   return (
@@ -16,7 +17,7 @@ const App = () => {
       <GlobalStyles />
       <Switch>
         <Route path="/" exact>
-          <Layout activeTab={"home"}>
+          <Layout activeTab="home">
             <Home />
           </Layout>
         </Route>
@@ -36,6 +37,12 @@ const App = () => {
         <Route path="/search" exact>
           <Layout>
             <Search />
+          </Layout>
+        </Route>
+
+        <Route path="/subscriptions" exact>
+          <Layout activeTab="subscriptions">
+            <Subscriptions />
           </Layout>
         </Route>
 
