@@ -25,18 +25,7 @@ export const ChannelHeader = styled.header`
   }
 
   button {
-    border: 0;
-    background: ${({ theme }) => theme.colors.general.red};
-    color: ${({ theme }) => theme.colors.general.light};
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    padding: 0.5rem 1rem;
     margin: auto;
-    cursor: pointer;
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.general.light};
-    }
 
     @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
       margin: 0 0 0 auto;
