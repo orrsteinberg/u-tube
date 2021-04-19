@@ -121,6 +121,29 @@ const api = {
       },
     });
   },
+  addSubscription: async (channelId, accessToken) => {
+    // Create a subscription resource to match YouTube API requirements
+    const subscriptionResource = {
+      snippet: {
+        resourceId: {
+          kind: "youtube#channel",
+          channelId,
+        },
+      },
+    };
+
+    return await request("/subscriptions", {
+      method: "POST",
+      data: subscriptionResource,
+      params: {
+        part: "snippet,contentDetails",
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+  deleteSubscription: async (subscriptionId, accessToken) => {},
 };
 
 export default api;
