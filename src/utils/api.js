@@ -5,6 +5,7 @@ import {
   NUM_RELATED_VIDS_TO_FETCH,
   NUM_COMMENTS_TO_FETCH,
   NUM_SEARCH_RESULTS_TO_FETCH,
+  NUM_SUBSCRIPTIONS_TO_FETCH,
 } from "./constants";
 
 const request = axios.create({
@@ -115,6 +116,7 @@ const api = {
       params: {
         part: "snippet,contentDetails",
         mine: true,
+        maxResults: NUM_SUBSCRIPTIONS_TO_FETCH,
       },
       headers: {
         Authorization: `Bearer ${accessToken}`,
