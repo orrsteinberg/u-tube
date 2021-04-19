@@ -1,28 +1,14 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 
-import {
-  fetchSubscriptions,
-  selectSubscriptions,
-  subscriptionsLoginRequired,
-} from "./subscriptionsSlice";
+import { selectSubscriptions } from "./subscriptionsSlice";
 import { selectUser } from "../auth/authSlice";
 import HorizontalChannelItem from "../../components/HorizontalChannelItem/HorizontalChannelItem";
 
 const Subscriptions = () => {
   const user = useSelector(selectUser);
-  const { status, error, channels } = useSelector(selectSubscriptions);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // Only fetch data if the user is logged in
-    if (user) {
-      dispatch(fetchSubscriptions());
-    } else {
-      dispatch(subscriptionsLoginRequired());
-    }
-  }, [user, dispatch]);
+  const { status, error, items } = useSelector(selectSubscriptions);
 
   return (
     <>
@@ -38,11 +24,11 @@ const Subscriptions = () => {
       {status === "failed" && <h3>{error}</h3>}
       {status === "succeeded" && (
         <>
-          {channels.map((channel) => (
+          {items.map((item) => (
             <HorizontalChannelItem
               subscription
-              channel={channel}
-              key={channel.id}
+              channel={item.channel}
+              key={item.channel.id}
             />
           ))}
         </>
