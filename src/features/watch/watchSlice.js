@@ -19,7 +19,6 @@ const initialState = {
       name: null,
       avatar: null,
       numSubs: null,
-      isSubscribed: false,
     },
   },
   relatedVideos: {
@@ -105,7 +104,6 @@ const watchSlice = createSlice({
           title: videoData.snippet.channelTitle,
           avatar: channelData.snippet.thumbnails.default.url,
           subscriberCount: channelData.statistics.subscriberCount,
-          isSubscribed: false, // default to false for now
         },
       };
 
