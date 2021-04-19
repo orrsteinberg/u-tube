@@ -6,7 +6,12 @@ import api from "../../utils/api";
 const initialState = {
   status: "idle", // "idle" | "loading" | "succeeded" | "failed"
   error: null,
-  items: [], // YouTube API works with "subscription resources" rather than simple channels
+  items: [],
+  updateInProgress: {
+    // Request status for adding/removing subscriptions
+    status: "idle",
+    error: null,
+  },
 };
 
 // Async thunks
@@ -25,15 +30,17 @@ export const updateSubscription = createAsyncThunk(
   "subscriptions/updateSubscription",
   async (channelId, { getState }) => {
     // Subscribe/unsubscribe from channel
-    const isSubscribed = getState().subscriptions.items.find(
+    const currentSubscription = getState().subscriptions.items.find(
       (item) => item.channel.id === channelId
     );
     const accessToken = getState().auth.accessToken;
 
-    if (isSubscribed) {
+    if (currentSubscription) {
       // TODO: Delete subscription
     } else {
       // TODO: Add new subscription
+      const subResponse = await api.addSubscription(channelId, accessToken);
+      return subResponse.data;
     }
   }
 );
@@ -76,6 +83,32 @@ const subscriptionsSlice = createSlice({
     [fetchSubscriptions.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error.message;
+    },
+    [updateSubscription.pending]: (state, action) => {
+      state.updateInProgress.status = "loading";
+    },
+    [updateSubscription.fulfilled]: (state, action) => {
+      state.updateInProgress.status = "succeeded";
+
+      const item = action.payload;
+
+      // Customize data shape
+      const newItem = {
+        id: item.id,
+        channel: {
+          id: item.snippet.resourceId.channelId,
+          title: item.snippet.title,
+          avatar: item.snippet.thumbnails.default.url,
+          videoCount: item.contentDetails.totalItemCount,
+          newVideoCount: item.contentDetails.newItemCount,
+        },
+      };
+
+      state.items.push(newItem);
+    },
+    [updateSubscription.rejected]: (state, action) => {
+      state.updateInProgress.status = "failed";
+      state.updateInProgress.error = action.error.message;
     },
   },
 });
