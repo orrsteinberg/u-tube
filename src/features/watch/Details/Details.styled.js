@@ -82,18 +82,7 @@ export const ChannelDetailsContainer = styled.div`
   }
 
   button {
-    border: 0;
-    background: ${({ theme }) => theme.colors.general.red};
-    color: ${({ theme }) => theme.colors.general.light};
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    padding: 0.5rem 1rem;
     margin-left: auto;
-    cursor: pointer;
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.general.light};
-    }
   }
 `;
 
