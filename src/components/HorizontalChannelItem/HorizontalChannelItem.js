@@ -1,27 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import numeral from "numeral";
 
 import {
   HorizontalChannelItemContainer,
   ChannelDetails,
 } from "./HorizontalChannelItem.styled";
 import Avatar from "../Avatar/Avatar";
+import ChannelStatCount from "../ChannelStatCount/ChannelStatCount";
 
 const HorizontalChannelItem = ({ channel, subscription }) => {
   const { id, title, avatar } = channel;
-
-  // Format data
-  const videoCount =
-    channel.videoCount === 0 ? "No" : numeral(channel.videoCount).format("0,0");
-  const subscriberCount =
-    channel.subscriberCount === 0
-      ? "No"
-      : numeral(channel.subscriberCount).format("0,0");
-  const newVideoCount =
-    channel.newVideoCount === 0
-      ? "No"
-      : numeral(channel.newVideoCount).format("0,0");
 
   return (
     <HorizontalChannelItemContainer>
@@ -32,19 +20,15 @@ const HorizontalChannelItem = ({ channel, subscription }) => {
         <Link to={`/channel/${id}`}>
           <h3>{title}</h3>
         </Link>
-        <p>{videoCount === "1" ? `1 video` : `${videoCount} videos`}</p>
+        <ChannelStatCount name="video" count={channel.videoCount} />
         {subscription ? (
-          <p>
-            {newVideoCount === "1"
-              ? `1 new video`
-              : `${newVideoCount} new videos`}
-          </p>
+          <ChannelStatCount
+            name="new video"
+            count={channel.newVideoCount}
+            style={channel.newVideoCount > 0 ? { fontWeight: "bold" } : null}
+          />
         ) : (
-          <p>
-            {subscriberCount === "1"
-              ? `1 subscriber`
-              : `${subscriberCount} subscribers`}
-          </p>
+          <ChannelStatCount name="subscriber" count={channel.subscriberCount} />
         )}
       </ChannelDetails>
     </HorizontalChannelItemContainer>

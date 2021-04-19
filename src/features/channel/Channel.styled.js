@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ChannelHeader = styled.header`
+export const StyledChannelHeader = styled.header`
   display: flex;
   flex-direction: column;
   align-items: center;
