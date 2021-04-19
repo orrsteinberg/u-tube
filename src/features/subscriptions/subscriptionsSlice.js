@@ -6,7 +6,7 @@ import api from "../../utils/api";
 const initialState = {
   status: "idle", // "idle" | "loading" | "succeeded" | "failed"
   error: null,
-  channels: [],
+  items: [], // YouTube API works with "subscription resources" rather than simple channels
 };
 
 // Async thunks
@@ -20,13 +20,30 @@ export const fetchSubscriptions = createAsyncThunk(
     return subResponse.data.items;
   }
 );
-//
+
+export const updateSubscription = createAsyncThunk(
+  "subscriptions/updateSubscription",
+  async (channelId, { getState }) => {
+    // Subscribe/unsubscribe from channel
+    const isSubscribed = getState().subscriptions.items.find(
+      (item) => item.channel.id === channelId
+    );
+    const accessToken = getState().auth.accessToken;
+
+    if (isSubscribed) {
+      // TODO: Delete subscription
+    } else {
+      // TODO: Add new subscription
+    }
+  }
+);
+
 // State slice
 const subscriptionsSlice = createSlice({
   name: "subscriptions",
   initialState,
   reducers: {
-    subscriptionsLoginRequired: (state, action) => {
+    clearSubscriptions: (state, action) => {
       state.status = "failed";
       state.error = "You must be logged in to view your subscriptions";
       state.channels = [];
@@ -41,17 +58,20 @@ const subscriptionsSlice = createSlice({
       state.status = "succeeded";
 
       // Customize data shape
-      const channels = action.payload.map((channel) => {
+      const items = action.payload.map((item) => {
         return {
-          id: channel.snippet.resourceId.channelId,
-          title: channel.snippet.title,
-          avatar: channel.snippet.thumbnails.default.url,
-          videoCount: channel.contentDetails.totalItemCount,
-          newVideoCount: channel.contentDetails.newItemCount,
+          id: item.id,
+          channel: {
+            id: item.snippet.resourceId.channelId,
+            title: item.snippet.title,
+            avatar: item.snippet.thumbnails.default.url,
+            videoCount: item.contentDetails.totalItemCount,
+            newVideoCount: item.contentDetails.newItemCount,
+          },
         };
       });
 
-      state.channels = channels;
+      state.items = items;
     },
     [fetchSubscriptions.rejected]: (state, action) => {
       state.status = "failed";
@@ -61,7 +81,7 @@ const subscriptionsSlice = createSlice({
 });
 
 // Actions
-export const { subscriptionsLoginRequired } = subscriptionsSlice.actions;
+export const { clearSubscriptions } = subscriptionsSlice.actions;
 
 // Selectors
 export const selectSubscriptions = (state) => state.subscriptions;
