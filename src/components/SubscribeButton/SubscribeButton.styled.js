@@ -22,5 +22,6 @@ export const StyledSubscribeButton = styled.button`
 
   &:disabled {
     opacity: 0.7;
+    cursor: auto;
   }
 `;
