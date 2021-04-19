@@ -19,4 +19,8 @@ export const StyledSubscribeButton = styled.button`
         ? lighten(0.05, theme.colors.general.faded)
         : lighten(0.05, theme.colors.general.red)};
   }
+
+  &:disabled {
+    opacity: 0.7;
+  }
 `;

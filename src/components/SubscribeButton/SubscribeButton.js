@@ -26,13 +26,19 @@ const SubscribeButton = ({ channelId }) => {
   }, [user, subscriptions, channelId]);
 
   const handleClick = () => {
-    dispatch(updateSubscription(channelId));
+    if (user) {
+      dispatch(updateSubscription(channelId));
+    }
   };
 
   const text = isSubscribed ? "Subscribed" : "Subscribe";
 
   return (
-    <StyledSubscribeButton isSubscribed={isSubscribed} onClick={handleClick}>
+    <StyledSubscribeButton
+      isSubscribed={isSubscribed}
+      onClick={handleClick}
+      disabled={subscriptions.updateInProgress.status === "loading"}
+    >
       {text}
     </StyledSubscribeButton>
   );
