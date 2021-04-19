@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
+import { selectUser } from "./features/auth/authSlice";
+import {
+  fetchSubscriptions,
+  clearSubscriptions,
+} from "./features/subscriptions/subscriptionsSlice";
 import { theme } from "./utils/theme";
 import GlobalStyles from "./globalStyles";
 import Layout from "./components/Layout/Layout";
@@ -12,6 +18,19 @@ import Search from "./features/search/Search";
 import Subscriptions from "./features/subscriptions/Subscriptions";
 
 const App = () => {
+  // Listen for auth state change and fetch/clear subscriptions
+  // to avoid repetitive subscription status requests for every channel/video
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchSubscriptions());
+    } else {
+      dispatch(clearSubscriptions());
+    }
+  }, [user, dispatch]);
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
