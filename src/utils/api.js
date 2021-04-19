@@ -145,7 +145,17 @@ const api = {
       },
     });
   },
-  deleteSubscription: async (subscriptionId, accessToken) => {},
+  deleteSubscription: async (subscriptionId, accessToken) => {
+    return await request("/subscriptions", {
+      method: "DELETE",
+      params: {
+        id: subscriptionId,
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
 };
 
 export default api;
