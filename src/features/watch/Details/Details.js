@@ -15,6 +15,7 @@ import {
   DescriptionContainer,
 } from "./Details.styled";
 import Avatar from "../../../components/Avatar/Avatar";
+import SubscribeButton from "../../../components/SubscribeButton/SubscribeButton";
 
 const Statistics = ({ likeCount, dislikeCount, viewCount, publishedAt }) => {
   return (
@@ -58,7 +59,7 @@ const ChannelDetails = ({ channel }) => {
         </Link>
         <span>{subscriberCount} Subscribers</span>
       </ChannelDetailsContent>
-      <button>Subscribe</button>
+      <SubscribeButton channelId={id} />
     </ChannelDetailsContainer>
   );
 };
