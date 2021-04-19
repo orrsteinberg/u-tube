@@ -11,7 +11,6 @@ const initialState = {
   avatar: null,
   subscriberCount: null,
   videoCount: null,
-  isSubscribed: false,
   channelVideos: {
     videos: [],
     status: "idle", // "idle" | "loading" | "succeeded" | "failed"
@@ -32,28 +31,9 @@ export const fetchChannelData = createAsyncThunk(
     }
 
     // If channel exists, fetch videos
-    dispatch(fetchInitialChannelVideos(channelId));
+    dispatch(fetchChannelVideos(channelId));
 
     return channelResponse.data.items[0];
-  }
-);
-
-export const fetchInitialChannelVideos = createAsyncThunk(
-  "channel/fetchInitialChannelVideos",
-  async (channelId) => {
-    // Get list of video IDs (without pageToken so we start from 0)
-    const channelVideosResponse = await api.getVideosByChannelId(channelId);
-    const channelVideosIds = channelVideosResponse.data.items.map(
-      (item) => item.id.videoId
-    );
-
-    // Get videos by ID so we can have their contentData (needed for video duration)
-    const videosResponse = await api.getVideosById(channelVideosIds);
-
-    return {
-      videos: videosResponse.data.items,
-      pageToken: channelVideosResponse.data.nextPageToken,
-    };
   }
 );
 
@@ -63,16 +43,16 @@ export const fetchChannelVideos = createAsyncThunk(
     const pageToken = getState().channel.channelVideos.pageToken;
 
     // Get list of video IDs (with pageToken so we continute from previous fetch)
-    const channelVideosResponse = await api.getVideosByChannelId(
-      channelId,
-      pageToken
-    );
-    const channelVideosIds = channelVideosResponse.data.items.map(
+    const channelVideosResponse = pageToken
+      ? await api.getVideosByChannelId(channelId, pageToken)
+      : await api.getVideosByChannelId(channelId);
+
+    const channelVideoIds = channelVideosResponse.data.items.map(
       (item) => item.id.videoId
     );
 
     // Get videos by ID so we can have their contentData (needed for video duration)
-    const videosResponse = await api.getVideosById(channelVideosIds);
+    const videosResponse = await api.getVideosById(channelVideoIds);
 
     return {
       videos: videosResponse.data.items,
@@ -90,6 +70,7 @@ const channelSlice = createSlice({
       state.status = "loading";
       state.error = null;
       state.channelVideos.videos = [];
+      state.channelVideos.pageToken = null;
     },
   },
   extraReducers: {
@@ -111,39 +92,10 @@ const channelSlice = createSlice({
       state.avatar = avatar;
       state.subscriberCount = subscriberCount || null;
       state.videoCount = videoCount;
-      state.isSubscribed = false; // Default to false for now
     },
     [fetchChannelData.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error.message;
-    },
-    [fetchInitialChannelVideos.pending]: (state, action) => {
-      state.channelVideos.status = "loading";
-    },
-    [fetchInitialChannelVideos.fulfilled]: (state, action) => {
-      state.channelVideos.status = "succeeded";
-
-      // Customize data shape
-      const newVideos = action.payload.videos.map((video) => {
-        return {
-          id: video.id,
-          title: video.snippet.title,
-          thumbnail: video.snippet.thumbnails.medium.url,
-          channelId: video.snippet.channelId,
-          channelTitle: video.snippet.channelTitle,
-          viewCount: video.statistics.viewCount,
-          publishedAt: video.snippet.publishedAt,
-          duration: video.contentDetails.duration,
-        };
-      });
-
-      // Update videos and page token
-      state.channelVideos.videos = newVideos;
-      state.channelVideos.pageToken = action.payload.pageToken;
-    },
-    [fetchInitialChannelVideos.rejected]: (state, action) => {
-      state.channelVideos.status = "failed";
-      state.channelVideos.error = action.error.message;
     },
     [fetchChannelVideos.pending]: (state, action) => {
       state.channelVideos.status = "loading";
