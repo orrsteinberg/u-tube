@@ -19,6 +19,7 @@ import VideoItem from "../../components/VideoItem/VideoItem";
 import SkeletonVideoItem from "../../components/skeletons/SkeletonVideoItem";
 import SkeletonChannelHeader from "../../components/skeletons/SkeletonChannelHeader";
 import Avatar from "../../components/Avatar/Avatar";
+import SubscribeButton from "../../components/SubscribeButton/SubscribeButton";
 
 const Channel = () => {
   const { id: urlParamId } = useParams();
@@ -46,7 +47,7 @@ const Channel = () => {
 
   useEffect(() => {
     // Only fetch initial channel data if it's a new channel (different id than the prev)
-    // (on first render channelId would be null therefore we would fetch data)
+    // (on first render channelId would be null so we would fetch data)
     if (urlParamId !== channelId) {
       dispatch(clearChannelView());
       dispatch(fetchChannelData(urlParamId));
@@ -84,7 +85,7 @@ const Channel = () => {
             </p>
             <p>{videoCount === "1" ? `1 video` : `${videoCount} videos`}</p>
           </ChannelHeaderText>
-          <button>Subscribe</button>
+          <SubscribeButton channelId={channelId} />
         </ChannelHeader>
       )}
       <VideoRow>
