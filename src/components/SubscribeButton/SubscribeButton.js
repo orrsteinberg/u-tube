@@ -6,7 +6,8 @@ import { StyledSubscribeButton } from "./SubscribeButton.styled";
 
 import {
   selectSubscriptions,
-  updateSubscription,
+  subscribe,
+  unsubscribe,
 } from "../../features/subscriptions/subscriptionsSlice";
 
 const SubscribeButton = ({ channelId }) => {
@@ -26,12 +27,16 @@ const SubscribeButton = ({ channelId }) => {
   }, [user, subscriptions, channelId]);
 
   const handleClick = () => {
-    if (user) {
-      dispatch(updateSubscription(channelId));
+    if (!user) return;
+
+    if (!isSubscribed) {
+      dispatch(subscribe(channelId));
+    } else {
+      dispatch(unsubscribe(channelId));
     }
   };
 
-  const text = isSubscribed ? "Subscribed" : "Subscribe";
+  const text = isSubscribed ? "Unsubscribe" : "Subscribe";
 
   return (
     <StyledSubscribeButton

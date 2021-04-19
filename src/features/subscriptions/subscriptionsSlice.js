@@ -26,22 +26,26 @@ export const fetchSubscriptions = createAsyncThunk(
   }
 );
 
-export const updateSubscription = createAsyncThunk(
-  "subscriptions/updateSubscription",
+export const subscribe = createAsyncThunk(
+  "subscriptions/subscribe",
   async (channelId, { getState }) => {
-    // Subscribe/unsubscribe from channel
-    const currentSubscription = getState().subscriptions.items.find(
+    const accessToken = getState().auth.accessToken;
+    const subResponse = await api.addSubscription(channelId, accessToken);
+    return subResponse.data;
+  }
+);
+
+export const unsubscribe = createAsyncThunk(
+  "subscriptions/unsubscribe",
+  async (channelId, { getState }) => {
+    const accessToken = getState().auth.accessToken;
+    const subscription = getState().subscriptions.items.find(
       (item) => item.channel.id === channelId
     );
-    const accessToken = getState().auth.accessToken;
 
-    if (currentSubscription) {
-      // TODO: Delete subscription
-    } else {
-      // TODO: Add new subscription
-      const subResponse = await api.addSubscription(channelId, accessToken);
-      return subResponse.data;
-    }
+    await api.deleteSubscription(subscription.id, accessToken);
+
+    return subscription.id;
   }
 );
 
@@ -84,10 +88,10 @@ const subscriptionsSlice = createSlice({
       state.status = "failed";
       state.error = action.error.message;
     },
-    [updateSubscription.pending]: (state, action) => {
+    [subscribe.pending]: (state, action) => {
       state.updateInProgress.status = "loading";
     },
-    [updateSubscription.fulfilled]: (state, action) => {
+    [subscribe.fulfilled]: (state, action) => {
       state.updateInProgress.status = "succeeded";
 
       const item = action.payload;
@@ -106,7 +110,20 @@ const subscriptionsSlice = createSlice({
 
       state.items.push(newItem);
     },
-    [updateSubscription.rejected]: (state, action) => {
+    [subscribe.rejected]: (state, action) => {
+      state.updateInProgress.status = "failed";
+      state.updateInProgress.error = action.error.message;
+    },
+    [unsubscribe.pending]: (state, action) => {
+      state.updateInProgress.status = "loading";
+    },
+    [unsubscribe.fulfilled]: (state, action) => {
+      state.updateInProgress.status = "succeeded";
+
+      const deletedId = action.payload;
+      state.items = state.items.filter((item) => item.id !== deletedId);
+    },
+    [unsubscribe.rejected]: (state, action) => {
       state.updateInProgress.status = "failed";
       state.updateInProgress.error = action.error.message;
     },
