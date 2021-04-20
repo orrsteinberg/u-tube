@@ -156,6 +156,30 @@ const api = {
       },
     });
   },
+  addComment: async (videoId, text, accessToken) => {
+    // Create a commentThread resource to match YouTube API requirements
+    const commentThreadResource = {
+      snippet: {
+        videoId,
+        topLevelComment: {
+          snippet: {
+            textOriginal: text,
+          },
+        },
+      },
+    };
+
+    return await request("/commentThreads", {
+      method: "POST",
+      data: commentThreadResource,
+      params: {
+        part: "snippet",
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
 };
 
 export default api;
