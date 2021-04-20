@@ -10,7 +10,7 @@ export const CommentsContainer = styled.div`
   }
 `;
 
-export const NewComment = styled.div`
+export const StyledNewCommentForm = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
@@ -51,6 +51,11 @@ export const NewComment = styled.div`
 
       &:focus {
         outline: none;
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: auto;
       }
     }
   }

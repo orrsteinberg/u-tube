@@ -18,18 +18,20 @@ const initialState = {
       id: null,
       name: null,
       avatar: null,
-      numSubs: null,
+      subscriberCount: null,
     },
   },
   relatedVideos: {
     videos: [],
-    status: "idle", // "idle" | "loading" | "succeeded" | "failed"
+    status: "idle",
     error: null,
   },
   commentSection: {
     comments: [],
-    status: "idle", // "idle" | "loading" | "succeeded" | "failed"
+    status: "idle",
     error: null,
+    newCommentStatus: "idle",
+    newCommentError: null,
   },
 };
 
@@ -71,6 +73,15 @@ export const fetchComments = createAsyncThunk(
   async (videoId) => {
     const commentsResponse = await api.getCommentsByVideoId(videoId);
     return commentsResponse.data.items;
+  }
+);
+
+export const addComment = createAsyncThunk(
+  "watch/addComment",
+  async ({ videoId, text }, { getState }) => {
+    const accessToken = getState().auth.accessToken;
+    const commentResponse = await api.addComment(videoId, text, accessToken);
+    return commentResponse.data;
   }
 );
 
@@ -180,6 +191,39 @@ const watchSlice = createSlice({
       }
 
       state.commentSection.error = errorMessage;
+    },
+    [addComment.pending]: (state, action) => {
+      state.commentSection.newCommentStatus = "loading";
+    },
+    [addComment.fulfilled]: (state, action) => {
+      state.commentSection.newCommentStatus = "succeeded";
+
+      // Customize data shape
+      const id = action.payload.id;
+      const {
+        authorDisplayName,
+        authorChannelId: { value: authorChannelId },
+        authorProfileImageUrl,
+        publishedAt,
+        textDisplay,
+        textOriginal,
+      } = action.payload.snippet.topLevelComment.snippet;
+
+      const newComment = {
+        id,
+        authorDisplayName,
+        authorChannelId,
+        authorProfileImageUrl,
+        publishedAt,
+        textDisplay,
+        textOriginal,
+      };
+
+      state.commentSection.comments.unshift(newComment);
+    },
+    [addComment.rejected]: (state, action) => {
+      state.commentSection.newCommentStatus = "failed";
+      state.commentSection.newCommentError = action.error.message;
     },
   },
 });

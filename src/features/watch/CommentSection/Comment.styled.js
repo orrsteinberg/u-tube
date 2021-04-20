@@ -26,6 +26,7 @@ export const Author = styled.div`
 
   a {
     color: ${({ theme }) => theme.colors.text.primary};
+    margin-right: 0.25rem;
   }
 
   span {

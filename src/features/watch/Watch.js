@@ -9,7 +9,6 @@ import {
   fetchComments,
   selectVideoToWatch,
   selectRelatedVideos,
-  selectCommentSection,
 } from "./watchSlice";
 import { NUM_RELATED_VIDS_TO_FETCH } from "../../utils/constants";
 import Details from "./Details/Details";
@@ -32,11 +31,6 @@ const Watch = () => {
     status: relatedVideosStatus,
     error: relatedVideosError,
   } = useSelector(selectRelatedVideos);
-  const {
-    comments,
-    status: commentSectionStatus,
-    error: commentSectionError,
-  } = useSelector(selectCommentSection);
 
   const dispatch = useDispatch();
 
@@ -72,11 +66,7 @@ const Watch = () => {
             <Details video={currentVideo} />
           </>
         )}
-        {commentSectionStatus === "loading" && <h3>Loading comments...</h3>}
-        {commentSectionStatus === "failed" && <p>{commentSectionError}</p>}
-        {commentSectionStatus === "succeeded" && (
-          <CommentSection comments={comments} />
-        )}
+        <CommentSection />
       </MainCol>
       <RelatedVideosCol>
         <h2>Related videos</h2>
