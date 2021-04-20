@@ -41,10 +41,17 @@ export const NavItem = styled.div`
 
 export const AuthButton = styled(NavItem)`
   border: 0;
-  box-shadow: inset 5px 0px 0px 1px ${({ theme }) => theme.colors.text.tertiary};
+  box-shadow: inset 5px 0px 0px 1px ${({ theme }) => theme.colors.general.blue};
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.text.primary};
+  color: ${({ theme }) => theme.colors.general.blue};
   font-weight: bold;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.bg.primary};
+    color: ${({ theme }) => theme.colors.general.accent1};
+    box-shadow: inset 10px 0px 0px 1px
+      ${({ theme }) => theme.colors.general.accent1};
+  }
 `;
 
 export const Nav = styled.nav`
