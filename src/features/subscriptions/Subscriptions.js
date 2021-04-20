@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import { selectSubscriptions } from "./subscriptionsSlice";
 import { selectUser } from "../auth/authSlice";
 import HorizontalChannelItem from "../../components/HorizontalChannelItem/HorizontalChannelItem";
+import Error from "../../components/Error/Error";
 
 const Subscriptions = () => {
   const user = useSelector(selectUser);
@@ -21,7 +22,7 @@ const Subscriptions = () => {
       </Helmet>
 
       {status === "loading" && <h3>Loading subscriptions...</h3>}
-      {status === "failed" && <h3>{error}</h3>}
+      {status === "failed" && <Error error={error} />}
       {status === "succeeded" && (
         <>
           {items.map((item) => (

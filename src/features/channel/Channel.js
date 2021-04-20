@@ -20,6 +20,7 @@ import SkeletonChannelHeader from "../../components/skeletons/SkeletonChannelHea
 import Avatar from "../../components/Avatar/Avatar";
 import ChannelStatCount from "../../components/ChannelStatCount/ChannelStatCount";
 import SubscribeButton from "../../components/SubscribeButton/SubscribeButton";
+import Error from "../../components/Error/Error";
 
 const ChannelHeader = () => {
   const {
@@ -35,7 +36,7 @@ const ChannelHeader = () => {
   return (
     <>
       {status === "loading" && <SkeletonChannelHeader />}
-      {status === "failed" && <h3>{error}</h3>}
+      {status === "failed" && <Error error={error} />}
       {status === "succeeded" && (
         <StyledChannelHeader>
           <Avatar src={avatar} alt={title} />
@@ -71,7 +72,7 @@ const ChannelVideos = () => {
         videos.map((video) => (
           <VideoItem hideChannel video={video} key={video.id} />
         ))}
-      {status === "failed" && <h4>{error}</h4>}
+      {status === "failed" && <Error error={error} />}
     </VideoRow>
   );
 };

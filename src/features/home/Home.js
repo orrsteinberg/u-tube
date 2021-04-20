@@ -8,6 +8,7 @@ import { NUM_VIDS_TO_FETCH } from "../../utils/constants";
 import { VideoRow } from "../../components/shared";
 import VideoItem from "../../components/VideoItem/VideoItem";
 import SkeletonVideoItem from "../../components/skeletons/SkeletonVideoItem";
+import Error from "../../components/Error/Error";
 
 const HomeView = () => {
   const { status, videos, error } = useSelector(selectHome);
@@ -46,7 +47,7 @@ const HomeView = () => {
         {status === "succeeded" &&
           videos.map((video) => <VideoItem video={video} key={video.id} />)}
       </VideoRow>
-      {status === "failed" && <h2>{error}</h2>}
+      {status === "failed" && <Error error={error} />}
     </InfiniteScroll>
   );
 };

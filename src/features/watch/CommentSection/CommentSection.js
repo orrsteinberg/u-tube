@@ -13,6 +13,7 @@ import {
 } from "./CommentSection.styled";
 import Comment from "./Comment";
 import Avatar from "../../../components/Avatar/Avatar";
+import Error from "../../../components/Error/Error";
 
 const NewCommentForm = () => {
   const { currentVideo } = useSelector(selectVideoToWatch);
@@ -65,7 +66,7 @@ const CommentSection = () => {
   return (
     <CommentsContainer>
       {status === "loading" && <h3>Loading comments...</h3>}
-      {status === "failed" && <h3>{error}</h3>}
+      {status === "failed" && <Error error={error} />}
       {status === "succeeded" && (
         <>
           <NewCommentForm />

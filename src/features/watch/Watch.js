@@ -22,6 +22,7 @@ import {
   Player,
   RelatedVideosCol,
 } from "./Watch.styled";
+import Error from "../../components/Error/Error";
 
 const Watch = () => {
   const { id: urlParamId } = useParams();
@@ -50,7 +51,7 @@ const Watch = () => {
       </Helmet>
       <MainCol>
         {status === "loading" && <SkeletonWatchVideo />}
-        {status === "failed" && <p>{error}</p>}
+        {status === "failed" && <Error error={error} />}
         {status === "succeeded" && (
           <>
             <Player>

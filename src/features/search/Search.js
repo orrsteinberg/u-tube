@@ -11,6 +11,7 @@ import {
 } from "./searchSlice";
 import HorizontalVideoItem from "../../components/HorizontalVideoItem/HorizontalVideoItem";
 import HorizontalChannelItem from "../../components/HorizontalChannelItem/HorizontalChannelItem";
+import Error from "../../components/Error/Error";
 
 const Search = () => {
   const { currentQuery, status, error, channels, videos } = useSelector(
@@ -51,7 +52,7 @@ const Search = () => {
           <h3>Searching...</h3>
         </>
       )}
-      {status === "failed" && <p>{error}</p>}
+      {status === "failed" && <Error error={error} />}
       {status === "succeeded" && (
         <>
           {channels.map((channel) => (
