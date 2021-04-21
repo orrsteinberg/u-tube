@@ -68,7 +68,7 @@ export const Details = styled.div`
   margin-top: 0.5rem;
 
   img {
-    margin-right: 0.75rem;
+    margin-right: 1rem;
   }
 `;
 
@@ -78,7 +78,7 @@ export const Meta = styled.div`
   h3 {
     line-height: 1.2;
     margin-top: ${({ hideChannel }) => (hideChannel ? "0" : "0.25rem")};
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
     color: ${({ theme }) => theme.colors.text.primary};
     font-size: 1.075rem;
   }

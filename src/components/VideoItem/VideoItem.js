@@ -41,7 +41,7 @@ const VideoItem = ({ video, hideChannel }) => {
       <Details>
         {!hideChannel && (
           <Link to={`/channel/${channelId}`}>
-            <Avatar size="md" src={channelAvatar} alt={channelTitle} />
+            <Avatar size="sm" src={channelAvatar} alt={channelTitle} />
           </Link>
         )}
         <Meta hideChannel={hideChannel}>
