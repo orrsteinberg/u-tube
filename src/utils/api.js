@@ -70,6 +70,17 @@ const api = {
       },
     });
   },
+  getVideosByCategoryId: async (categoryId, pageToken) => {
+    return await request("/videos", {
+      params: {
+        part: "snippet,contentDetails,statistics",
+        chart: "mostPopular",
+        videoCategoryId: categoryId,
+        maxResults: NUM_VIDS_TO_FETCH,
+        pageToken,
+      },
+    });
+  },
   getChannelById: async (channelId) => {
     return await request("/channels", {
       params: {
