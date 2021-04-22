@@ -27,9 +27,9 @@ const NewCommentForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // If user is logged in, add new comment
-    if (!user) return;
+    if (!user || text.trim() === "") return;
 
+    // If user is logged in, add new comment
     const newComment = {
       videoId: currentVideo.id,
       text,
