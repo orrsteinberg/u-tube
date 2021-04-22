@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
 
 export const NavGroup = styled.div`
   margin-bottom: 1.5rem;
