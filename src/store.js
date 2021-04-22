@@ -6,6 +6,7 @@ import watchReducer from "./features/watch/watchSlice";
 import channelReducer from "./features/channel/channelSlice";
 import searchReducer from "./features/search/searchSlice";
 import subscriptionsReducer from "./features/subscriptions/subscriptionsSlice";
+import exploreReducer from "./features/explore/exploreSlice";
 
 const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ const store = configureStore({
     channel: channelReducer,
     search: searchReducer,
     subscriptions: subscriptionsReducer,
+    explore: exploreReducer,
   },
 });
 
