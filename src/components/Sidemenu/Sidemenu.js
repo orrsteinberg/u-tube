@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   MdHome,
-  MdWhatshot,
+  MdExplore,
   MdVideoLibrary,
   MdSubscriptions,
   MdHistory,
@@ -13,9 +13,52 @@ import {
 } from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
 
-import { Nav, NavGroup, NavItem, AuthButton } from "./Sidemenu.styled";
+import {
+  Nav,
+  NavGroup,
+  NavItem,
+  AuthButton,
+  ViewAllSubsButton,
+} from "./Sidemenu.styled";
 import { selectUser } from "../../features/auth/authSlice";
 import { login, logout } from "../../features/auth/authSlice";
+import { selectSubscriptions } from "../../features/subscriptions/subscriptionsSlice";
+import Avatar from "../Avatar/Avatar";
+
+const SubscribedChannelsGroup = () => {
+  // Show only the first 5 subscriptions, expand list to show the rest
+  const [isExpanded, setIsExpanded] = useState(false);
+  const { items: fullList } = useSelector(selectSubscriptions);
+
+  const listToDisplay = isExpanded ? fullList : fullList.slice(0, 5);
+
+  const handleToggle = () => setIsExpanded(!isExpanded);
+
+  const button =
+    fullList.length > 5 ? (
+      <ViewAllSubsButton onClick={handleToggle}>
+        {isExpanded ? "show less" : "show all"}
+      </ViewAllSubsButton>
+    ) : null;
+
+  return (
+    <NavGroup>
+      {listToDisplay.map((item) => (
+        <Link to={`/channel/${item.channel.id}`} key={item.channel.id}>
+          <NavItem>
+            <Avatar
+              size="xs"
+              src={item.channel.avatar}
+              alt={item.channel.title}
+            />{" "}
+            <span>{item.channel.title}</span>
+          </NavItem>
+        </Link>
+      ))}
+      {button}
+    </NavGroup>
+  );
+};
 
 const Sidemenu = ({ showOnMobile, activeTab, watchView }) => {
   const user = useSelector(selectUser);
@@ -36,9 +79,9 @@ const Sidemenu = ({ showOnMobile, activeTab, watchView }) => {
             <MdHome /> <span>Home</span>
           </NavItem>
         </Link>
-        <Link to="/">
-          <NavItem active={activeTab === "trending"}>
-            <MdWhatshot /> <span>Trending</span>
+        <Link to="/explore">
+          <NavItem active={activeTab === "explore"}>
+            <MdExplore /> <span>Explore</span>
           </NavItem>
         </Link>
         <Link to="/subscriptions">
@@ -61,6 +104,7 @@ const Sidemenu = ({ showOnMobile, activeTab, watchView }) => {
           <MdWatchLater /> <span>Watch Later</span>
         </NavItem>
       </NavGroup>
+      {user && <SubscribedChannelsGroup />}
       <AuthButton as="button" onClick={handleAuth}>
         {authIcon} <span>{authText}</span>
       </AuthButton>

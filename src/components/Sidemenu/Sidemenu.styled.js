@@ -1,9 +1,29 @@
 import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
 export const NavGroup = styled.div`
   margin-bottom: 1.5rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.bg.secondary};
+`;
+
+export const ViewAllSubsButton = styled.button`
+  border: 0;
+  outline: 0;
+  background: none;
+  text-align: center;
+  display: block;
+  width: 100%;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-top: 0.75rem;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  cursor: pointer;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text.primary};
+  }
 `;
 
 export const NavItem = styled.div`
@@ -45,12 +65,12 @@ export const AuthButton = styled(NavItem)`
   cursor: pointer;
   color: ${({ theme }) => theme.colors.general.blue};
   font-weight: bold;
+  margin-bottom: 2rem;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.bg.primary};
-    color: ${({ theme }) => theme.colors.general.accent1};
-    box-shadow: inset 10px 0px 0px 1px
-      ${({ theme }) => theme.colors.general.accent1};
+    background: ${({ theme }) => theme.colors.general.blue};
+    color: ${({ theme }) => theme.colors.bg.primary};
+    box-shadow: inset 10px 0px 0px 1px ${({ theme }) => theme.colors.bg.primary};
   }
 `;
 
@@ -95,7 +115,11 @@ export const Nav = styled.nav`
 
   // Expand menu on large screen if user is not on the watch view
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    ${({ watchView }) => !watchView && "width: 230px"};
+    ${({ watchView }) =>
+      !watchView &&
+      css`
+        width: 240px;
+      `};
   }
 
   /* Custom Scrollbar */
