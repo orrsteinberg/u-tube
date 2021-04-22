@@ -2,8 +2,10 @@ import styled from "styled-components";
 
 export const AvatarImg = styled.img`
   width: ${({ size }) =>
-    size === "sm"
-      ? "30px"
+    size === "xs"
+      ? "26px"
+      : size === "sm"
+      ? "36px"
       : size === "md"
       ? "40px"
       : size === "lg"
