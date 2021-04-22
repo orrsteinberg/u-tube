@@ -16,6 +16,7 @@ import Watch from "./features/watch/Watch";
 import Channel from "./features/channel/Channel";
 import Search from "./features/search/Search";
 import Subscriptions from "./features/subscriptions/Subscriptions";
+import Explore from "./features/explore/Explore";
 
 const App = () => {
   // Listen for auth state change and fetch/clear subscriptions
@@ -62,6 +63,12 @@ const App = () => {
         <Route path="/subscriptions" exact>
           <Layout activeTab="subscriptions">
             <Subscriptions />
+          </Layout>
+        </Route>
+
+        <Route path="/explore" exact>
+          <Layout activeTab="explore">
+            <Explore />
           </Layout>
         </Route>
 
