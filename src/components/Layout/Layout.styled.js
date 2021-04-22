@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Main = styled.main`
   display: flex;
@@ -9,20 +9,19 @@ export const Main = styled.main`
 export const ViewContainer = styled.div`
   /* Custom Scrollbar */
   &::-webkit-scrollbar {
-    width: 11px;
+    width: 10px;
   }
   & {
     scrollbar-width: thin;
     scrollbar-color: ${({ theme }) =>
-      `${theme.colors.bg.primary} ${theme.colors.bg.tertiary}`};
+      `${theme.colors.bg.tertiary} ${theme.colors.bg.primary}`};
   }
   &::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.bg.tertiary};
+    background: ${({ theme }) => theme.colors.bg.darker};
   }
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.bg.primary};
-    border-radius: 6px;
-    border: 3px solid ${({ theme }) => theme.colors.bg.tertiary};
+    background-color: ${({ theme }) => theme.colors.bg.tertiary};
+    border-radius: 3px;
   }
 
   flex: 1;
@@ -59,15 +58,17 @@ export const ViewContainer = styled.div`
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     ${({ menuIsOpen, theme }) =>
       menuIsOpen &&
-      `::after {
-        position: fixed;
-        top: ${theme.sizes.headerHeight};
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.7);
-        z-index: 1;
-      }`}
+      css`
+        ::after {
+          position: fixed;
+          top: ${theme.sizes.headerHeight};
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.7);
+          z-index: 1;
+        }
+      `}
   }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
