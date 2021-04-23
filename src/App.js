@@ -19,12 +19,12 @@ import Subscriptions from "./features/subscriptions/Subscriptions";
 import Explore from "./features/explore/Explore";
 
 const App = () => {
-  // Listen for auth state change and fetch/clear subscriptions
-  // to avoid repetitive subscription status requests for every channel/video
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // On user state change fetch/clear subscriptions
+    // to avoid repetitive subscription status requests for every channel/video
     if (user) {
       dispatch(fetchSubscriptions());
     } else {
