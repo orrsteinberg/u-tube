@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   MdHome,
@@ -13,6 +13,7 @@ import {
 } from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
 
+import { useGoogleAuth } from "../../hooks";
 import {
   Nav,
   NavGroup,
@@ -21,7 +22,6 @@ import {
   ViewAllSubsButton,
 } from "./Sidemenu.styled";
 import { selectUser } from "../../features/auth/authSlice";
-import { login, logout } from "../../features/auth/authSlice";
 import { selectSubscriptions } from "../../features/subscriptions/subscriptionsSlice";
 import Avatar from "../Avatar/Avatar";
 
@@ -61,15 +61,15 @@ const SubscribedChannelsGroup = () => {
 };
 
 const Sidemenu = ({ showOnMobile, activeTab, watchView }) => {
+  const [signIn, signOut] = useGoogleAuth();
   const user = useSelector(selectUser);
-  const dispatch = useDispatch();
 
   const handleAuth = () => {
-    user ? dispatch(logout()) : dispatch(login());
+    user ? signOut() : signIn();
   };
 
   const authIcon = user ? <IoMdLogOut /> : <MdPerson />;
-  const authText = user ? "Log out" : "Log in";
+  const authText = user ? "Sign out" : "Sign in";
 
   return (
     <Nav showOnMobile={showOnMobile} watchView={watchView}>
