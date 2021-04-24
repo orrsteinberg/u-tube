@@ -29,10 +29,19 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
+  .hideOnMobile {
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+      display: none;
+    }
+  }
+
   .count {
     text-transform: uppercase;
   }
 
+  .circleHighlight {
+    color: ${({ theme }) => theme.colors.general.blue};
+  }
 `;
 
 export default GlobalStyles;
