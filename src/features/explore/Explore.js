@@ -73,7 +73,7 @@ const Explore = () => {
     <InfiniteScroll
       dataLength={explorer?.videos.length || 0}
       next={getVideos}
-      hasMore={true}
+      hasMore={explorer?.hasMoreVideos}
       // Target parent container by id to detect scroll
       scrollableTarget="view-container"
     >

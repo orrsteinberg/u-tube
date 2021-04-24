@@ -80,7 +80,7 @@ const ChannelVideos = () => {
 const Channel = () => {
   const { id: urlParamId } = useParams();
   const { channelId, title } = useSelector(selectChannelData);
-  const { videos } = useSelector(selectChannelVideos);
+  const { videos, hasMoreVideos } = useSelector(selectChannelVideos);
   const dispatch = useDispatch();
 
   // Fetch more videos on scroll
@@ -102,7 +102,7 @@ const Channel = () => {
     <InfiniteScroll
       dataLength={videos.length}
       next={getMoreVideos}
-      hasMore={true}
+      hasMore={hasMoreVideos}
       // Target parent container by id to detect scroll
       scrollableTarget="view-container"
     >

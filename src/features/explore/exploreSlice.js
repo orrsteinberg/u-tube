@@ -19,30 +19,35 @@ const initialState = {
     status: "idle", // "idle" | "loading" | "succeeded" | "failed"
     error: null,
     pageToken: null,
+    hasMoreVideos: true,
   },
   gaming: {
     videos: [],
     status: "idle",
     error: null,
     pageToken: null,
+    hasMoreVideos: true,
   },
   news: {
     videos: [],
     status: "idle",
     error: null,
     pageToken: null,
+    hasMoreVideos: true,
   },
   sports: {
     videos: [],
     status: "idle",
     error: null,
     pageToken: null,
+    hasMoreVideos: true,
   },
   comedy: {
     videos: [],
     status: "idle",
     error: null,
     pageToken: null,
+    hasMoreVideos: true,
   },
 };
 
@@ -120,7 +125,14 @@ const exploreSlice = createSlice({
       // Update current category, videos and page token
       state.currentCategory = category;
       state[category].videos = state[category].videos.concat(newVideos);
-      state[category].pageToken = action.payload.pageToken;
+
+      // If there was no next page token, we've fetched all the videos for this channel
+      if (action.payload.pageToken) {
+        state[category].pageToken = action.payload.pageToken;
+      } else {
+        state[category].pageToken = null;
+        state[category].hasMoreVideos = false;
+      }
     },
     [fetchVideosToExplore.rejected]: (state, action) => {
       const category = state.currentCategory;

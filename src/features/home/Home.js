@@ -11,7 +11,7 @@ import SkeletonVideoItem from "../../components/skeletons/SkeletonVideoItem";
 import Error from "../../components/Error/Error";
 
 const HomeView = () => {
-  const { status, videos, error } = useSelector(selectHome);
+  const { status, videos, error, hasMoreVideos } = useSelector(selectHome);
   const dispatch = useDispatch();
 
   const getVideos = useCallback(() => dispatch(fetchHomeVideos()), [dispatch]);
@@ -27,7 +27,7 @@ const HomeView = () => {
     <InfiniteScroll
       dataLength={videos.length}
       next={getVideos}
-      hasMore={true}
+      hasMore={hasMoreVideos}
       // Target parent container by id to detect scroll
       scrollableTarget="view-container"
     >

@@ -13,9 +13,10 @@ const initialState = {
   videoCount: null,
   channelVideos: {
     videos: [],
-    status: "idle", // "idle" | "loading" | "succeeded" | "failed"
+    status: "idle",
     error: null,
     pageToken: null,
+    hasMoreVideos: true,
   },
 };
 
@@ -117,9 +118,16 @@ const channelSlice = createSlice({
         };
       });
 
-      // Update videos and page token
+      // Update videos
       state.channelVideos.videos = state.channelVideos.videos.concat(newVideos);
-      state.channelVideos.pageToken = action.payload.pageToken;
+
+      // If there was no next page token, we've fetched all the videos for this channel
+      if (action.payload.pageToken) {
+        state.channelVideos.pageToken = action.payload.pageToken;
+      } else {
+        state.channelVideos.pageToken = null;
+        state.channelVideos.hasMoreVideos = false;
+      }
     },
     [fetchChannelVideos.rejected]: (state, action) => {
       state.channelVideos.status = "failed";

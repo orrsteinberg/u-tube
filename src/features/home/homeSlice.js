@@ -8,6 +8,7 @@ const initialState = {
   status: "idle", // "idle" | "loading" | "succeeded" | "failed"
   error: null,
   pageToken: null,
+  hasMoreVideos: true,
 };
 
 // Async thunks
@@ -69,9 +70,16 @@ const homeSlice = createSlice({
         };
       });
 
-      // Update videos and page token
+      // Update videos
       state.videos = state.videos.concat(newVideos);
-      state.pageToken = action.payload.pageToken;
+
+      // If there was no next page token, we've fetched all the videos for this channel
+      if (action.payload.pageToken) {
+        state.pageToken = action.payload.pageToken;
+      } else {
+        state.pageToken = null;
+        state.hasMoreVideos = false;
+      }
     },
     [fetchHomeVideos.rejected]: (state, action) => {
       state.status = "failed";
