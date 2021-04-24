@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const AvatarImg = styled.img`
   width: ${({ size }) =>
@@ -12,4 +12,11 @@ export const AvatarImg = styled.img`
       ? "50px"
       : "auto"};
   border-radius: 50%;
+
+  // Highlight avatar
+  ${({ highlight, theme }) =>
+    highlight &&
+    css`
+      box-shadow: var(--highlight);
+    `}
 `;
