@@ -38,9 +38,18 @@ const initialState = {
 // Async thunks
 export const fetchVideoToWatch = createAsyncThunk(
   "watch/fetchVideoToWatch",
-  async (videoId) => {
+  async (videoId, { dispatch }) => {
     // Get video
     const videoResponse = await api.getVideoById(videoId);
+
+    // Show error if video was not found
+    if (videoResponse.data.items.length === 0) {
+      throw new Error("Video not found");
+    }
+
+    // If video exists, fetch related videos and comments
+    dispatch(fetchRelatedVideos(videoId));
+    dispatch(fetchComments(videoId));
 
     // Channel data is not included in the API response so we have to make another request
     const channelId = videoResponse.data.items[0].snippet.channelId;

@@ -5,8 +5,6 @@ import { Helmet } from "react-helmet";
 
 import {
   fetchVideoToWatch,
-  fetchRelatedVideos,
-  fetchComments,
   selectVideoToWatch,
   selectRelatedVideos,
 } from "./watchSlice";
@@ -39,8 +37,6 @@ const Watch = () => {
     // Only fetch required data if it's a new video
     if (urlParamId !== currentVideo.id) {
       dispatch(fetchVideoToWatch(urlParamId));
-      dispatch(fetchRelatedVideos(urlParamId));
-      dispatch(fetchComments(urlParamId));
     }
   }, [urlParamId, currentVideo, dispatch]);
 
@@ -69,20 +65,22 @@ const Watch = () => {
         )}
         <CommentSection />
       </MainCol>
-      <RelatedVideosCol>
-        <h2>Related videos</h2>
-        {relatedVideosStatus === "loading" &&
-          [...Array(NUM_RELATED_VIDS_TO_FETCH)].map((_, i) => (
-            <SkeletonHorizontalVideoItem key={i} />
-          ))}
-        {relatedVideosStatus === "failed" && (
-          <Error error={relatedVideosError} />
-        )}
-        {relatedVideosStatus === "succeeded" &&
-          videos.map((video) => (
-            <HorizontalVideoItem video={video} key={video.id} />
-          ))}
-      </RelatedVideosCol>
+      {relatedVideosStatus !== "idle" && (
+        <RelatedVideosCol>
+          <h2>Related videos</h2>
+          {relatedVideosStatus === "loading" &&
+            [...Array(NUM_RELATED_VIDS_TO_FETCH)].map((_, i) => (
+              <SkeletonHorizontalVideoItem key={i} />
+            ))}
+          {relatedVideosStatus === "failed" && (
+            <Error error={relatedVideosError} />
+          )}
+          {relatedVideosStatus === "succeeded" &&
+            videos.map((video) => (
+              <HorizontalVideoItem video={video} key={video.id} />
+            ))}
+        </RelatedVideosCol>
+      )}
     </WatchViewContainer>
   );
 };
