@@ -5,6 +5,9 @@ export const truncateTitle = (title) =>
 export const truncateDescription = (description) =>
   description.length > 150 ? description.substr(0, 147) + "..." : description;
 
+export const truncateSubscriptionTitle = (title) =>
+  title.length > 18 ? title.substr(0, 15) + "..." : title;
+
 // Parse query strings
 export const getQueryStringParams = (query) => {
   return query
