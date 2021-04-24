@@ -17,7 +17,9 @@ import Error from "../../../components/Error/Error";
 
 const NewCommentForm = () => {
   const { currentVideo } = useSelector(selectVideoToWatch);
-  const { newCommentStatus } = useSelector(selectCommentSection);
+  const { newCommentStatus, newCommentError } = useSelector(
+    selectCommentSection
+  );
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
@@ -56,6 +58,7 @@ const NewCommentForm = () => {
           Comment
         </button>
       </form>
+      {newCommentStatus === "failed" && <Error error={newCommentError} />}
     </StyledNewCommentForm>
   );
 };
