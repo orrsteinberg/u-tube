@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const VideoItemContainer = styled.div`
   margin: 0 auto 1.75rem auto;
-  max-width: 90%;
+  max-width: 320px;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     max-width: 256px;
