@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const HorizontalChannelItemContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   margin-bottom: 0.75rem;
   max-width: 100%;
