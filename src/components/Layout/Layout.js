@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 
-import Header from "../../components/Header/Header";
-import Sidemenu from "../../components/Sidemenu/Sidemenu";
+import { useDetectPageClick } from "../../hooks";
+import Header from "../Header/Header";
+import Sidemenu from "../Sidemenu/Sidemenu";
 import { Main, ViewContainer } from "./Layout.styled";
 
 const Layout = ({ children, activeTab, watchView }) => {
-  const [showMenuOnMobile, setShowMenuOnMobile] = useState(false);
+  const menuRef = useRef(null);
+  const [showMenuOnMobile, setShowMenuOnMobile] = useDetectPageClick(
+    menuRef,
+    false
+  );
 
   const handleMenuToggle = () => setShowMenuOnMobile(!showMenuOnMobile);
 
@@ -14,6 +19,7 @@ const Layout = ({ children, activeTab, watchView }) => {
       <Header handleMenuToggle={handleMenuToggle} />
       <Main>
         <Sidemenu
+          ref={menuRef}
           showOnMobile={showMenuOnMobile}
           activeTab={activeTab}
           watchView={watchView}
