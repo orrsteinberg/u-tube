@@ -53,7 +53,7 @@ export const HeaderIcons = styled.div`
 `;
 
 export const ToggleButton = styled(IconButton)`
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }
@@ -64,10 +64,10 @@ export const SearchForm = styled.form`
   background: ${({ theme }) => theme.colors.bg.darker};
   border: 1px solid ${({ theme }) => theme.colors.bg.secondary};
   border-radius: 3px;
+  margin: 0 0.25rem;
 
   &:focus-within {
     background: ${({ theme }) => shade(0.5, theme.colors.bg.primary)};
-    //background: ${({ theme }) => theme.colors.bg.secondary};
   }
 
   input {
