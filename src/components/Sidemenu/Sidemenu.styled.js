@@ -110,6 +110,8 @@ export const Nav = styled.nav`
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
     position: static;
     transform: translateX(0);
+    // Box shadow var for highlighted channel avatars on md screen
+    --highlight: 0px 0px 0px 2px ${({ theme }) => theme.colors.general.blue};
   }
 
   // Expand menu on large screen if user is not on the watch view
@@ -118,6 +120,8 @@ export const Nav = styled.nav`
       !watchView &&
       css`
         width: 240px;
+        // No need for highlighting avatars on large screen (except on watch view)
+        --highlight: none;
       `};
   }
 
