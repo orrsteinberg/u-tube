@@ -48,6 +48,7 @@ export const StyledNewCommentForm = styled.div`
       cursor: pointer;
       text-transform: uppercase;
       padding: 0.5rem 1rem;
+      border-radius: 3px;
 
       &:focus {
         outline: none;
