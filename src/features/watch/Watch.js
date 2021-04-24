@@ -75,7 +75,9 @@ const Watch = () => {
           [...Array(NUM_RELATED_VIDS_TO_FETCH)].map((_, i) => (
             <SkeletonHorizontalVideoItem key={i} />
           ))}
-        {relatedVideosStatus === "failed" && <p>{relatedVideosError}</p>}
+        {relatedVideosStatus === "failed" && (
+          <Error error={relatedVideosError} />
+        )}
         {relatedVideosStatus === "succeeded" &&
           videos.map((video) => (
             <HorizontalVideoItem video={video} key={video.id} />
