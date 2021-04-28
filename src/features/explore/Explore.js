@@ -14,7 +14,7 @@ import {
   fetchVideosToExplore,
   setCurrentCategory,
   selectCurrentCategory,
-  selectExplorer,
+  selectExploreCategory,
 } from "./exploreSlice";
 import { CardsContainer, StyledCard, ExploreText } from "./Explore.styled";
 import { NUM_VIDS_TO_FETCH } from "../../utils/constants";
@@ -54,7 +54,7 @@ const CategoryCards = () => {
 };
 
 const Explore = () => {
-  const explorer = useSelector(selectExplorer);
+  const activeCategory = useSelector(selectExploreCategory);
   const dispatch = useDispatch();
 
   const getVideos = useCallback(() => dispatch(fetchVideosToExplore()), [
@@ -63,16 +63,16 @@ const Explore = () => {
 
   useEffect(() => {
     // On state change, fetch videos if there aren't any already
-    if (explorer?.status === "idle") {
+    if (activeCategory?.status === "idle") {
       getVideos();
     }
-  }, [getVideos, explorer]);
+  }, [getVideos, activeCategory]);
 
   return (
     <InfiniteScroll
-      dataLength={explorer?.videos.length || 0}
+      dataLength={activeCategory?.videos.length || 0}
       next={getVideos}
-      hasMore={explorer?.hasMoreVideos}
+      hasMore={activeCategory?.hasMoreVideos}
       // Target parent container by id to detect scroll
       scrollableTarget="view-container"
     >
@@ -80,18 +80,18 @@ const Explore = () => {
         <title>Explore | U-Tube</title>
       </Helmet>
       <CategoryCards />
-      {!explorer && (
+      {!activeCategory && (
         <ExploreText>
           Click on a category to explore trending videos
         </ExploreText>
       )}
-      {explorer && (
+      {activeCategory && (
         <>
           <div className="row">
-            {explorer.status === "loading" && (
+            {activeCategory.status === "loading" && (
               <>
-                {explorer.videos.length > 0 &&
-                  explorer.videos.map((video) => (
+                {activeCategory.videos.length > 0 &&
+                  activeCategory.videos.map((video) => (
                     <VideoItem video={video} key={video.id} />
                   ))}
                 {[...Array(NUM_VIDS_TO_FETCH)].map((_, i) => (
@@ -99,12 +99,14 @@ const Explore = () => {
                 ))}
               </>
             )}
-            {explorer.status === "succeeded" &&
-              explorer.videos.map((video) => (
+            {activeCategory.status === "succeeded" &&
+              activeCategory.videos.map((video) => (
                 <VideoItem video={video} key={video.id} />
               ))}
           </div>
-          {explorer.status === "failed" && <Error error={explorer.error} />}
+          {activeCategory.status === "failed" && (
+            <Error error={activeCategory.error} />
+          )}
         </>
       )}
     </InfiniteScroll>

@@ -149,7 +149,7 @@ export const { setCurrentCategory } = exploreSlice.actions;
 export const selectCurrentCategory = (state) => {
   return state.explore.currentCategory;
 };
-export const selectExplorer = (state) => {
+export const selectExploreCategory = (state) => {
   const currentCategory = state.explore.currentCategory;
   return state.explore[currentCategory];
 };
