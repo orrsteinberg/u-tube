@@ -12,7 +12,6 @@ import {
   selectChannelVideos,
 } from "./channelSlice";
 import { NUM_VIDS_TO_FETCH } from "../../utils/constants";
-import { VideoRow } from "../../components/shared";
 import { StyledChannelHeader, ChannelHeaderText } from "./Channel.styled";
 import VideoItem from "../../components/VideoItem/VideoItem";
 import SkeletonVideoItem from "../../components/skeletons/SkeletonVideoItem";
@@ -56,7 +55,7 @@ const ChannelVideos = () => {
   const { status, error, videos } = useSelector(selectChannelVideos);
 
   return (
-    <VideoRow>
+    <div className="row">
       {status === "loading" && (
         <>
           {videos.length > 0 &&
@@ -73,7 +72,7 @@ const ChannelVideos = () => {
           <VideoItem hideChannel video={video} key={video.id} />
         ))}
       {status === "failed" && <Error error={error} />}
-    </VideoRow>
+    </div>
   );
 };
 

@@ -18,7 +18,6 @@ import {
 } from "./exploreSlice";
 import { CardsContainer, StyledCard, ExploreText } from "./Explore.styled";
 import { NUM_VIDS_TO_FETCH } from "../../utils/constants";
-import { VideoRow } from "../../components/shared";
 import VideoItem from "../../components/VideoItem/VideoItem";
 import SkeletonVideoItem from "../../components/skeletons/SkeletonVideoItem";
 import Error from "../../components/Error/Error";
@@ -88,7 +87,7 @@ const Explore = () => {
       )}
       {explorer && (
         <>
-          <VideoRow>
+          <div className="row">
             {explorer.status === "loading" && (
               <>
                 {explorer.videos.length > 0 &&
@@ -104,7 +103,7 @@ const Explore = () => {
               explorer.videos.map((video) => (
                 <VideoItem video={video} key={video.id} />
               ))}
-          </VideoRow>
+          </div>
           {explorer.status === "failed" && <Error error={explorer.error} />}
         </>
       )}

@@ -5,7 +5,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import { fetchHomeVideos, selectHome } from "./homeSlice";
 import { NUM_VIDS_TO_FETCH } from "../../utils/constants";
-import { VideoRow } from "../../components/shared";
 import VideoItem from "../../components/VideoItem/VideoItem";
 import SkeletonVideoItem from "../../components/skeletons/SkeletonVideoItem";
 import Error from "../../components/Error/Error";
@@ -34,7 +33,7 @@ const HomeView = () => {
       <Helmet>
         <title>Home | U-Tube</title>
       </Helmet>
-      <VideoRow>
+      <div className="row">
         {status === "loading" && (
           <>
             {videos.length > 0 &&
@@ -46,7 +45,7 @@ const HomeView = () => {
         )}
         {status === "succeeded" &&
           videos.map((video) => <VideoItem video={video} key={video.id} />)}
-      </VideoRow>
+      </div>
       {status === "failed" && <Error error={error} />}
     </InfiniteScroll>
   );

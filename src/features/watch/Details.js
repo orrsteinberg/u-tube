@@ -5,7 +5,6 @@ import moment from "moment";
 import numeral from "numeral";
 
 import { truncateDescription } from "../../utils/helpers";
-import { IconButton } from "../../components/shared";
 import {
   DetailsContainer,
   StatisticsContainer,
@@ -16,6 +15,7 @@ import {
 } from "./Details.styled";
 import Avatar from "../../components/Avatar/Avatar";
 import SubscribeButton from "../../components/SubscribeButton/SubscribeButton";
+import IconButton from "../../components/IconButton/IconButton";
 
 const Statistics = ({ likeCount, dislikeCount, viewCount, publishedAt }) => {
   return (
