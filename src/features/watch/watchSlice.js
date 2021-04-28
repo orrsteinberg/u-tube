@@ -98,7 +98,13 @@ export const addComment = createAsyncThunk(
 const watchSlice = createSlice({
   name: "watch",
   initialState,
-  reducers: {},
+  reducers: {
+    noUserCommentError: (state, action) => {
+      state.commentSection.newCommentStatus = "failed";
+      state.commentSection.newCommentError =
+        "You must be logged in to post comments";
+    },
+  },
   extraReducers: {
     // Using Immer under the hood so we're not mutating the actual state
     [fetchVideoToWatch.pending]: (state, action) => {
@@ -236,6 +242,9 @@ const watchSlice = createSlice({
     },
   },
 });
+
+// Actions
+export const { noUserCommentError } = watchSlice.actions;
 
 // Selectors
 export const selectVideoToWatch = (state) => state.watch;
