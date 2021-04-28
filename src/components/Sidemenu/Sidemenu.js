@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -14,56 +14,9 @@ import {
 import { IoMdLogOut } from "react-icons/io";
 
 import { useGoogleAuth } from "../../hooks";
-import {
-  Nav,
-  NavGroup,
-  NavItem,
-  AuthButton,
-  ViewAllSubsButton,
-} from "./Sidemenu.styled";
-import { truncateSubscriptionTitle } from "../../utils/helpers";
+import { Nav, NavGroup, NavItem, AuthButton } from "./Sidemenu.styled";
 import { selectUser } from "../../features/auth/authSlice";
-import { selectSubscriptions } from "../../features/subscriptions/subscriptionsSlice";
-import Avatar from "../Avatar/Avatar";
-
-const SubscribedChannelsGroup = () => {
-  // Show only the first 5 subscriptions, expand list to show the rest
-  const [isExpanded, setIsExpanded] = useState(false);
-  const { items: fullList } = useSelector(selectSubscriptions);
-
-  const listToDisplay = isExpanded ? fullList : fullList.slice(0, 5);
-
-  const handleToggle = () => setIsExpanded(!isExpanded);
-
-  const button =
-    fullList.length > 5 ? (
-      <ViewAllSubsButton onClick={handleToggle}>
-        {isExpanded ? "show less" : "show all"}
-      </ViewAllSubsButton>
-    ) : null;
-
-  return (
-    <NavGroup className="hideOnMobile">
-      {listToDisplay.map((item) => (
-        <Link to={`/channel/${item.channel.id}`} key={item.channel.id}>
-          <NavItem>
-            <Avatar
-              highlight={item.channel.newVideoCount > 0}
-              size="xs"
-              src={item.channel.avatar}
-              alt={item.channel.title}
-            />{" "}
-            <span>{truncateSubscriptionTitle(item.channel.title)}</span>
-            {item.channel.newVideoCount > 0 && (
-              <span className="circleHighlight">●</span>
-            )}
-          </NavItem>
-        </Link>
-      ))}
-      {button}
-    </NavGroup>
-  );
-};
+import SubscriptionsNavGroup from "./SubscriptionsNavGroup";
 
 const Sidemenu = React.forwardRef(
   ({ showOnMobile, activeTab, watchView }, ref) => {
@@ -110,7 +63,7 @@ const Sidemenu = React.forwardRef(
             <MdWatchLater /> <span>Watch Later</span>
           </NavItem>
         </NavGroup>
-        {user && <SubscribedChannelsGroup />}
+        {user && <SubscriptionsNavGroup />}
         <AuthButton as="button" onClick={handleAuth}>
           {authIcon} <span>{authText}</span>
         </AuthButton>

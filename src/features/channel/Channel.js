@@ -11,70 +11,8 @@ import {
   selectChannelData,
   selectChannelVideos,
 } from "./channelSlice";
-import { NUM_VIDS_TO_FETCH } from "../../utils/constants";
-import { StyledChannelHeader, ChannelHeaderText } from "./Channel.styled";
-import VideoItem from "../../components/VideoItem/VideoItem";
-import SkeletonVideoItem from "../../components/skeletons/SkeletonVideoItem";
-import SkeletonChannelHeader from "../../components/skeletons/SkeletonChannelHeader";
-import Avatar from "../../components/Avatar/Avatar";
-import ChannelStatCount from "../../components/ChannelStatCount/ChannelStatCount";
-import SubscribeButton from "../../components/SubscribeButton/SubscribeButton";
-import Error from "../../components/Error/Error";
-
-const ChannelHeader = () => {
-  const {
-    channelId,
-    status,
-    error,
-    title,
-    avatar,
-    subscriberCount,
-    videoCount,
-  } = useSelector(selectChannelData);
-
-  return (
-    <>
-      {status === "loading" && <SkeletonChannelHeader />}
-      {status === "failed" && <Error error={error} />}
-      {status === "succeeded" && (
-        <StyledChannelHeader>
-          <Avatar src={avatar} alt={title} />
-          <ChannelHeaderText>
-            <h1>{title}</h1>
-            <ChannelStatCount name="subscriber" count={subscriberCount} />
-            <ChannelStatCount name="video" count={videoCount} />
-          </ChannelHeaderText>
-          <SubscribeButton channelId={channelId} />
-        </StyledChannelHeader>
-      )}
-    </>
-  );
-};
-
-const ChannelVideos = () => {
-  const { status, error, videos } = useSelector(selectChannelVideos);
-
-  return (
-    <div className="row">
-      {status === "loading" && (
-        <>
-          {videos.length > 0 &&
-            videos.map((video) => (
-              <VideoItem hideChannel video={video} key={video.id} />
-            ))}
-          {[...Array(NUM_VIDS_TO_FETCH)].map((_, i) => (
-            <SkeletonVideoItem hideChannel key={i} />
-          ))}
-        </>
-      )}
-      {status === "succeeded" &&
-        videos.map((video) => (
-          <VideoItem hideChannel video={video} key={video.id} />
-        ))}
-      {status === "failed" && <Error error={error} />}
-    </div>
-  );
-};
+import ChannelHeader from "./ChannelHeader";
+import ChannelVideos from "./ChannelVideos";
 
 const Channel = () => {
   const { id: urlParamId } = useParams();

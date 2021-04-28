@@ -6,25 +6,6 @@ export const NavGroup = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.bg.secondary};
 `;
 
-export const ViewAllSubsButton = styled.button`
-  border: 0;
-  outline: 0;
-  background: none;
-  text-align: center;
-  display: block;
-  width: 100%;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  font-weight: bold;
-  margin-top: 0.75rem;
-  color: ${({ theme }) => theme.colors.text.secondary};
-  cursor: pointer;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.text.primary};
-  }
-`;
-
 export const NavItem = styled.div`
   display: flex;
   justify-content: center;
@@ -51,6 +32,12 @@ export const NavItem = styled.div`
 
   svg {
     font-size: 1.8rem;
+
+    ${({ theme, active }) =>
+      active &&
+      css`
+        color: ${theme.colors.general.accent2};
+      `}
   }
 
   span {
@@ -102,6 +89,10 @@ export const Nav = styled.nav`
           span {
             display: inline-block;
             margin-left: 1rem;
+          }
+
+          .circleHighlight {
+            margin-left: auto;
           }
         `};
     }
