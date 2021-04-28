@@ -3,33 +3,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
-import {
-  fetchVideoToWatch,
-  selectVideoToWatch,
-  selectRelatedVideos,
-} from "./watchSlice";
-import { NUM_RELATED_VIDS_TO_FETCH } from "../../utils/constants";
-import Details from "./Details/Details";
-import CommentSection from "./CommentSection/CommentSection";
-import HorizontalVideoItem from "../../components/HorizontalVideoItem/HorizontalVideoItem";
-import SkeletonWatchVideo from "../../components/skeletons/SkeletonWatchVideo";
-import SkeletonHorizontalVideoItem from "../../components/skeletons/SkeletonHorizontalVideoItem";
+import { fetchVideoToWatch, selectVideoToWatch } from "./watchSlice";
 import {
   WatchViewContainer,
   MainCol,
-  Player,
   RelatedVideosCol,
+  Player,
 } from "./Watch.styled";
+import Details from "./Details";
+import CommentSection from "./CommentSection";
+import RelatedVideos from "./RelatedVideos";
+import SkeletonWatchVideo from "../../components/skeletons/SkeletonWatchVideo";
 import Error from "../../components/Error/Error";
 
 const Watch = () => {
   const { id: urlParamId } = useParams();
   const { currentVideo, status, error } = useSelector(selectVideoToWatch);
-  const {
-    videos,
-    status: relatedVideosStatus,
-    error: relatedVideosError,
-  } = useSelector(selectRelatedVideos);
 
   const dispatch = useDispatch();
 
@@ -65,22 +54,9 @@ const Watch = () => {
         )}
         <CommentSection />
       </MainCol>
-      {relatedVideosStatus !== "idle" && (
-        <RelatedVideosCol>
-          <h2>Related videos</h2>
-          {relatedVideosStatus === "loading" &&
-            [...Array(NUM_RELATED_VIDS_TO_FETCH)].map((_, i) => (
-              <SkeletonHorizontalVideoItem key={i} />
-            ))}
-          {relatedVideosStatus === "failed" && (
-            <Error error={relatedVideosError} />
-          )}
-          {relatedVideosStatus === "succeeded" &&
-            videos.map((video) => (
-              <HorizontalVideoItem video={video} key={video.id} />
-            ))}
-        </RelatedVideosCol>
-      )}
+      <RelatedVideosCol>
+        <RelatedVideos />
+      </RelatedVideosCol>
     </WatchViewContainer>
   );
 };

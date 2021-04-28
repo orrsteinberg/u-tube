@@ -4,8 +4,8 @@ import { MdThumbUp, MdThumbDown } from "react-icons/md";
 import moment from "moment";
 import numeral from "numeral";
 
-import { truncateDescription } from "../../../utils/helpers";
-import { IconButton } from "../../../components/shared";
+import { truncateDescription } from "../../utils/helpers";
+import { IconButton } from "../../components/shared";
 import {
   DetailsContainer,
   StatisticsContainer,
@@ -14,8 +14,8 @@ import {
   ChannelDetailsContent,
   DescriptionContainer,
 } from "./Details.styled";
-import Avatar from "../../../components/Avatar/Avatar";
-import SubscribeButton from "../../../components/SubscribeButton/SubscribeButton";
+import Avatar from "../../components/Avatar/Avatar";
+import SubscribeButton from "../../components/SubscribeButton/SubscribeButton";
 
 const Statistics = ({ likeCount, dislikeCount, viewCount, publishedAt }) => {
   return (

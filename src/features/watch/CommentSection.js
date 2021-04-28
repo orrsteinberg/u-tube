@@ -1,35 +1,40 @@
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { selectUser } from "../../auth/authSlice";
+import { selectUser } from "../auth/authSlice";
 import {
   addComment,
+  noUserCommentError,
   selectVideoToWatch,
   selectCommentSection,
-} from "../watchSlice";
+} from "./watchSlice";
 import {
   CommentsContainer,
   StyledNewCommentForm,
 } from "./CommentSection.styled";
 import Comment from "./Comment";
-import Avatar from "../../../components/Avatar/Avatar";
-import Error from "../../../components/Error/Error";
+import Avatar from "../../components/Avatar/Avatar";
+import Error from "../../components/Error/Error";
 
 const NewCommentForm = () => {
+  const inputRef = useRef();
+  const [text, setText] = useState("");
+  const user = useSelector(selectUser);
   const { currentVideo } = useSelector(selectVideoToWatch);
   const { newCommentStatus, newCommentError } = useSelector(
     selectCommentSection
   );
-  const user = useSelector(selectUser);
   const dispatch = useDispatch();
-
-  const [text, setText] = useState("");
-  const inputRef = useRef();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!user || text.trim() === "") return;
+    if (!user) {
+      dispatch(noUserCommentError());
+      return;
+    }
+
+    if (text.trim() === "") return;
 
     // If user is logged in, add new comment
     const newComment = {
@@ -44,22 +49,24 @@ const NewCommentForm = () => {
   };
 
   return (
-    <StyledNewCommentForm>
-      <Avatar size="lg" src={user?.avatar} alt={user?.name} />
-      <form onSubmit={handleSubmit}>
-        <input
-          ref={inputRef}
-          type="text"
-          placeholder="Add a comment..."
-          value={text}
-          onChange={({ target }) => setText(target.value)}
-        />
-        <button type="submit" disabled={newCommentStatus === "loading"}>
-          Comment
-        </button>
-      </form>
+    <>
+      <StyledNewCommentForm>
+        <Avatar size="lg" src={user?.avatar} alt={user?.name} />
+        <form onSubmit={handleSubmit}>
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="Add a comment..."
+            value={text}
+            onChange={({ target }) => setText(target.value)}
+          />
+          <button type="submit" disabled={newCommentStatus === "loading"}>
+            Comment
+          </button>
+        </form>
+      </StyledNewCommentForm>
       {newCommentStatus === "failed" && <Error error={newCommentError} />}
-    </StyledNewCommentForm>
+    </>
   );
 };
 

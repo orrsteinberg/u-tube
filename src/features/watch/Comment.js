@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 
 import { CommentContainer, CommentBody, Author, Text } from "./Comment.styled";
-import Avatar from "../../../components/Avatar/Avatar";
+import Avatar from "../../components/Avatar/Avatar";
 
 const Comment = ({ comment }) => {
   const {
