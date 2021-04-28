@@ -68,7 +68,7 @@ const channelSlice = createSlice({
   initialState,
   reducers: {
     clearChannelView: (state, action) => {
-      state.status = "loading";
+      state.status = "idle";
       state.error = null;
       state.channelVideos.videos = [];
       state.channelVideos.pageToken = null;
