@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ReactComponent as YouTubeLogo } from "../../logo.svg";
+import { ReactComponent as YouTubeLogo } from "../../assets/logo.svg";
 import IconButton from "../IconButton/IconButton";
 
 export const StyledHeader = styled.header`

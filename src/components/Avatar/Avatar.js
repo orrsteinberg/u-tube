@@ -1,6 +1,6 @@
 import React from "react";
 
-import GuestAvatar from "../../guest.svg";
+import GuestAvatar from "../../assets/guest.svg";
 import { AvatarImg } from "./Avatar.styled";
 
 const Avatar = ({ src, alt, size, highlight }) => {
