@@ -29,6 +29,8 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
+  /* Utility Classes */
+
   .hideOnMobile {
     @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
       display: none;
@@ -41,6 +43,13 @@ const GlobalStyles = createGlobalStyle`
 
   .circleHighlight {
     color: ${({ theme }) => theme.colors.general.blue};
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
   }
 `;
 
