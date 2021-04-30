@@ -5,8 +5,21 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { theme } from "../../utils/theme";
 
 const SkeletonContainer = styled.div`
-  width: 256px;
-  margin: 0 auto 1rem auto;
+  margin: 0 auto 1.75rem auto;
+  flex-basis: 90%;
+  max-width: 380px;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    flex-basis: 48%;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    flex-basis: 29%;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    flex-basis: 24%;
+  }
 `;
 
 const SkeletonVideoItem = ({ hideChannel }) => {
@@ -16,7 +29,7 @@ const SkeletonVideoItem = ({ hideChannel }) => {
         color={theme.colors.bg.tertiary}
         highlightColor={theme.colors.bg.secondary}
       >
-        <Skeleton height={145} width="100%" />
+        <Skeleton style={{ paddingTop: "calc(9/16 * 100%)" }} width="100%" />
         <div>
           {!hideChannel && (
             <Skeleton
