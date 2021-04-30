@@ -2,10 +2,19 @@ import styled from "styled-components";
 
 export const VideoItemContainer = styled.div`
   margin: 0 auto 1.75rem auto;
-  max-width: 320px;
+  flex-basis: 90%;
+  max-width: 380px;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
-    max-width: 256px;
+    flex-basis: 48%;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    flex-basis: 29%;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    flex-basis: 24%;
   }
 `;
 
@@ -13,18 +22,23 @@ export const Thumbnail = styled.div`
   position: relative;
   overflow: hidden;
   border-bottom: 3px solid ${({ theme }) => theme.colors.bg.tertiary};
+  background: ${({ theme }) => theme.colors.bg.primary};
+  padding-top: calc(9 / 16 * 100%);
 
   ::before {
     content: "";
     position: absolute;
-    width: 100%;
-    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: linear-gradient(
       45deg,
       ${({ theme }) => theme.colors.general.accent1} 0%,
       ${({ theme }) => theme.colors.general.accent2} 100%
     );
     opacity: 0;
+    z-index: 1;
   }
 
   svg {
@@ -35,11 +49,12 @@ export const Thumbnail = styled.div`
     font-size: 6rem;
     color: ${({ theme }) => theme.colors.general.light};
     display: none;
+    z-index: 2;
   }
 
   &:hover {
     ::before {
-      opacity: 0.6;
+      opacity: 0.7;
     }
 
     svg {
@@ -50,6 +65,11 @@ export const Thumbnail = styled.div`
   img {
     width: 100%;
     display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 `;
 
@@ -60,6 +80,7 @@ export const Duration = styled.div`
   background: rgba(0, 0, 0, 0.8);
   padding: 0.25rem 0.5rem;
   color: ${({ theme }) => theme.colors.text.primary};
+  z-index: 3;
 `;
 
 export const Details = styled.div`
