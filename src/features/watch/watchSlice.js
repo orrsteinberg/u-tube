@@ -104,6 +104,10 @@ const watchSlice = createSlice({
       state.commentSection.newCommentError =
         "You must be logged in to post comments";
     },
+    clearNoUserCommentError: (state, action) => {
+      state.commentSection.newCommentStatus = "idle";
+      state.commentSection.newCommentError = null;
+    }
   },
   extraReducers: {
     // Using Immer under the hood so we're not mutating the actual state
@@ -244,7 +248,7 @@ const watchSlice = createSlice({
 });
 
 // Actions
-export const { noUserCommentError } = watchSlice.actions;
+export const { noUserCommentError, clearNoUserCommentError } = watchSlice.actions;
 
 // Selectors
 export const selectVideoToWatch = (state) => state.watch;

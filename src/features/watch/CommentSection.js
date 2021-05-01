@@ -1,10 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { selectUser } from "../auth/authSlice";
 import {
   addComment,
   noUserCommentError,
+  clearNoUserCommentError,
   selectVideoToWatch,
   selectCommentSection,
 } from "./watchSlice";
@@ -25,6 +26,13 @@ const NewCommentForm = () => {
     selectCommentSection
   );
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    // When user logs in, clear omment error
+    if (user) {
+      dispatch(clearNoUserCommentError());
+    }
+  }, [user, dispatch])
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -65,7 +73,9 @@ const NewCommentForm = () => {
           </button>
         </form>
       </StyledNewCommentForm>
-      {newCommentStatus === "failed" && <Error error={newCommentError} />}
+      {newCommentStatus === "failed" && (
+        <Error error={newCommentError} />
+      )}
     </>
   );
 };
