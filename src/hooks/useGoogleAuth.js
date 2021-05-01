@@ -9,7 +9,7 @@ const useGoogleAuth = () => {
 
   useEffect(() => {
     // Initialize gapi if no current auth instance exists
-    if (!authInstance) {
+    if (window.gapi && !authInstance) {
       window.gapi.load("client:auth2", () => {
         window.gapi.auth2
           .init({
