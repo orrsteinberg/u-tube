@@ -66,7 +66,7 @@ const App = () => {
           </Layout>
         </Route>
 
-        <Route path="/explore" exact>
+        <Route path="/explore">
           <Layout activeTab="explore">
             <Explore />
           </Layout>
