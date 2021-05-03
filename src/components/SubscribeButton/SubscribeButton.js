@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { confirmAlert } from "react-confirm-alert";
 
 import { selectUser } from "../../features/auth/authSlice";
 import { StyledSubscribeButton } from "./SubscribeButton.styled";
@@ -32,7 +33,20 @@ const SubscribeButton = ({ channelId }) => {
     if (!isSubscribed) {
       dispatch(subscribe(channelId));
     } else {
-      dispatch(unsubscribe(channelId));
+      confirmAlert({
+        title: "Remove subscription",
+        message: "Are you sure you want to unsubscribe from this channel?",
+        buttons: [
+          {
+            label: "Yes",
+            onClick: () => dispatch(unsubscribe(channelId)),
+          },
+          {
+            label: "No",
+            onClick: null,
+          },
+        ],
+      });
     }
   };
 
