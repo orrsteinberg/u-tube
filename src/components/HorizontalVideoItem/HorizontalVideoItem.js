@@ -4,7 +4,7 @@ import { MdPlayArrow } from "react-icons/md";
 import moment from "moment";
 import numeral from "numeral";
 
-import { truncateTitle, truncateDescription } from "../../utils/helpers";
+import { truncateText } from "../../utils/helpers";
 import {
   HorizontalVideoItemContainer,
   ThumbnailLink,
@@ -35,7 +35,7 @@ const HorizontalVideoItem = ({ video, fullWidth }) => {
   const { id, thumbnail, channelId, channelTitle } = video;
 
   // Format data
-  const title = truncateTitle(video.title);
+  const title = truncateText("title", video.title);
 
   const viewCount = numeral(video.viewCount).format("0.a");
 
@@ -45,7 +45,8 @@ const HorizontalVideoItem = ({ video, fullWidth }) => {
   const duration = moment.utc(durationInSeconds * 1000).format("mm:ss");
 
   // Only display description on fullWidth version for search results
-  const description = fullWidth && truncateDescription(video.description);
+  const description =
+    fullWidth && truncateText("description", video.description);
 
   return (
     <HorizontalVideoItemContainer fullWidth={fullWidth}>

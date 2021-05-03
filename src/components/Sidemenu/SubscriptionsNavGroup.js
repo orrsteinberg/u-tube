@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { NavGroup, NavItem } from "./Sidemenu.styled";
 import { ViewAllSubsButton } from "./SubscriptionsNavGroup.styled";
-import { truncateSubscriptionTitle } from "../../utils/helpers";
+import { truncateText } from "../../utils/helpers";
 import { selectSubscriptions } from "../../features/subscriptions/subscriptionsSlice";
 import Avatar from "../Avatar/Avatar";
 
@@ -35,7 +35,7 @@ const SubscriptionsNavGroup = () => {
               src={item.channel.avatar}
               alt={item.channel.title}
             />{" "}
-            <span>{truncateSubscriptionTitle(item.channel.title)}</span>
+            <span>{truncateText("subscription", item.channel.title)}</span>
             {item.channel.newVideoCount > 0 && (
               <span className="circleHighlight">●</span>
             )}
