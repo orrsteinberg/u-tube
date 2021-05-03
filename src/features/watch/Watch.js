@@ -3,7 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
-import { fetchVideoToWatch, selectVideoToWatch } from "./watchSlice";
+import {
+  fetchVideoToWatch,
+  clearStatus,
+  selectVideoToWatch,
+} from "./watchSlice";
 import {
   WatchViewContainer,
   MainCol,
@@ -25,6 +29,7 @@ const Watch = () => {
   useEffect(() => {
     // Only fetch required data if it's a new video
     if (urlParamId !== currentVideo.id) {
+      dispatch(clearStatus());
       dispatch(fetchVideoToWatch(urlParamId));
     }
   }, [urlParamId, currentVideo, dispatch]);

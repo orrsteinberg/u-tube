@@ -1,6 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import api from "../../utils/api";
+import {
+  getVideoToWatch,
+  getRelatedVideos,
+  getComments,
+  addComment,
+  handleResultErrors,
+} from "../../utils/helpers";
 
 // State shape
 const initialState = {
@@ -39,58 +45,40 @@ const initialState = {
 export const fetchVideoToWatch = createAsyncThunk(
   "watch/fetchVideoToWatch",
   async (videoId, { dispatch }) => {
-    // Get video
-    const videoResponse = await api.getVideoById(videoId);
-
-    // Show error if video was not found
-    if (videoResponse.data.items.length === 0) {
-      throw new Error("Video not found");
-    }
-
-    // If video exists, fetch related videos and comments
-    dispatch(fetchRelatedVideos(videoId));
-    dispatch(fetchComments(videoId));
-
-    // Channel data is not included in the API response so we have to make another request
-    const channelId = videoResponse.data.items[0].snippet.channelId;
-    const channelResponse = await api.getChannelById(channelId);
-
-    return {
-      video: videoResponse.data.items[0],
-      channel: channelResponse.data.items[0],
-    };
+    return getVideoToWatch(videoId)
+      .then((result) => {
+        // If video exists, fetch related videos and comments
+        dispatch(fetchRelatedVideos(videoId));
+        dispatch(fetchComments(videoId));
+        return result;
+      })
+      .catch(handleResultErrors);
   }
 );
 
 export const fetchRelatedVideos = createAsyncThunk(
   "watch/fetchRelatedVideos",
   async (videoId) => {
-    // Get list of related video IDs
-    const relatedVideosResponse = await api.getRelatedVideos(videoId);
-    const relatedVideosIds = relatedVideosResponse.data.items.map(
-      (item) => item.id.videoId
-    );
-
-    // Get videos by ID so we can have their contentData (needed for video duration)
-    const videosResponse = await api.getVideosById(relatedVideosIds);
-    return videosResponse.data.items;
+    return getRelatedVideos(videoId)
+      .then((videos) => videos)
+      .catch(handleResultErrors);
   }
 );
 
 export const fetchComments = createAsyncThunk(
   "watch/fetchComments",
   async (videoId) => {
-    const commentsResponse = await api.getCommentsByVideoId(videoId);
-    return commentsResponse.data.items;
+    return getComments(videoId)
+      .then((comments) => comments)
+      .catch(handleResultErrors);
   }
 );
 
-export const addComment = createAsyncThunk(
-  "watch/addComment",
+export const postComment = createAsyncThunk(
+  "watch/postComment",
   async ({ videoId, text }, { getState }) => {
     const accessToken = getState().auth.accessToken;
-    const commentResponse = await api.addComment(videoId, text, accessToken);
-    return commentResponse.data;
+    return addComment(videoId, text, accessToken);
   }
 );
 
@@ -99,6 +87,11 @@ const watchSlice = createSlice({
   name: "watch",
   initialState,
   reducers: {
+    clearStatus: (state, action) => {
+      state.relatedVideos.status = "idle";
+      state.commentSection.status = "idle";
+      state.commentSection.newCommentStatus = "idle";
+    },
     noUserCommentError: (state, action) => {
       state.commentSection.newCommentStatus = "failed";
       state.commentSection.newCommentError =
@@ -107,7 +100,7 @@ const watchSlice = createSlice({
     clearNoUserCommentError: (state, action) => {
       state.commentSection.newCommentStatus = "idle";
       state.commentSection.newCommentError = null;
-    }
+    },
   },
   extraReducers: {
     // Using Immer under the hood so we're not mutating the actual state
@@ -116,29 +109,7 @@ const watchSlice = createSlice({
     },
     [fetchVideoToWatch.fulfilled]: (state, action) => {
       state.status = "succeeded";
-
-      const videoData = action.payload.video;
-      const channelData = action.payload.channel;
-
-      // Customize data shape
-      const video = {
-        id: videoData.id,
-        title: videoData.snippet.title,
-        description: videoData.snippet.description,
-        likeCount: videoData.statistics.likeCount,
-        dislikeCount: videoData.statistics.dislikeCount,
-        viewCount: videoData.statistics.viewCount,
-        publishedAt: videoData.snippet.publishedAt,
-        channel: {
-          id: videoData.snippet.channelId,
-          title: videoData.snippet.channelTitle,
-          avatar: channelData.snippet.thumbnails.default.url,
-          subscriberCount: channelData.statistics.subscriberCount,
-        },
-      };
-
-      // Update state
-      state.currentVideo = video;
+      state.currentVideo = action.payload;
     },
     [fetchVideoToWatch.rejected]: (state, action) => {
       state.status = "failed";
@@ -149,22 +120,7 @@ const watchSlice = createSlice({
     },
     [fetchRelatedVideos.fulfilled]: (state, action) => {
       state.relatedVideos.status = "succeeded";
-
-      // Customize data shape
-      const videos = action.payload.map((video) => {
-        return {
-          id: video.id,
-          title: video.snippet.title,
-          thumbnail: video.snippet.thumbnails.medium.url,
-          channelId: video.snippet.channelId,
-          channelTitle: video.snippet.channelTitle,
-          viewCount: video.statistics.viewCount,
-          publishedAt: video.snippet.publishedAt,
-          duration: video.contentDetails.duration,
-        };
-      });
-
-      state.relatedVideos.videos = videos;
+      state.relatedVideos.videos = action.payload;
     },
     [fetchRelatedVideos.rejected]: (state, action) => {
       state.relatedVideos.status = "failed";
@@ -175,72 +131,20 @@ const watchSlice = createSlice({
     },
     [fetchComments.fulfilled]: (state, action) => {
       state.commentSection.status = "succeeded";
-
-      // Customize data shape
-      const comments = action.payload.map((comment) => {
-        const {
-          authorDisplayName,
-          authorChannelId: { value: authorChannelId },
-          authorProfileImageUrl,
-          publishedAt,
-          textDisplay,
-          textOriginal,
-        } = comment.snippet.topLevelComment.snippet;
-
-        return {
-          id: comment.id,
-          authorDisplayName,
-          authorChannelId,
-          authorProfileImageUrl,
-          publishedAt,
-          textDisplay,
-          textOriginal,
-        };
-      });
-
-      state.commentSection.comments = comments;
+      state.commentSection.comments = action.payload;
     },
     [fetchComments.rejected]: (state, action) => {
       state.commentSection.status = "failed";
-
-      let errorMessage = action.error.message;
-
-      if (errorMessage === "Request failed with status code 403") {
-        errorMessage = "Comments have been disabled for this video";
-      }
-
-      state.commentSection.error = errorMessage;
+      state.commentSection.error = action.error.message;
     },
-    [addComment.pending]: (state, action) => {
+    [postComment.pending]: (state, action) => {
       state.commentSection.newCommentStatus = "loading";
     },
-    [addComment.fulfilled]: (state, action) => {
+    [postComment.fulfilled]: (state, action) => {
       state.commentSection.newCommentStatus = "succeeded";
-
-      // Customize data shape
-      const id = action.payload.id;
-      const {
-        authorDisplayName,
-        authorChannelId: { value: authorChannelId },
-        authorProfileImageUrl,
-        publishedAt,
-        textDisplay,
-        textOriginal,
-      } = action.payload.snippet.topLevelComment.snippet;
-
-      const newComment = {
-        id,
-        authorDisplayName,
-        authorChannelId,
-        authorProfileImageUrl,
-        publishedAt,
-        textDisplay,
-        textOriginal,
-      };
-
-      state.commentSection.comments.unshift(newComment);
+      state.commentSection.comments.unshift(action.payload);
     },
-    [addComment.rejected]: (state, action) => {
+    [postComment.rejected]: (state, action) => {
       state.commentSection.newCommentStatus = "failed";
       state.commentSection.newCommentError = action.error.message;
     },
@@ -248,7 +152,11 @@ const watchSlice = createSlice({
 });
 
 // Actions
-export const { noUserCommentError, clearNoUserCommentError } = watchSlice.actions;
+export const {
+  clearStatus,
+  noUserCommentError,
+  clearNoUserCommentError,
+} = watchSlice.actions;
 
 // Selectors
 export const selectVideoToWatch = (state) => state.watch;

@@ -38,17 +38,6 @@ const Search = () => {
       <h1>Search results for "{queryParam}"</h1>
       {status === "loading" && (
         <>
-          {channels.length > 0 &&
-            channels.map((channel) => (
-              <HorizontalChannelItem
-                channel={channel}
-                key={channel.id}
-              />
-            ))}
-          {videos.length > 0 &&
-            videos.map((video) => (
-              <HorizontalVideoItem fullWidth video={video} key={video.id} />
-            ))}
           <h3>Searching...</h3>
         </>
       )}

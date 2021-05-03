@@ -1,6 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import api from "../../utils/api";
+import {
+  getSubscriptions,
+  addSubscription,
+  deleteSubscription,
+  handleResultErrors,
+} from "../../utils/helpers";
 
 // State shape
 const initialState = {
@@ -17,35 +22,35 @@ const initialState = {
 // Async thunks
 export const fetchSubscriptions = createAsyncThunk(
   "subscriptions/fetchSubscriptions",
-  async (_, { getState }) => {
-    // Get subscriptions
+  (_, { getState }) => {
     const accessToken = getState().auth.accessToken;
-    const subResponse = await api.getSubscriptions(accessToken);
-
-    return subResponse.data.items;
+    return getSubscriptions(accessToken)
+      .then((result) => result)
+      .catch(handleResultErrors);
   }
 );
 
 export const subscribe = createAsyncThunk(
   "subscriptions/subscribe",
-  async (channelId, { getState }) => {
+  (channelId, { getState }) => {
     const accessToken = getState().auth.accessToken;
-    const subResponse = await api.addSubscription(channelId, accessToken);
-    return subResponse.data;
+    return addSubscription(channelId, accessToken)
+      .then((result) => result)
+      .catch(handleResultErrors);
   }
 );
 
 export const unsubscribe = createAsyncThunk(
   "subscriptions/unsubscribe",
-  async (channelId, { getState }) => {
+  (channelId, { getState }) => {
     const accessToken = getState().auth.accessToken;
     const subscription = getState().subscriptions.items.find(
       (item) => item.channel.id === channelId
     );
 
-    await api.deleteSubscription(subscription.id, accessToken);
-
-    return subscription.id;
+    return deleteSubscription(subscription.id, accessToken)
+      .then((deletedId) => deletedId)
+      .catch(handleResultErrors);
   }
 );
 
@@ -67,22 +72,7 @@ const subscriptionsSlice = createSlice({
     },
     [fetchSubscriptions.fulfilled]: (state, action) => {
       state.status = "succeeded";
-
-      // Customize data shape
-      const items = action.payload.map((item) => {
-        return {
-          id: item.id,
-          channel: {
-            id: item.snippet.resourceId.channelId,
-            title: item.snippet.title,
-            avatar: item.snippet.thumbnails.default.url,
-            videoCount: item.contentDetails.totalItemCount,
-            newVideoCount: item.contentDetails.newItemCount,
-          },
-        };
-      });
-
-      state.items = items;
+      state.items = action.payload;
     },
     [fetchSubscriptions.rejected]: (state, action) => {
       state.status = "failed";
@@ -93,22 +83,7 @@ const subscriptionsSlice = createSlice({
     },
     [subscribe.fulfilled]: (state, action) => {
       state.updateInProgress.status = "succeeded";
-
-      const item = action.payload;
-
-      // Customize data shape
-      const newItem = {
-        id: item.id,
-        channel: {
-          id: item.snippet.resourceId.channelId,
-          title: item.snippet.title,
-          avatar: item.snippet.thumbnails.default.url,
-          videoCount: item.contentDetails.totalItemCount,
-          newVideoCount: item.contentDetails.newItemCount,
-        },
-      };
-
-      state.items.push(newItem);
+      state.items.push(action.payload);
     },
     [subscribe.rejected]: (state, action) => {
       state.updateInProgress.status = "failed";
@@ -119,7 +94,6 @@ const subscriptionsSlice = createSlice({
     },
     [unsubscribe.fulfilled]: (state, action) => {
       state.updateInProgress.status = "succeeded";
-
       const deletedId = action.payload;
       state.items = state.items.filter((item) => item.id !== deletedId);
     },

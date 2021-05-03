@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { selectUser } from "../auth/authSlice";
 import {
-  addComment,
+  postComment,
   noUserCommentError,
   clearNoUserCommentError,
   selectVideoToWatch,
@@ -32,7 +32,7 @@ const NewCommentForm = () => {
     if (user) {
       dispatch(clearNoUserCommentError());
     }
-  }, [user, dispatch])
+  }, [user, dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -49,7 +49,7 @@ const NewCommentForm = () => {
       videoId: currentVideo.id,
       text,
     };
-    dispatch(addComment(newComment));
+    dispatch(postComment(newComment));
 
     // Clear input and remove focus
     inputRef.current.blur();
@@ -73,9 +73,7 @@ const NewCommentForm = () => {
           </button>
         </form>
       </StyledNewCommentForm>
-      {newCommentStatus === "failed" && (
-        <Error error={newCommentError} />
-      )}
+      {newCommentStatus === "failed" && <Error error={newCommentError} />}
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import api from "../../utils/api";
+import { getSearchResults, handleResultErrors } from "../../utils/helpers";
 
 // State shape
 const initialState = {
@@ -14,34 +14,10 @@ const initialState = {
 // Async thunks
 export const fetchSearchResults = createAsyncThunk(
   "search/fetchSearchResults",
-  async (query) => {
-    // Get search results
-    const searchResponse = await api.getSearchResults(query);
-
-    if (searchResponse.data.items.length === 0) {
-      throw new Error("No results found");
-    }
-
-    // Make additional requests for video and channel data as needed
-    const channelIds = [];
-    const videoIds = [];
-    searchResponse.data.items.forEach((item) => {
-      if (item.id.kind === "youtube#channel") {
-        channelIds.push(item.id.channelId);
-      } else if (item.id.kind === "youtube#video") {
-        videoIds.push(item.id.videoId);
-      }
-    });
-
-    const channelsResponse =
-      channelIds.length > 0 && (await api.getChannelsById(channelIds));
-    const videosResponse =
-      videoIds.length > 0 && (await api.getVideosById(videoIds));
-
-    return {
-      channels: channelsResponse.data?.items,
-      videos: videosResponse.data?.items,
-    };
+  (query) => {
+    return getSearchResults(query)
+      .then((results) => results)
+      .catch(handleResultErrors);
   }
 );
 //
@@ -64,39 +40,9 @@ const searchSlice = createSlice({
     },
     [fetchSearchResults.fulfilled]: (state, action) => {
       state.status = "succeeded";
-
-      // Customize data shape
-      const channels =
-        action.payload.channels &&
-        action.payload.channels.map((channel) => {
-          return {
-            id: channel.id,
-            title: channel.snippet.title,
-            avatar: channel.snippet.thumbnails.default.url,
-            subscriberCount: channel.statistics.subscriberCount,
-            videoCount: channel.statistics.videoCount,
-          };
-        });
-
-      const videos =
-        action.payload.videos &&
-        action.payload.videos.map((video) => {
-          return {
-            id: video.id,
-            title: video.snippet.title,
-            thumbnail: video.snippet.thumbnails.medium.url,
-            channelId: video.snippet.channelId,
-            channelTitle: video.snippet.channelTitle,
-            viewCount: video.statistics.viewCount,
-            publishedAt: video.snippet.publishedAt,
-            duration: video.contentDetails.duration,
-            description: video.snippet.description,
-          };
-        });
-
-      // Update state, if there were no results set to an empty array rather than undefined
-      state.videos = videos || [];
-      state.channels = channels || [];
+      console.log(action.payload);
+      state.channels = action.payload.channels;
+      state.videos = action.payload.videos;
     },
     [fetchSearchResults.rejected]: (state, action) => {
       state.status = "failed";

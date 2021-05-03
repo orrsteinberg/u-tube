@@ -1,6 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import api from "../../utils/api";
+import {
+  getChannelData,
+  getChannelVideos,
+  handleResultErrors,
+} from "../../utils/helpers";
 
 // State shape
 const initialState = {
@@ -23,42 +27,24 @@ const initialState = {
 // Async thunks
 export const fetchChannelData = createAsyncThunk(
   "channel/fetchChannelData",
-  async (channelId, { dispatch }) => {
-    // Get Channel
-    const channelResponse = await api.getChannelById(channelId);
-
-    if (channelResponse.data.pageInfo.totalResults === 0) {
-      throw new Error("Channel not found");
-    }
-
-    // If channel exists, fetch videos
-    dispatch(fetchChannelVideos(channelId));
-
-    return channelResponse.data.items[0];
+  (channelId, { dispatch }) => {
+    return getChannelData(channelId)
+      .then((channelData) => {
+        // If channel exists, fetch videos
+        dispatch(fetchChannelVideos(channelId));
+        return channelData;
+      })
+      .catch(handleResultErrors);
   }
 );
 
 export const fetchChannelVideos = createAsyncThunk(
   "channel/fetchChannelVideos",
-  async (channelId, { getState }) => {
+  (channelId, { getState }) => {
     const pageToken = getState().channel.channelVideos.pageToken;
-
-    // Get list of video IDs (with pageToken so we continute from previous fetch)
-    const channelVideosResponse = pageToken
-      ? await api.getVideosByChannelId(channelId, pageToken)
-      : await api.getVideosByChannelId(channelId);
-
-    const channelVideoIds = channelVideosResponse.data.items.map(
-      (item) => item.id.videoId
-    );
-
-    // Get videos by ID so we can have their contentData (needed for video duration)
-    const videosResponse = await api.getVideosById(channelVideoIds);
-
-    return {
-      videos: videosResponse.data.items,
-      pageToken: channelVideosResponse.data.nextPageToken,
-    };
+    return getChannelVideos(channelId, pageToken)
+      .then((result) => result)
+      .catch(handleResultErrors);
   }
 );
 
@@ -82,10 +68,7 @@ const channelSlice = createSlice({
     [fetchChannelData.fulfilled]: (state, action) => {
       state.status = "succeeded";
 
-      const { id } = action.payload;
-      const { title } = action.payload.snippet;
-      const { url: avatar } = action.payload.snippet.thumbnails.default;
-      const { subscriberCount, videoCount } = action.payload.statistics;
+      const { id, title, avatar, subscriberCount, videoCount } = action.payload;
 
       // Update state
       state.channelId = id;
@@ -104,26 +87,14 @@ const channelSlice = createSlice({
     [fetchChannelVideos.fulfilled]: (state, action) => {
       state.channelVideos.status = "succeeded";
 
-      // Customize data shape
-      const newVideos = action.payload.videos.map((video) => {
-        return {
-          id: video.id,
-          title: video.snippet.title,
-          thumbnail: video.snippet.thumbnails.medium.url,
-          channelId: video.snippet.channelId,
-          channelTitle: video.snippet.channelTitle,
-          viewCount: video.statistics.viewCount,
-          publishedAt: video.snippet.publishedAt,
-          duration: video.contentDetails.duration,
-        };
-      });
+      const { videos, nextPageToken } = action.payload;
 
       // Update videos
-      state.channelVideos.videos = state.channelVideos.videos.concat(newVideos);
+      state.channelVideos.videos = state.channelVideos.videos.concat(videos);
 
       // If there was no next page token, we've fetched all the videos for this channel
-      if (action.payload.pageToken) {
-        state.channelVideos.pageToken = action.payload.pageToken;
+      if (nextPageToken) {
+        state.channelVideos.pageToken = nextPageToken;
       } else {
         state.channelVideos.pageToken = null;
         state.channelVideos.hasMoreVideos = false;

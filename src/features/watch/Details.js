@@ -4,7 +4,7 @@ import { MdThumbUp, MdThumbDown } from "react-icons/md";
 import moment from "moment";
 import numeral from "numeral";
 
-import { truncateDescription } from "../../utils/helpers";
+import { truncateText } from "../../utils/helpers";
 import {
   DetailsContainer,
   StatisticsContainer,
@@ -70,7 +70,7 @@ const Description = ({ description }) => {
   const handleToggleClick = () => setIsExpanded(!isExpended);
 
   // Truncate description, and if it's still the same length, hide toggle button
-  const shortDescription = truncateDescription(description);
+  const shortDescription = truncateText("description", description);
   const showToggle =
     shortDescription.length < description.length ? true : false;
 
