@@ -62,7 +62,7 @@ export const AuthButton = styled(NavItem)`
 
 export const Nav = styled.nav`
   position: fixed;
-  z-index: 3;
+  z-index: 100;
   width: 80px;
   height: ${({ theme }) => `calc(100vh - ${theme.sizes.headerHeight})`};
   overflow: auto;
