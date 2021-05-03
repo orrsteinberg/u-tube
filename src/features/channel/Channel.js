@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
@@ -17,14 +17,15 @@ import ChannelVideos from "./ChannelVideos";
 const Channel = () => {
   const { id: urlParamId } = useParams();
   const { channelId, title } = useSelector(selectChannelData);
-  const { videos, hasMoreVideos } = useSelector(selectChannelVideos);
+  const { videos, hasMoreVideos, pageToken } = useSelector(selectChannelVideos);
   const dispatch = useDispatch();
 
   // Fetch more videos on scroll
-  const getMoreVideos = useCallback(
-    () => dispatch(fetchChannelVideos(urlParamId)),
-    [urlParamId, dispatch]
-  );
+  const getMoreVideos = () => {
+    if (pageToken) {
+      dispatch(fetchChannelVideos(urlParamId));
+    }
+  };
 
   useEffect(() => {
     // Only fetch initial channel data if it's a new channel (different id than the prev)

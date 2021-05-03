@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -10,22 +10,29 @@ import SkeletonVideoItem from "../../components/skeletons/SkeletonVideoItem";
 import Error from "../../components/Error/Error";
 
 const HomeView = () => {
-  const { status, videos, error, hasMoreVideos } = useSelector(selectHome);
+  const { status, videos, error, hasMoreVideos, pageToken } = useSelector(
+    selectHome
+  );
   const dispatch = useDispatch();
 
-  const getVideos = useCallback(() => dispatch(fetchHomeVideos()), [dispatch]);
+  // Fetch more videos on scroll
+  const getMoreVideos = () => {
+    if (pageToken) {
+      dispatch(fetchHomeVideos());
+    }
+  };
 
   useEffect(() => {
     // Auto fetch videos if there aren't any yet
     if (videos.length === 0) {
-      getVideos();
+      dispatch(fetchHomeVideos());
     }
-  }, [videos, getVideos]);
+  }, [videos, dispatch]);
 
   return (
     <InfiniteScroll
       dataLength={videos.length}
-      next={getVideos}
+      next={getMoreVideos}
       hasMore={hasMoreVideos}
       // Target parent container by id to detect scroll
       scrollableTarget="view-container"
