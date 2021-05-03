@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { lighten } from "polished";
 
 export const StyledSubscribeButton = styled.button`
   border: 0;
@@ -12,13 +11,6 @@ export const StyledSubscribeButton = styled.button`
   padding: 0.75rem 1rem;
   line-height: 1;
   cursor: pointer;
-
-  &:active {
-    background: ${({ isSubscribed, theme }) =>
-      isSubscribed
-        ? lighten(0.05, theme.colors.general.faded)
-        : lighten(0.05, theme.colors.general.red)};
-  }
 
   &:disabled {
     opacity: 0.7;
