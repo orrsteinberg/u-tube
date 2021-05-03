@@ -32,16 +32,10 @@ const api = {
     });
   },
   getVideosById: async (videoIds) => {
-    // Convert array of video IDs to a comma-seperated string
-    const commaSeperatedIds = videoIds.reduce(
-      (str, id) => (str === "" ? id : `${str},${id}`),
-      "" // start with an empty string
-    );
-
     return await request("/videos", {
       params: {
         part: "snippet,statistics,contentDetails",
-        id: commaSeperatedIds,
+        id: videoIds.toString(),
       },
     });
   },
@@ -87,15 +81,10 @@ const api = {
     });
   },
   getChannelsById: async (channelIds) => {
-    const commaSeperatedIds = channelIds.reduce(
-      (str, id) => (str === "" ? id : `${str},${id}`),
-      ""
-    );
-
     return await request("/channels", {
       params: {
         part: "snippet,statistics",
-        id: commaSeperatedIds,
+        id: channelIds.toString(),
       },
     });
   },
