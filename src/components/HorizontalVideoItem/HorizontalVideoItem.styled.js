@@ -33,7 +33,7 @@ export const ThumbnailLink = styled(Link)`
   overflow: hidden;
   border-bottom: 3px solid ${({ theme }) => theme.colors.bg.tertiary};
   cursor: pointer;
-  background: ${({ theme }) => theme.colors.bg.primary};
+  background: ${({ theme }) => theme.colors.bg.tertiary};
   padding-top: calc(9 / 16 * var(--thumbnail-width));
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
@@ -96,7 +96,7 @@ export const Duration = styled.div`
   bottom: 0.25rem;
   background: rgba(0, 0, 0, 0.8);
   padding: 0.25rem 0.5rem;
-  color: ${({ theme }) => theme.colors.text.primary};
+  color: ${({ theme }) => theme.colors.general.light};
   z-index: 3;
 `;
 

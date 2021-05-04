@@ -22,7 +22,7 @@ export const Thumbnail = styled.div`
   position: relative;
   overflow: hidden;
   border-bottom: 3px solid ${({ theme }) => theme.colors.bg.tertiary};
-  background: ${({ theme }) => theme.colors.bg.primary};
+  background: ${({ theme }) => theme.colors.bg.tertiary};
   padding-top: calc(9 / 16 * 100%);
 
   ::before {
@@ -64,7 +64,6 @@ export const Thumbnail = styled.div`
 
   img {
     width: 100%;
-    display: block;
     position: absolute;
     top: 0;
     left: 0;
@@ -79,7 +78,7 @@ export const Duration = styled.div`
   bottom: 0.25rem;
   background: rgba(0, 0, 0, 0.8);
   padding: 0.25rem 0.5rem;
-  color: ${({ theme }) => theme.colors.text.primary};
+  color: ${({ theme }) => theme.colors.general.light};
   z-index: 3;
 `;
 
