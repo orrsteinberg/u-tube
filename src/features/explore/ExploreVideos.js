@@ -48,21 +48,16 @@ const ExploreVideos = () => {
       scrollableTarget="view-container"
     >
       <div className="row">
+        {currentCategoryData.videos.map((video) => (
+          <VideoItem video={video} key={video.id} />
+        ))}
         {currentCategoryData.status === "loading" && (
           <>
-            {currentCategoryData.videos.length > 0 &&
-              currentCategoryData.videos.map((video) => (
-                <VideoItem video={video} key={video.id} />
-              ))}
             {[...Array(NUM_VIDS_TO_FETCH)].map((_, i) => (
               <SkeletonVideoItem key={i} />
             ))}
           </>
         )}
-        {currentCategoryData.status === "succeeded" &&
-          currentCategoryData.videos.map((video) => (
-            <VideoItem video={video} key={video.id} />
-          ))}
       </div>
       {currentCategoryData.status === "failed" && (
         <Error error={currentCategoryData.error} />

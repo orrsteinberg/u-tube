@@ -41,17 +41,16 @@ const HomeView = () => {
         <title>Home | U-Tube</title>
       </Helmet>
       <div className="row">
+        {videos.map((video) => (
+          <VideoItem video={video} key={video.id} />
+        ))}
         {status === "loading" && (
           <>
-            {videos.length > 0 &&
-              videos.map((video) => <VideoItem video={video} key={video.id} />)}
             {[...Array(NUM_VIDS_TO_FETCH)].map((_, i) => (
               <SkeletonVideoItem key={i} />
             ))}
           </>
         )}
-        {status === "succeeded" &&
-          videos.map((video) => <VideoItem video={video} key={video.id} />)}
       </div>
       {status === "failed" && <Error error={error} />}
     </InfiniteScroll>

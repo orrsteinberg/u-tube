@@ -12,21 +12,16 @@ const ChannelVideos = () => {
 
   return (
     <div className="row">
+      {videos.map((video) => (
+        <VideoItem hideChannel video={video} key={video.id} />
+      ))}
       {status === "loading" && (
         <>
-          {videos.length > 0 &&
-            videos.map((video) => (
-              <VideoItem hideChannel video={video} key={video.id} />
-            ))}
           {[...Array(NUM_VIDS_TO_FETCH)].map((_, i) => (
             <SkeletonVideoItem hideChannel key={i} />
           ))}
         </>
       )}
-      {status === "succeeded" &&
-        videos.map((video) => (
-          <VideoItem hideChannel video={video} key={video.id} />
-        ))}
       {status === "failed" && <Error error={error} />}
     </div>
   );
