@@ -15,7 +15,11 @@ const Explore = () => {
   return (
     <>
       <Helmet>
-        <title>Explore {explore?.currentCategory + " "}| U-Tube</title>
+        <title>
+          {explore.currentCategory
+            ? `Explore ${explore.currentCategory} | U-Tube`
+            : `Explore | U-Tube`}
+        </title>
       </Helmet>
       <Tabs />
       <Route path={path} exact>
