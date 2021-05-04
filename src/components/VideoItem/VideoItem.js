@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { MdPlayArrow } from "react-icons/md";
 import moment from "moment";
 import numeral from "numeral";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 
 import { truncateText } from "../../utils/helpers";
 import {
@@ -33,7 +35,12 @@ const VideoItem = ({ video, hideChannel }) => {
     <VideoItemContainer>
       <Link to={`/watch/${id}`}>
         <Thumbnail>
-          <img src={thumbnail} alt={`${title} video thumbnail`} />
+          <LazyLoadImage
+            alt={`${title} video thumbnail`}
+            src={thumbnail}
+            effect="opacity"
+            wrapperProps={{ style: { display: "block" } }}
+          />
           <Duration>{duration}</Duration>
           <MdPlayArrow />
         </Thumbnail>
