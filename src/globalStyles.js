@@ -62,7 +62,7 @@ const confirmAlertStyles = css`
     border: none;
     display: inline-block;
     padding: 0.5rem 1.25rem;
-    color: ${({ theme }) => theme.colors.text.primary};
+    color: ${({ theme }) => theme.colors.general.light};
     margin-right: 0.75rem;
     border-radius: 3px;
     font-size: 1rem;

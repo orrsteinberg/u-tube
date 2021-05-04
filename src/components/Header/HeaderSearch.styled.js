@@ -28,7 +28,7 @@ export const SearchForm = styled.form`
 
     &:focus {
       outline: none;
-      border: 1px solid ${({ theme }) => theme.colors.text.primary};
+      border: 1px solid ${({ theme }) => theme.colors.text.secondary};
     }
 
     @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
