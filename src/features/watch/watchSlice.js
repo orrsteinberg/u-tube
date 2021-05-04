@@ -44,7 +44,7 @@ const initialState = {
 // Async thunks
 export const fetchVideoToWatch = createAsyncThunk(
   "watch/fetchVideoToWatch",
-  async (videoId, { dispatch }) => {
+  (videoId, { dispatch }) => {
     return getVideoToWatch(videoId)
       .then((result) => {
         // If video exists, fetch related videos and comments
@@ -58,7 +58,7 @@ export const fetchVideoToWatch = createAsyncThunk(
 
 export const fetchRelatedVideos = createAsyncThunk(
   "watch/fetchRelatedVideos",
-  async (videoId) => {
+  (videoId) => {
     return getRelatedVideos(videoId)
       .then((videos) => videos)
       .catch(handleResultErrors);
@@ -67,7 +67,7 @@ export const fetchRelatedVideos = createAsyncThunk(
 
 export const fetchComments = createAsyncThunk(
   "watch/fetchComments",
-  async (videoId) => {
+  (videoId) => {
     return getComments(videoId)
       .then((comments) => comments)
       .catch(handleResultErrors);
@@ -76,7 +76,7 @@ export const fetchComments = createAsyncThunk(
 
 export const postComment = createAsyncThunk(
   "watch/postComment",
-  async ({ videoId, text }, { getState }) => {
+  ({ videoId, text }, { getState }) => {
     const accessToken = getState().auth.accessToken;
     return addComment(videoId, text, accessToken);
   }
