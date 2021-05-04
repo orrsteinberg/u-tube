@@ -40,7 +40,6 @@ const searchSlice = createSlice({
     },
     [fetchSearchResults.fulfilled]: (state, action) => {
       state.status = "succeeded";
-      console.log(action.payload);
       state.channels = action.payload.channels;
       state.videos = action.payload.videos;
     },
