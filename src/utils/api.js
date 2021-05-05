@@ -6,6 +6,7 @@ import {
   NUM_COMMENTS_TO_FETCH,
   NUM_SEARCH_RESULTS_TO_FETCH,
   NUM_SUBSCRIPTIONS_TO_FETCH,
+  NUM_RATINGS_TO_FETCH,
 } from "./constants";
 
 const request = axios.create({
@@ -171,6 +172,42 @@ const api = {
       data: commentThreadResource,
       params: {
         part: "snippet",
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+  getLikedVideos: async (accessToken) => {
+    return await request("/videos", {
+      params: {
+        part: "snippet,contentDetails",
+        myRating: "like",
+        maxResults: NUM_RATINGS_TO_FETCH,
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+  getDislikedVideos: async (accessToken) => {
+    return await request("/videos", {
+      params: {
+        part: "snippet,contentDetails",
+        myRating: "dislike",
+        maxResults: NUM_RATINGS_TO_FETCH,
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+  rateVideo: async (videoId, rating, accessToken) => {
+    return await request("/videos/rate", {
+      method: "POST",
+      params: {
+        id: videoId,
+        rating,
       },
       headers: {
         Authorization: `Bearer ${accessToken}`,

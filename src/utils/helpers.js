@@ -7,7 +7,7 @@ export const truncateText = (type, text) => {
 
   switch (type) {
     case "title":
-      return truncate(70);
+      return truncate(64);
     case "description":
       return truncate(150);
     case "subscription":
@@ -297,4 +297,21 @@ export const addSubscription = async (channelId, accessToken) => {
 export const deleteSubscription = async (subscriptionId, accessToken) => {
   await api.deleteSubscription(subscriptionId, accessToken);
   return subscriptionId;
+};
+
+export const getRatings = async (accessToken) => {
+  const likedVideos = await api.getLikedVideos(accessToken);
+  const dislikedVideos = await api.getDislikedVideos(accessToken);
+
+  const extractVideoId = (videoData) => videoData.id;
+
+  return {
+    likedVideos: likedVideos.data.items.map(extractVideoId),
+    dislikedVideos: dislikedVideos.data.items.map(extractVideoId),
+  };
+};
+
+export const rateVideo = async (videoId, rating, accessToken) => {
+  await api.rateVideo(videoId, rating, accessToken);
+  return videoId;
 };
