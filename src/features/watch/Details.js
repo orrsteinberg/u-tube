@@ -17,7 +17,15 @@ import Avatar from "../../components/Avatar/Avatar";
 import SubscribeButton from "../../components/SubscribeButton/SubscribeButton";
 import IconButton from "../../components/IconButton/IconButton";
 
-const Statistics = ({ likeCount, dislikeCount, viewCount, publishedAt }) => {
+import RatingButtons from "../../components/RatingButtons/RatingButtons";
+
+const Statistics = ({
+  videoId,
+  likeCount,
+  dislikeCount,
+  viewCount,
+  publishedAt,
+}) => {
   return (
     <StatisticsContainer>
       <span>
@@ -26,20 +34,11 @@ const Statistics = ({ likeCount, dislikeCount, viewCount, publishedAt }) => {
         {" • "}
         {publishedAt}
       </span>
-      <LikesBox>
-        <span className="count">
-          <IconButton>
-            <MdThumbUp />
-          </IconButton>
-          {likeCount}
-        </span>
-        <span className="count">
-          <IconButton>
-            <MdThumbDown />
-          </IconButton>
-          {dislikeCount}
-        </span>
-      </LikesBox>
+      <RatingButtons
+        videoId={videoId}
+        likeCount={likeCount}
+        dislikeCount={dislikeCount}
+      />
     </StatisticsContainer>
   );
 };
@@ -90,7 +89,7 @@ const Description = ({ description }) => {
 };
 
 const Details = ({ video }) => {
-  const { title, description, channel } = video;
+  const { id, title, description, channel } = video;
 
   // Format data
   const viewCount = numeral(video.viewCount).format("0,0");
@@ -106,6 +105,7 @@ const Details = ({ video }) => {
         publishedAt={publishedAt}
         likeCount={likeCount}
         dislikeCount={dislikeCount}
+        videoId={id}
       />
       <ChannelDetails channel={channel} />
       <Description description={description} />

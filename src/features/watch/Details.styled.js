@@ -35,15 +35,6 @@ export const StatisticsContainer = styled.div`
   span {
     font-size: 1.2rem;
   }
-
-  button {
-    margin: 0 0.25rem;
-    font-size: 1.75rem;
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.text.secondary};
-    }
-  }
 `;
 
 export const LikesBox = styled.div`
