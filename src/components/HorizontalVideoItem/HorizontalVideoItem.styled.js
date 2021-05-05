@@ -7,7 +7,7 @@ export const HorizontalVideoItemContainer = styled.div`
   align-items: flex-start;
   font-size: ${({ fullWidth }) => (fullWidth ? "1.1rem" : "1rem")};
   margin: 1.5rem auto;
-  max-width: 400px;
+  max-width: 320px;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     max-width: 600px;
