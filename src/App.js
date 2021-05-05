@@ -8,6 +8,7 @@ import {
   fetchSubscriptions,
   clearSubscriptions,
 } from "./features/subscriptions/subscriptionsSlice";
+import { fetchRatings, clearRatings } from "./features/ratings/ratingsSlice";
 import { theme } from "./utils/theme";
 import GlobalStyles from "./globalStyles";
 import Layout from "./components/Layout/Layout";
@@ -23,12 +24,14 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // On user state change fetch/clear subscriptions
-    // to avoid repetitive subscription status requests for every channel/video
+    // On user state change fetch/clear subscriptions/rating
+    // to avoid repetitive status requests for every channel/video
     if (user) {
       dispatch(fetchSubscriptions());
+      dispatch(fetchRatings());
     } else {
       dispatch(clearSubscriptions());
+      dispatch(clearRatings());
     }
   }, [user, dispatch]);
 
