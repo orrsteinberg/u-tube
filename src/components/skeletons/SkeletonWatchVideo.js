@@ -1,8 +1,6 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useContext } from "react";
+import styled, { ThemeContext } from "styled-components";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-
-import { theme } from "../../utils/theme";
 
 const SkeletonVideoContainer = styled.div`
   position: relative;
@@ -10,6 +8,8 @@ const SkeletonVideoContainer = styled.div`
 `;
 
 const SkeletonWatchVideo = () => {
+  const theme = useContext(ThemeContext);
+
   return (
     <SkeletonTheme
       color={theme.colors.bg.tertiary}

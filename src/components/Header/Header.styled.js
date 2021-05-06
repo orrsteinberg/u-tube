@@ -16,6 +16,7 @@ export const StyledHeader = styled.header`
   padding-left: 1rem;
   padding-right: 1.25rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.bg.secondary};
+  transition: background 0.2s;
 `;
 
 export const HeaderLogo = styled(YouTubeLogo)`

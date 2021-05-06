@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ThemeContext } from "styled-components";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
-import { theme } from "../../utils/theme";
-
 const SkeletonChannelHeader = () => {
+  const theme = useContext(ThemeContext);
+
   return (
     <div style={{ width: "100%", marginBottom: "2rem" }}>
       <SkeletonTheme

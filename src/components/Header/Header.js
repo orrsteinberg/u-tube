@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ThemeContext } from "styled-components";
 import { useSelector } from "react-redux";
-import { MdMenu, MdApps } from "react-icons/md";
+import { MdMenu } from "react-icons/md";
+import { IoMdSunny, IoMdMoon } from "react-icons/io";
 
 import { selectUser } from "../../features/auth/authSlice";
 import {
@@ -13,7 +15,8 @@ import HeaderSearch from "./HeaderSearch";
 import Avatar from "../Avatar/Avatar";
 import IconButton from "../IconButton/IconButton";
 
-const Header = ({ handleMenuToggle }) => {
+const Header = ({ handleMenuToggle, handleThemeToggle }) => {
+  const theme = useContext(ThemeContext);
   const user = useSelector(selectUser);
 
   return (
@@ -24,8 +27,8 @@ const Header = ({ handleMenuToggle }) => {
       <HeaderLogo />
       <HeaderSearch />
       <HeaderIcons>
-        <IconButton>
-          <MdApps />
+        <IconButton onClick={handleThemeToggle}>
+          {theme.name === "light" ? <IoMdMoon /> : <IoMdSunny />}
         </IconButton>
         <Avatar size="md" src={user?.avatar} alt={user?.name} />
       </HeaderIcons>

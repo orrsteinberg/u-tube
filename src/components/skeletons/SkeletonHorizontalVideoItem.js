@@ -1,8 +1,6 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useContext } from "react";
+import styled, { ThemeContext } from "styled-components";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-
-import { theme } from "../../utils/theme";
 
 const SkeletonContainer = styled.div`
   font-size: ${({ fullWidth }) => (fullWidth ? "1.1rem" : "1rem")};
@@ -17,6 +15,8 @@ const SkeletonContainer = styled.div`
 `;
 
 const SkeletonHorizontalVideoItem = () => {
+  const theme = useContext(ThemeContext);
+
   return (
     <SkeletonContainer>
       <SkeletonTheme

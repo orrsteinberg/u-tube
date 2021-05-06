@@ -5,35 +5,35 @@ import Header from "../Header/Header";
 import Sidemenu from "../Sidemenu/Sidemenu";
 import { Main, ViewContainer } from "./Layout.styled";
 
-const Layout = ({ children, activeTab, watchView }) => {
+const Layout = ({ children, activeTab, watchView, toggleTheme }) => {
   const menuRef = useRef(null);
-  const [showMenuOnMobile, setShowMenuOnMobile] = useDetectPageClick(
+  const viewContainerRef = useRef(null);
+  const [mobileMenuIsOpen, setMobileMenuIsOpen] = useDetectPageClick(
     menuRef, // Element
     false // Initial value
   );
-  const viewContainerRef = useRef(null);
 
   useLayoutEffect(() => {
     // Scroll to top when changing views
     viewContainerRef.current.scrollTop = 0;
   });
 
-  const handleMenuToggle = () => setShowMenuOnMobile(!showMenuOnMobile);
+  const toggleMenu = () => setMobileMenuIsOpen(!mobileMenuIsOpen);
 
   return (
     <>
-      <Header handleMenuToggle={handleMenuToggle} />
+      <Header handleThemeToggle={toggleTheme} handleMenuToggle={toggleMenu} />
       <Main>
         <Sidemenu
           ref={menuRef}
-          showOnMobile={showMenuOnMobile}
+          showOnMobile={mobileMenuIsOpen}
           activeTab={activeTab}
           watchView={watchView}
         />
         <ViewContainer
           ref={viewContainerRef}
           id="view-container"
-          menuIsOpen={showMenuOnMobile}
+          menuIsOpen={mobileMenuIsOpen}
         >
           {children}
         </ViewContainer>

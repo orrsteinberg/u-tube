@@ -70,7 +70,7 @@ export const Nav = styled.nav`
   display: flex;
   flex-direction: column;
   padding-top: 2rem;
-  transition: transform 0.2s, width 0.2s;
+  transition: transform 0.2s, width 0.2s, background 0.2s;
   transform: ${({ showOnMobile }) =>
     showOnMobile ? "translateX(0)" : "translateX(-200px)"};
 

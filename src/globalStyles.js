@@ -131,6 +131,7 @@ const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.colors.text.primary};
     background: ${({ theme }) => theme.colors.bg.darker};
     overflow-x: hidden;
+    transition: background 0.2s;
   }
 
   a {

@@ -1,8 +1,6 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useContext } from "react";
+import styled, { ThemeContext } from "styled-components";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-
-import { theme } from "../../utils/theme";
 
 const SkeletonContainer = styled.div`
   margin: 0 auto 1.75rem auto;
@@ -23,6 +21,8 @@ const SkeletonContainer = styled.div`
 `;
 
 const SkeletonVideoItem = ({ hideChannel }) => {
+  const theme = useContext(ThemeContext);
+
   return (
     <SkeletonContainer>
       <SkeletonTheme
