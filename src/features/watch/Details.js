@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { MdThumbUp, MdThumbDown } from "react-icons/md";
 import moment from "moment";
 import numeral from "numeral";
 
@@ -8,16 +7,15 @@ import { truncateText } from "../../utils/helpers";
 import {
   DetailsContainer,
   StatisticsContainer,
-  LikesBox,
   ChannelDetailsContainer,
   ChannelDetailsContent,
   DescriptionContainer,
 } from "./Details.styled";
 import Avatar from "../../components/Avatar/Avatar";
 import SubscribeButton from "../../components/SubscribeButton/SubscribeButton";
-import IconButton from "../../components/IconButton/IconButton";
-
 import RatingButtons from "../../components/RatingButtons/RatingButtons";
+
+import { useTextExpand } from "../../hooks";
 
 const Statistics = ({
   videoId,
@@ -64,24 +62,17 @@ const ChannelDetails = ({ channel }) => {
 };
 
 const Description = ({ description }) => {
-  const [isExpended, setIsExpanded] = useState(false);
-
-  const handleToggleClick = () => setIsExpanded(!isExpended);
-
-  // Truncate description, and if it's still the same length, hide toggle button
-  const shortDescription = truncateText("description", description);
-  const showToggle =
-    shortDescription.length < description.length ? true : false;
-
-  // Display the appropriate version (short or full description)
-  const displayText = isExpended ? description : shortDescription;
+  const { content, showToggle, handleToggle, isExpanded } = useTextExpand(
+    "description",
+    description
+  );
 
   return (
     <DescriptionContainer>
-      <p>{displayText}</p>
+      <p>{content}</p>
       {showToggle && (
-        <button onClick={handleToggleClick}>
-          Show {isExpended ? "less" : "more"}
+        <button onClick={handleToggle}>
+          Show {isExpanded ? "less" : "more"}
         </button>
       )}
     </DescriptionContainer>
