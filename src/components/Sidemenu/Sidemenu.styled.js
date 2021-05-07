@@ -51,7 +51,7 @@ export const AuthButton = styled(NavItem)`
   cursor: pointer;
   color: ${({ theme }) => theme.colors.general.blue};
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 
   &:hover {
     background: ${({ theme }) => theme.colors.general.blue};
@@ -70,6 +70,7 @@ export const Nav = styled.nav`
   display: flex;
   flex-direction: column;
   padding-top: 2rem;
+  padding-bottom: 4.5rem;
   transition: transform 0.2s, width 0.2s, background 0.2s;
   transform: ${({ showOnMobile }) =>
     showOnMobile ? "translateX(0)" : "translateX(-200px)"};
