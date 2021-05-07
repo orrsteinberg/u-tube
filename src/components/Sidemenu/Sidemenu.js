@@ -12,6 +12,7 @@ import {
   MdPerson,
 } from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
+import { FaGithub } from "react-icons/fa";
 
 import { useGoogleAuth } from "../../hooks";
 import { Nav, NavGroup, NavItem, AuthButton } from "./Sidemenu.styled";
@@ -67,6 +68,15 @@ const Sidemenu = React.forwardRef(
         <AuthButton as="button" onClick={handleAuth}>
           {authIcon} <span>{authText}</span>
         </AuthButton>
+        <a
+          href="https://www.github.com/orrsteinberg/u-tube"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <NavItem>
+            <FaGithub /> <span>View on GitHub</span>
+          </NavItem>
+        </a>
       </Nav>
     );
   }
