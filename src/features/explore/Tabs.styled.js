@@ -3,14 +3,9 @@ import { Link } from "react-router-dom";
 
 export const TabsContainer = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-bottom: 1.5rem;
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
-    flex-direction: row;
-  }
 `;
 
 export const TabLink = styled(Link)`
@@ -43,22 +38,22 @@ export const StyledTab = styled.div`
 
   svg {
     font-size: 2.5rem;
-    margin-right: 1.25rem;
 
     ${({ theme, isActive }) =>
       isActive &&
       css`
         color: ${({ theme }) => theme.colors.general.accent2};
       `}
-
-    @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
-      margin: 0;
-    }
   }
 
   h2 {
-    font-size: 1.2rem;
-    text-transform: capitalize;
+    display: none;
+
+    @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+      display: block;
+      font-size: 1.2rem;
+      text-transform: capitalize;
+    }
   }
 
   &:hover {
