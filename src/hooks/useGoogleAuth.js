@@ -63,7 +63,7 @@ const useGoogleAuth = () => {
     window.gapi.auth2.getAuthInstance().signOut();
   };
 
-  return [signIn, signOut];
+  return { signIn, signOut };
 };
 
 export default useGoogleAuth;
