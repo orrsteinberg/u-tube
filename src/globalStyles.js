@@ -26,13 +26,11 @@ const confirmAlertStyles = css`
   }
 
   .react-confirm-alert-body {
-    font-family: Arial, Helvetica, sans-serif;
     width: 400px;
     padding: 2rem;
     text-align: center;
     background: ${({ theme }) => theme.colors.bg.primary};
     border-radius: 5px;
-    box-shadow: 0 20px 75px rgba(0, 0, 0, 0.3);
     color: ${({ theme }) => theme.colors.text.primary};
   }
 
