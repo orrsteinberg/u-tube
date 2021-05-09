@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import numeral from "numeral";
 
-import { truncateText } from "../../utils/helpers";
 import {
   DetailsContainer,
   StatisticsContainer,
