@@ -78,8 +78,8 @@ export const Nav = styled.nav`
   // Show compact version of nav items on the Watch view
   & ${NavItem} {
     @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-      ${({ watchView }) =>
-        !watchView &&
+      ${({ compact }) =>
+        !compact &&
         css`
           justify-content: flex-start;
 
@@ -106,10 +106,10 @@ export const Nav = styled.nav`
     --highlight: 0px 0px 0px 2px ${({ theme }) => theme.colors.general.blue};
   }
 
-  // Expand menu on large screen if user is not on the watch view
+  // Expand menu on large screen unless 'compact' is true (for the 'watch' view)
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    ${({ watchView }) =>
-      !watchView &&
+    ${({ compact }) =>
+      !compact &&
       css`
         width: 240px;
         // No need for highlighting avatars on large screen (except on watch view)
