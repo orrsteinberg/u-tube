@@ -17,6 +17,7 @@ export const NavItem = styled.div`
   color: ${({ theme, active }) =>
     active ? theme.colors.text.primary : theme.colors.text.secondary};
   font-weight: ${({ active }) => (active ? "bold" : "regular")};
+  cursor: pointer;
 
   ${({ disabled }) =>
     disabled &&
@@ -51,12 +52,21 @@ export const AuthButton = styled(NavItem)`
   cursor: pointer;
   color: ${({ theme }) => theme.colors.general.blue};
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  min-height: 48px; // fix mobile glitch
 
   &:hover {
     background: ${({ theme }) => theme.colors.general.blue};
     color: ${({ theme }) => theme.colors.bg.primary};
     box-shadow: inset 10px 0px 0px 1px ${({ theme }) => theme.colors.bg.primary};
+  }
+`;
+
+export const ThemeButton = styled(NavItem)`
+  border: 0;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    display: none;
   }
 `;
 

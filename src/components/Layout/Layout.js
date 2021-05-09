@@ -28,6 +28,7 @@ const Layout = ({ children, activeTab, watchView, toggleTheme }) => {
           ref={menuRef}
           showOnMobile={mobileMenuIsOpen}
           toggleMenu={toggleMenu}
+          toggleTheme={toggleTheme}
           activeTab={activeTab}
           compact={watchView}
         />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -13,10 +13,18 @@ import {
 } from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
 import { FaGithub } from "react-icons/fa";
+import { IoMdSunny, IoMdMoon } from "react-icons/io";
+import { ThemeContext } from "styled-components";
 
 import { selectUser } from "../../features/auth/authSlice";
 import { useGoogleAuth } from "../../hooks";
-import { Nav, NavGroup, NavItem, AuthButton } from "./Sidemenu.styled";
+import {
+  Nav,
+  NavGroup,
+  NavItem,
+  AuthButton,
+  ThemeButton,
+} from "./Sidemenu.styled";
 import SubscriptionsNavGroup from "./SubscriptionsNavGroup";
 import AuthModal from "../AuthModal/AuthModal";
 
@@ -58,10 +66,11 @@ const disabledNavLinks = [
 ];
 
 const Sidemenu = React.forwardRef(
-  ({ showOnMobile, toggleMenu, activeTab, compact }, ref) => {
+  ({ showOnMobile, toggleMenu, toggleTheme, activeTab, compact }, ref) => {
     const [showAuthModal, setShowAuthModal] = useState(false);
     const { signOut } = useGoogleAuth();
     const user = useSelector(selectUser);
+    const theme = useContext(ThemeContext);
 
     const handleAuth = () => {
       user ? signOut() : setShowAuthModal(true);
@@ -95,6 +104,10 @@ const Sidemenu = React.forwardRef(
           <AuthButton as="button" onClick={handleAuth}>
             {authIcon} <span>{authText}</span>
           </AuthButton>
+          <ThemeButton as="button" onClick={toggleTheme}>
+            {theme.name === "light" ? <IoMdMoon /> : <IoMdSunny />}{" "}
+            <span>Switch theme</span>
+          </ThemeButton>
           <a
             href="https://www.github.com/orrsteinberg/u-tube"
             target="_blank"
