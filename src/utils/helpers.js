@@ -12,6 +12,8 @@ export const truncateText = (type, text) => {
       return truncate(150);
     case "subscription":
       return truncate(18);
+    case "comment":
+      return truncate(100);
     default:
       return text;
   }
