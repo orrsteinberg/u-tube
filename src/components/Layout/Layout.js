@@ -22,13 +22,14 @@ const Layout = ({ children, activeTab, watchView, toggleTheme }) => {
 
   return (
     <>
-      <Header handleThemeToggle={toggleTheme} handleMenuToggle={toggleMenu} />
+      <Header toggleTheme={toggleTheme} toggleMenu={toggleMenu} />
       <Main>
         <Sidemenu
           ref={menuRef}
           showOnMobile={mobileMenuIsOpen}
+          toggleMenu={toggleMenu}
           activeTab={activeTab}
-          watchView={watchView}
+          compact={watchView}
         />
         <ViewContainer
           ref={viewContainerRef}

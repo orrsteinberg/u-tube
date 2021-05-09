@@ -15,19 +15,19 @@ import HeaderSearch from "./HeaderSearch";
 import Avatar from "../Avatar/Avatar";
 import IconButton from "../IconButton/IconButton";
 
-const Header = ({ handleMenuToggle, handleThemeToggle }) => {
+const Header = ({ toggleMenu, toggleTheme }) => {
   const theme = useContext(ThemeContext);
   const user = useSelector(selectUser);
 
   return (
     <StyledHeader>
-      <ToggleButton onClick={handleMenuToggle}>
+      <ToggleButton onClick={toggleMenu}>
         <MdMenu />
       </ToggleButton>
       <HeaderLogo />
       <HeaderSearch />
       <HeaderIcons>
-        <IconButton onClick={handleThemeToggle}>
+        <IconButton onClick={toggleTheme}>
           {theme.name === "light" ? <IoMdMoon /> : <IoMdSunny />}
         </IconButton>
         <Avatar size="md" src={user?.avatar} alt={user?.name} />
