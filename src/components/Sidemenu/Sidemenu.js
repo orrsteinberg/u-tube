@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -14,70 +14,99 @@ import {
 import { IoMdLogOut } from "react-icons/io";
 import { FaGithub } from "react-icons/fa";
 
+import { selectUser } from "../../features/auth/authSlice";
 import { useGoogleAuth } from "../../hooks";
 import { Nav, NavGroup, NavItem, AuthButton } from "./Sidemenu.styled";
-import { selectUser } from "../../features/auth/authSlice";
 import SubscriptionsNavGroup from "./SubscriptionsNavGroup";
+import AuthModal from "../AuthModal/AuthModal";
+
+const mainNavLinks = [
+  {
+    name: "Home",
+    to: "/",
+    icon: <MdHome />,
+  },
+  {
+    name: "Explore",
+    to: "/explore",
+    icon: <MdExplore />,
+  },
+  {
+    name: "Subscriptions",
+    to: "/subscriptions",
+    icon: <MdSubscriptions />,
+  },
+];
+
+const disabledNavLinks = [
+  {
+    name: "Library",
+    icon: <MdVideoLibrary />,
+  },
+  {
+    name: "History",
+    icon: <MdHistory />,
+  },
+  {
+    name: "My Videos",
+    icon: <MdVideocam />,
+  },
+  {
+    name: "Watch Later",
+    icon: <MdWatchLater />,
+  },
+];
 
 const Sidemenu = React.forwardRef(
-  ({ showOnMobile, activeTab, watchView }, ref) => {
-    const [signIn, signOut] = useGoogleAuth();
+  ({ showOnMobile, toggleMenu, activeTab, compact }, ref) => {
+    const [showAuthModal, setShowAuthModal] = useState(false);
+    const { signOut } = useGoogleAuth();
     const user = useSelector(selectUser);
 
     const handleAuth = () => {
-      user ? signOut() : signIn();
+      user ? signOut() : setShowAuthModal(true);
     };
 
     const authIcon = user ? <IoMdLogOut /> : <MdPerson />;
     const authText = user ? "Sign out" : "Sign in";
 
+    const closeAuthModal = () => setShowAuthModal(false);
+
     return (
-      <Nav showOnMobile={showOnMobile} watchView={watchView} ref={ref}>
-        <NavGroup>
-          <Link to="/">
-            <NavItem active={activeTab === "home"}>
-              <MdHome /> <span>Home</span>
+      <>
+        <Nav showOnMobile={showOnMobile} compact={compact} ref={ref}>
+          <NavGroup>
+            {mainNavLinks.map((navLink) => (
+              <Link to={navLink.to} key={navLink.name} onClick={toggleMenu}>
+                <NavItem active={activeTab === navLink.name.toLowerCase()}>
+                  {navLink.icon} <span>{navLink.name}</span>
+                </NavItem>
+              </Link>
+            ))}
+          </NavGroup>
+          <NavGroup>
+            {disabledNavLinks.map((navLink) => (
+              <NavItem disabled key={navLink.name}>
+                {navLink.icon} <span>{navLink.name}</span>
+              </NavItem>
+            ))}
+          </NavGroup>
+          {user && <SubscriptionsNavGroup />}
+          <AuthButton as="button" onClick={handleAuth}>
+            {authIcon} <span>{authText}</span>
+          </AuthButton>
+          <a
+            href="https://www.github.com/orrsteinberg/u-tube"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <NavItem>
+              <FaGithub /> <span>View on GitHub</span>
             </NavItem>
-          </Link>
-          <Link to="/explore">
-            <NavItem active={activeTab === "explore"}>
-              <MdExplore /> <span>Explore</span>
-            </NavItem>
-          </Link>
-          <Link to="/subscriptions">
-            <NavItem active={activeTab === "subscriptions"}>
-              <MdSubscriptions /> <span>Subscriptions</span>
-            </NavItem>
-          </Link>
-        </NavGroup>
-        <NavGroup>
-          <NavItem disabled>
-            <MdVideoLibrary /> <span>Library</span>
-          </NavItem>
-          <NavItem disabled>
-            <MdHistory /> <span>History</span>
-          </NavItem>
-          <NavItem disabled>
-            <MdVideocam /> <span>My Videos</span>
-          </NavItem>
-          <NavItem disabled>
-            <MdWatchLater /> <span>Watch Later</span>
-          </NavItem>
-        </NavGroup>
-        {user && <SubscriptionsNavGroup />}
-        <AuthButton as="button" onClick={handleAuth}>
-          {authIcon} <span>{authText}</span>
-        </AuthButton>
-        <a
-          href="https://www.github.com/orrsteinberg/u-tube"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <NavItem>
-            <FaGithub /> <span>View on GitHub</span>
-          </NavItem>
-        </a>
-      </Nav>
+          </a>
+        </Nav>
+        {showAuthModal && <AuthModal closeModal={closeAuthModal} />}
+      </>
     );
   }
 );
