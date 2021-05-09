@@ -2,16 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
+import { useTextExpand } from "../../hooks";
 import { CommentContainer, CommentBody, Author, Text } from "./Comment.styled";
 import Avatar from "../../components/Avatar/Avatar";
 
 const Comment = ({ comment }) => {
-  const {
-    authorDisplayName,
-    authorChannelId,
-    authorProfileImageUrl,
-    textOriginal,
-  } = comment;
+  const { content } = useTextExpand("comment", comment.textOriginal);
+
+  const { authorDisplayName, authorChannelId, authorProfileImageUrl } = comment;
 
   const publishedAt = moment(comment.publishedAt).fromNow();
 
@@ -25,7 +23,7 @@ const Comment = ({ comment }) => {
           <Link to={`/channel/${authorChannelId}`}>{authorDisplayName}</Link>
           <span> {publishedAt}</span>
         </Author>
-        <Text>{textOriginal}</Text>
+        <Text>{content}</Text>
       </CommentBody>
     </CommentContainer>
   );
