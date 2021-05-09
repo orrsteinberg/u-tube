@@ -7,9 +7,11 @@ export const SearchForm = styled.form`
   border: 1px solid ${({ theme }) => theme.colors.bg.secondary};
   border-radius: 3px;
   margin: 0 0.25rem;
+  transition: box-shadow 0.2s;
 
   &:focus-within {
-    background: ${({ theme }) => shade(0.5, theme.colors.bg.primary)};
+    border: 1px solid ${({ theme }) => theme.colors.text.tertiary};
+    box-shadow: 0 0 0 3px rgba(21, 156, 228, 0.4);
   }
 
   input {
@@ -20,7 +22,7 @@ export const SearchForm = styled.form`
     color: ${({ theme }) => theme.colors.text.primary};
     padding-left: 1rem;
     font-size: 1.1rem;
-    transition: border 0.2s;
+    //transition: border 0.2s;
 
     &::placeholder {
       color: ${({ theme }) => theme.colors.text.secondary};
@@ -28,7 +30,8 @@ export const SearchForm = styled.form`
 
     &:focus {
       outline: none;
-      border: 1px solid ${({ theme }) => theme.colors.text.secondary};
+      //background: ${({ theme }) => theme.colors.bg.tertiary};
+      //border: 1px solid ${({ theme }) => theme.colors.text.secondary};
     }
 
     @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -37,7 +40,10 @@ export const SearchForm = styled.form`
   }
 
   button {
-    background: ${({ theme }) => shade(0.4, theme.colors.bg.primary)};
+    background: ${({ theme }) =>
+      theme.name === "light"
+        ? theme.colors.bg.tertiary
+        : shade(0.4, theme.colors.bg.primary)};
     border: none;
     border-bottom: 2px solid transparent;
     color: ${({ theme }) => theme.colors.text.secondary};
@@ -60,7 +66,10 @@ export const SearchForm = styled.form`
     &:focus {
       outline: none;
       border-bottom: 2px solid ${({ theme }) => theme.colors.text.secondary};
-      background: ${({ theme }) => shade(0.5, theme.colors.bg.primary)};
+      background: ${({ theme }) =>
+        theme.name === "light"
+          ? theme.colors.bg.secondary
+          : shade(0.5, theme.colors.bg.primary)};
     }
   }
 

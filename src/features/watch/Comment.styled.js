@@ -37,5 +37,8 @@ export const Author = styled.div`
 
 export const Text = styled.p`
   margin: 0.25rem 0 0 0;
-  color: ${({ theme }) => lighten(0.15, theme.colors.text.secondary)};
+  color: ${({ theme }) =>
+    theme.name === "light"
+      ? theme.colors.text.secondary
+      : lighten(0.15, theme.colors.text.secondary)};
 `;

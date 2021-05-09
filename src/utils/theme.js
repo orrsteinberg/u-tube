@@ -53,19 +53,15 @@ export const lightTheme = {
       accent2: "#ce83f7",
     },
     text: {
-      //primary: "#101c36",
       primary: "#222222",
-      //primary: "#030303",
-      //secondary: "#2a3658",
-      secondary: "#606060",
-      //tertiary: "#223054",
-      tertiary: "#8f8f8f",
+      secondary: "#404040",
+      tertiary: "#888888",
     },
     bg: {
       primary: "#ffffff",
-      secondary: "#e5e5e5",
+      secondary: "#e8eeed",
       tertiary: "#eeeeee",
-      darker: "#fbfbfb",
+      darker: "#f8f8f8",
     },
   },
   breakpoints: {
