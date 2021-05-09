@@ -10,9 +10,11 @@ import {
   subscribe,
   unsubscribe,
 } from "../../features/subscriptions/subscriptionsSlice";
+import AuthModal from "../AuthModal/AuthModal";
 
 const SubscribeButton = ({ channelId }) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const subscriptions = useSelector(selectSubscriptions);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
@@ -27,8 +29,13 @@ const SubscribeButton = ({ channelId }) => {
     }
   }, [user, subscriptions, channelId]);
 
+  const closeAuthModal = () => setShowAuthModal(false);
+
   const handleClick = () => {
-    if (!user) return;
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
 
     if (!isSubscribed) {
       dispatch(subscribe(channelId));
@@ -53,13 +60,16 @@ const SubscribeButton = ({ channelId }) => {
   const text = isSubscribed ? "Unsubscribe" : "Subscribe";
 
   return (
-    <StyledSubscribeButton
-      isSubscribed={isSubscribed}
-      onClick={handleClick}
-      disabled={subscriptions.updateInProgress.status === "loading"}
-    >
-      {text}
-    </StyledSubscribeButton>
+    <>
+      <StyledSubscribeButton
+        isSubscribed={isSubscribed}
+        onClick={handleClick}
+        disabled={subscriptions.updateInProgress.status === "loading"}
+      >
+        {text}
+      </StyledSubscribeButton>
+      {showAuthModal && <AuthModal closeModal={closeAuthModal} />}
+    </>
   );
 };
 

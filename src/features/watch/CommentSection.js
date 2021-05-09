@@ -1,11 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { selectUser } from "../auth/authSlice";
 import {
   postComment,
-  noUserCommentError,
-  clearNoUserCommentError,
   selectVideoToWatch,
   selectCommentSection,
 } from "./watchSlice";
@@ -16,6 +14,7 @@ import {
 import Comment from "./Comment";
 import Avatar from "../../components/Avatar/Avatar";
 import Error from "../../components/Error/Error";
+import AuthModal from "../../components/AuthModal/AuthModal";
 
 const NewCommentForm = () => {
   const inputRef = useRef();
@@ -25,20 +24,16 @@ const NewCommentForm = () => {
   const { newCommentStatus, newCommentError } = useSelector(
     selectCommentSection
   );
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    // When user logs in, clear omment error
-    if (user) {
-      dispatch(clearNoUserCommentError());
-    }
-  }, [user, dispatch]);
+  const closeAuthModal = () => setShowAuthModal(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (!user) {
-      dispatch(noUserCommentError());
+      setShowAuthModal(true);
       return;
     }
 
@@ -74,6 +69,7 @@ const NewCommentForm = () => {
         </form>
       </StyledNewCommentForm>
       {newCommentStatus === "failed" && <Error error={newCommentError} />}
+      {showAuthModal && <AuthModal closeModal={closeAuthModal} />}
     </>
   );
 };
