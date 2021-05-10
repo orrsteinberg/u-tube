@@ -63,7 +63,7 @@ const HorizontalVideoItem = ({ video, fullWidth }) => {
         <MdPlayArrow />
       </ThumbnailLink>
       <ItemBody fullWidth={fullWidth}>
-        <Link to={`/watch/${id}`}>
+        <Link to={`/watch/${id}`} title={video.title}>
           <h3>{title}</h3>
         </Link>
         <Metadata
