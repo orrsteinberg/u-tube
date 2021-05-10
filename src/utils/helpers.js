@@ -1,5 +1,9 @@
 import api from "./api";
 
+/*
+ * Utility functions
+ */
+
 // Truncate text
 export const truncateText = (type, text) => {
   const truncate = (maxLength) =>
@@ -60,10 +64,10 @@ const filterResultByType = (obj, item) => {
 };
 
 /*
- * Modify API response data shape
+ * Transform API response data shape to fit the client store models
  */
 
-const modifyVideo = (videoData) => {
+const transformVideo = (videoData) => {
   return {
     id: videoData.id,
     title: videoData.snippet.title,
@@ -77,7 +81,7 @@ const modifyVideo = (videoData) => {
   };
 };
 
-const modifyVideosWithAvatars = ({ videos, channels }) => {
+const transformVideosWithAvatars = ({ videos, channels }) => {
   // Create object with channel id for keys and avatar url for values
   const channelAvatars = channels.reduce((avatarsObj, channel) => {
     return {
@@ -87,13 +91,13 @@ const modifyVideosWithAvatars = ({ videos, channels }) => {
   }, {});
 
   // Add appropriate channel avatars to videos by their id
-  return videos.map(modifyVideo).map((video) => ({
+  return videos.map(transformVideo).map((video) => ({
     ...video,
     channelAvatar: channelAvatars[video.channelId],
   }));
 };
 
-const modifyChannelData = (channelData) => {
+const transformChannelData = (channelData) => {
   return {
     id: channelData.id,
     title: channelData.snippet.title,
@@ -103,7 +107,7 @@ const modifyChannelData = (channelData) => {
   };
 };
 
-const modifyVideoToWatch = ({ videoData, channelData }) => {
+const transformVideoToWatch = ({ videoData, channelData }) => {
   return {
     id: videoData.id,
     title: videoData.snippet.title,
@@ -121,7 +125,7 @@ const modifyVideoToWatch = ({ videoData, channelData }) => {
   };
 };
 
-const modifyComment = (commentData) => {
+const transformComment = (commentData) => {
   const {
     authorDisplayName,
     authorChannelId: { value: authorChannelId },
@@ -142,7 +146,7 @@ const modifyComment = (commentData) => {
   };
 };
 
-const modifySubscription = (item) => {
+const transformSubscription = (item) => {
   return {
     id: item.id,
     channel: {
@@ -156,7 +160,7 @@ const modifySubscription = (item) => {
 };
 
 /*
- * Handle API requests and modify returned data
+ * Handle API requests and return transformed data
  */
 
 export const getVideosWithAvatars = async ({ pageToken, categoryId }) => {
@@ -170,7 +174,7 @@ export const getVideosWithAvatars = async ({ pageToken, categoryId }) => {
   const channelsResponse = await api.getChannelsById(channelIds);
 
   // Customize video data shape and merge channel avatars
-  const videos = modifyVideosWithAvatars({
+  const videos = transformVideosWithAvatars({
     videos: videosResponse.data.items,
     channels: channelsResponse.data.items,
   });
@@ -181,6 +185,11 @@ export const getVideosWithAvatars = async ({ pageToken, categoryId }) => {
   };
 };
 
+export const getHomeVideos = (pageToken) => getVideosWithAvatars({ pageToken });
+
+export const getCategoryVideos = (categoryId, pageToken) =>
+  getVideosWithAvatars({ pageToken, categoryId });
+
 export const getChannelData = async (channelId) => {
   const channelResponse = await api.getChannelById(channelId);
 
@@ -188,7 +197,7 @@ export const getChannelData = async (channelId) => {
     throw new Error("Channel not found");
   }
 
-  return modifyChannelData(channelResponse.data.items[0]);
+  return transformChannelData(channelResponse.data.items[0]);
 };
 
 export const getChannelVideos = async (channelId, pageToken) => {
@@ -205,7 +214,7 @@ export const getChannelVideos = async (channelId, pageToken) => {
   const videosResponse = await api.getVideosById(channelVideoIds);
 
   return {
-    videos: videosResponse.data.items.map(modifyVideo),
+    videos: videosResponse.data.items.map(transformVideo),
     nextPageToken: channelVideosResponse.data.nextPageToken,
   };
 };
@@ -222,7 +231,7 @@ export const getVideoToWatch = async (videoId) => {
   const channelId = videoResponse.data.items[0].snippet.channelId;
   const channelResponse = await api.getChannelById(channelId);
 
-  return modifyVideoToWatch({
+  return transformVideoToWatch({
     videoData: videoResponse.data.items[0],
     channelData: channelResponse.data.items[0],
   });
@@ -237,27 +246,27 @@ export const getRelatedVideos = async (videoId) => {
 
   // Get videos by ID so we can have their contentData (needed for video duration)
   const videosResponse = await api.getVideosById(relatedVideosIds);
-  return videosResponse.data.items.map(modifyVideo);
+  return videosResponse.data.items.map(transformVideo);
 };
 
 export const getComments = async (videoId) => {
   const commentsResponse = await api.getCommentsByVideoId(videoId);
-  return commentsResponse.data.items.map(modifyComment);
+  return commentsResponse.data.items.map(transformComment);
 };
 
 export const addComment = async (videoId, text, accessToken) => {
   const commentResponse = await api.addComment(videoId, text, accessToken);
-  return modifyComment(commentResponse.data);
+  return transformComment(commentResponse.data);
 };
 
 const getChannelsById = async (channelIds) => {
   const channelsResponse = await api.getChannelsById(channelIds);
-  return channelsResponse.data.items.map(modifyChannelData);
+  return channelsResponse.data.items.map(transformChannelData);
 };
 
 const getVideosById = async (videoIds) => {
   const videosResponse = await api.getVideosById(videoIds);
-  return videosResponse.data.items.map(modifyVideo);
+  return videosResponse.data.items.map(transformVideo);
 };
 
 export const getSearchResults = async (query) => {
@@ -288,12 +297,12 @@ export const getSearchResults = async (query) => {
 
 export const getSubscriptions = async (accessToken) => {
   const subResponse = await api.getSubscriptions(accessToken);
-  return subResponse.data.items.map(modifySubscription);
+  return subResponse.data.items.map(transformSubscription);
 };
 
 export const addSubscription = async (channelId, accessToken) => {
   const subResponse = await api.addSubscription(channelId, accessToken);
-  return modifySubscription(subResponse.data);
+  return transformSubscription(subResponse.data);
 };
 
 export const deleteSubscription = async (subscriptionId, accessToken) => {

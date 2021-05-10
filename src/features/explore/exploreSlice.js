@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { getVideosWithAvatars, handleResultErrors } from "../../utils/helpers";
+import { getCategoryVideos, handleResultErrors } from "../../utils/helpers";
 
 // Category IDs
 const categoryIds = {
@@ -60,7 +60,7 @@ export const fetchVideosToExplore = createAsyncThunk(
     const pageToken = getState().explore[category].pageToken;
     const categoryId = categoryIds[category];
 
-    return getVideosWithAvatars({ categoryId, pageToken })
+    return getCategoryVideos(categoryId, pageToken)
       .then((result) => result)
       .catch(handleResultErrors);
   }

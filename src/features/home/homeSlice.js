@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { getVideosWithAvatars, handleResultErrors } from "../../utils/helpers";
+import { getHomeVideos, handleResultErrors } from "../../utils/helpers";
 
 // State shape
 const initialState = {
@@ -16,7 +16,7 @@ export const fetchHomeVideos = createAsyncThunk(
   "home/fetchHomeVideos",
   (_, { getState }) => {
     const pageToken = getState().home.pageToken;
-    return getVideosWithAvatars({ pageToken })
+    return getHomeVideos(pageToken)
       .then((result) => result)
       .catch(handleResultErrors);
   }
