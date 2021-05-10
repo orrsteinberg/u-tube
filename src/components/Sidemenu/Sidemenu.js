@@ -101,22 +101,24 @@ const Sidemenu = React.forwardRef(
             ))}
           </NavGroup>
           {user && <SubscriptionsNavGroup />}
-          <AuthButton as="button" onClick={handleAuth}>
-            {authIcon} <span>{authText}</span>
-          </AuthButton>
-          <ThemeButton as="button" onClick={toggleTheme}>
-            {theme.name === "light" ? <IoMdMoon /> : <IoMdSunny />}{" "}
-            <span>Switch theme</span>
-          </ThemeButton>
-          <a
-            href="https://www.github.com/orrsteinberg/u-tube"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <NavItem>
-              <FaGithub /> <span>View on GitHub</span>
-            </NavItem>
-          </a>
+          <NavGroup>
+            <AuthButton as="button" onClick={handleAuth}>
+              {authIcon} <span>{authText}</span>
+            </AuthButton>
+            <ThemeButton as="button" onClick={toggleTheme}>
+              {theme.name === "light" ? <IoMdMoon /> : <IoMdSunny />}{" "}
+              <span>Switch theme</span>
+            </ThemeButton>
+            <a
+              href="https://www.github.com/orrsteinberg/u-tube"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <NavItem>
+                <FaGithub /> <span>View on GitHub</span>
+              </NavItem>
+            </a>
+          </NavGroup>
         </Nav>
         {showAuthModal && <AuthModal closeModal={closeAuthModal} />}
       </>
