@@ -3,7 +3,7 @@ import { darken } from "polished";
 
 export const ErrorContainer = styled.div`
   max-width: 380px;
-  padding: 0.25rem;
+  padding: 0.25rem 1rem;
   margin: 1.5rem auto;
   text-align: center;
   color: ${({ theme }) => theme.colors.text.secondary};
