@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 
-// Detect clicks on the page in order to toggle mobile menu
-const useDetectPageClick = (elementRef, initialState) => {
-  const [isActive, setIsActive] = useState(initialState);
+// Manage mobile menu state
+// and detects outside click events in order to close it
+const useMobileMenu = (elementRef, initialState) => {
+  const [isOpen, setIsOpen] = useState(initialState);
 
   useEffect(() => {
     const handlePageClick = (event) => {
@@ -10,13 +11,13 @@ const useDetectPageClick = (elementRef, initialState) => {
         // If the menu element does not contain the target,
         // it means we clicked outside and we want to close the menu
         if (!elementRef.current.contains(event.target)) {
-          setIsActive(false);
+          setIsOpen(false);
         }
       }
     };
 
     // When the element is active, listen for clicks anywhere on the page
-    if (isActive) {
+    if (isOpen) {
       window.addEventListener("click", handlePageClick);
     }
 
@@ -26,7 +27,9 @@ const useDetectPageClick = (elementRef, initialState) => {
     };
   });
 
-  return [isActive, setIsActive];
+  const toggle = () => setIsOpen(!isOpen);
+
+  return [isOpen, toggle];
 };
 
-export default useDetectPageClick;
+export default useMobileMenu;
