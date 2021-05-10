@@ -14,6 +14,7 @@ import {
 import Comment from "./Comment";
 import Avatar from "../../components/Avatar/Avatar";
 import Error from "../../components/Error/Error";
+import Spinner from "../../components/Spinner/Spinner";
 import AuthModal from "../../components/AuthModal/AuthModal";
 
 const NewCommentForm = () => {
@@ -79,7 +80,7 @@ const CommentSection = () => {
 
   return (
     <CommentsContainer>
-      {status === "loading" && <h3>Loading comments...</h3>}
+      {status === "loading" && <Spinner />}
       {status === "failed" && <Error error={error} />}
       {status === "succeeded" && (
         <>

@@ -12,6 +12,7 @@ import {
 import HorizontalVideoItem from "../../components/HorizontalVideoItem/HorizontalVideoItem";
 import HorizontalChannelItem from "../../components/HorizontalChannelItem/HorizontalChannelItem";
 import Error from "../../components/Error/Error";
+import Spinner from "../../components/Spinner/Spinner";
 
 const Search = () => {
   const { currentQuery, status, error, channels, videos } = useSelector(
@@ -39,6 +40,7 @@ const Search = () => {
       {status === "loading" && (
         <>
           <h3>Searching...</h3>
+          <Spinner />
         </>
       )}
       {status === "failed" && <Error error={error} />}
