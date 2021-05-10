@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
+import { useDarkMode } from "./hooks";
 import { selectUser } from "./features/auth/authSlice";
 import {
   fetchSubscriptions,
@@ -21,7 +22,7 @@ import Explore from "./features/explore/Explore";
 import NotFound from "./components/NotFound/NotFound";
 
 const App = () => {
-  const [theme, setTheme] = useState("dark");
+  const [darkMode, toggleThemeMode] = useDarkMode();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
@@ -37,51 +38,48 @@ const App = () => {
     }
   }, [user, dispatch]);
 
-  const toggleTheme = () =>
-    theme === "dark" ? setTheme("light") : setTheme("dark");
-
   return (
-    <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <GlobalStyles />
       <Switch>
         <Route path="/" exact>
-          <Layout toggleTheme={toggleTheme} activeTab="home">
+          <Layout toggleTheme={toggleThemeMode} activeTab="home">
             <Home />
           </Layout>
         </Route>
 
         <Route path="/watch/:id" exact>
-          <Layout toggleTheme={toggleTheme} watchView>
+          <Layout toggleTheme={toggleThemeMode} watchView>
             <Watch />
           </Layout>
         </Route>
 
         <Route path="/channel/:id" exact>
-          <Layout toggleTheme={toggleTheme}>
+          <Layout toggleTheme={toggleThemeMode}>
             <Channel />
           </Layout>
         </Route>
 
         <Route path="/search" exact>
-          <Layout toggleTheme={toggleTheme}>
+          <Layout toggleTheme={toggleThemeMode}>
             <Search />
           </Layout>
         </Route>
 
         <Route path="/subscriptions" exact>
-          <Layout toggleTheme={toggleTheme} activeTab="subscriptions">
+          <Layout toggleTheme={toggleThemeMode} activeTab="subscriptions">
             <Subscriptions />
           </Layout>
         </Route>
 
         <Route path="/explore">
-          <Layout toggleTheme={toggleTheme} activeTab="explore">
+          <Layout toggleTheme={toggleThemeMode} activeTab="explore">
             <Explore />
           </Layout>
         </Route>
 
         <Route>
-          <Layout toggleTheme={toggleTheme}>
+          <Layout toggleTheme={toggleThemeMode}>
             <NotFound />
           </Layout>
         </Route>
