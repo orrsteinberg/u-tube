@@ -18,6 +18,7 @@ import Channel from "./features/channel/Channel";
 import Search from "./features/search/Search";
 import Subscriptions from "./features/subscriptions/Subscriptions";
 import Explore from "./features/explore/Explore";
+import NotFound from "./components/NotFound/NotFound";
 
 const App = () => {
   const [theme, setTheme] = useState("dark");
@@ -81,7 +82,7 @@ const App = () => {
 
         <Route>
           <Layout toggleTheme={toggleTheme}>
-            <h1>Not Found</h1>
+            <NotFound />
           </Layout>
         </Route>
       </Switch>
