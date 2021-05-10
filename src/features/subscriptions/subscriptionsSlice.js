@@ -61,7 +61,7 @@ const subscriptionsSlice = createSlice({
   reducers: {
     clearSubscriptions: (state, action) => {
       state.status = "failed";
-      state.error = "You must be logged in to view your subscriptions";
+      state.error = "You must be signed in to view your subscriptions";
       state.channels = [];
     },
   },
