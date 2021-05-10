@@ -52,8 +52,7 @@ export const AuthButton = styled(NavItem)`
   cursor: pointer;
   color: ${({ theme }) => theme.colors.general.blue};
   font-weight: bold;
-  margin-bottom: 0.75rem;
-  min-height: 48px; // fix mobile glitch
+  margin-bottom: 0.5rem;
 
   &:hover {
     background: ${({ theme }) => theme.colors.general.blue};
