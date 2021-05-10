@@ -127,7 +127,7 @@ const GlobalStyles = createGlobalStyle`
 
   body {
     color: ${({ theme }) => theme.colors.text.primary};
-    background: ${({ theme }) => theme.colors.bg.darker};
+    background: ${({ theme }) => theme.colors.bg.content};
     overflow-x: hidden;
     transition: background 0.2s;
   }

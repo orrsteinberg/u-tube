@@ -71,7 +71,7 @@ export const GoogleButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: space-arund;
-  background: ${({ theme }) => theme.colors.bg.darker};
+  background: ${({ theme }) => theme.colors.bg.content};
   border: none;
   padding: 0 1.25rem;
   margin: auto;

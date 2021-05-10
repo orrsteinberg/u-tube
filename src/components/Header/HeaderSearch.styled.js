@@ -3,7 +3,7 @@ import { shade } from "polished";
 
 export const SearchForm = styled.form`
   display: flex;
-  background: ${({ theme }) => theme.colors.bg.darker};
+  background: ${({ theme }) => theme.colors.bg.content};
   border: 1px solid ${({ theme }) => theme.colors.bg.secondary};
   border-radius: 3px;
   margin: 0 0.25rem;

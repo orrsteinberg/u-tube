@@ -17,7 +17,7 @@ export const ViewContainer = styled.div`
       `${theme.colors.bg.tertiary} ${theme.colors.bg.primary}`};
   }
   &::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.bg.darker};
+    background: ${({ theme }) => theme.colors.bg.content};
   }
   &::-webkit-scrollbar-thumb {
     background-color: ${({ theme }) => theme.colors.bg.tertiary};
