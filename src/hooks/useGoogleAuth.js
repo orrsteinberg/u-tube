@@ -40,12 +40,12 @@ const useGoogleAuth = () => {
       const isSignedIn = authInstance.isSignedIn.get();
 
       if (isSignedIn) {
-        const { currentUser } = authInstance;
+        const profile = authInstance.currentUser.get().getBasicProfile();
 
         const userData = {
-          name: currentUser.fe.gt.Ue,
-          avatar: currentUser.fe.gt.zJ,
-          accessToken: currentUser.fe.qc.access_token,
+          name: profile.getName(),
+          avatar: profile.getImageUrl(),
+          accessToken: authInstance.currentUser.fe.qc.access_token,
         };
 
         dispatch(loadUserData(userData));
