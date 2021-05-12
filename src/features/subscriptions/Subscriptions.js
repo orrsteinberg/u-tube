@@ -6,6 +6,7 @@ import { selectSubscriptions } from "./subscriptionsSlice";
 import { selectUser } from "../auth/authSlice";
 import HorizontalChannelItem from "../../components/HorizontalChannelItem/HorizontalChannelItem";
 import Error from "../../components/Error/Error";
+import Spinner from "../../components/Spinner/Spinner";
 
 const Subscriptions = () => {
   const user = useSelector(selectUser);
@@ -21,7 +22,7 @@ const Subscriptions = () => {
         )}
       </Helmet>
 
-      {status === "loading" && <h3>Loading subscriptions...</h3>}
+      {status === "loading" && <Spinner />}
       {status === "failed" && <Error error={error} />}
       {status === "succeeded" && (
         <>
