@@ -32,17 +32,25 @@ export const fetchSubscriptions = createAsyncThunk(
 
 export const subscribe = createAsyncThunk(
   "subscriptions/subscribe",
-  (channelId, { getState }) => {
+  (channelId, { getState, dispatch }) => {
     const accessToken = getState().auth.accessToken;
     return addSubscription(channelId, accessToken)
       .then((result) => result)
-      .catch(handleResultErrors);
+      .catch((error) => {
+        const alreadySubscribed = error.response?.data?.message.startsWith(
+          "The subscription that you are trying to create already exists."
+        );
+        if (alreadySubscribed) {
+          dispatch(fetchSubscriptions());
+        }
+        handleResultErrors(error);
+      });
   }
 );
 
 export const unsubscribe = createAsyncThunk(
   "subscriptions/unsubscribe",
-  (channelId, { getState }) => {
+  (channelId, { getState, dispatch }) => {
     const accessToken = getState().auth.accessToken;
     const subscription = getState().subscriptions.items.find(
       (item) => item.channel.id === channelId
@@ -50,7 +58,15 @@ export const unsubscribe = createAsyncThunk(
 
     return deleteSubscription(subscription.id, accessToken)
       .then((deletedId) => deletedId)
-      .catch(handleResultErrors);
+      .catch((error) => {
+        const alreadyUnsubscribed = error.response?.data?.message.startsWith(
+          "The subscription that you are trying to delete cannot be found."
+        );
+        if (alreadyUnsubscribed) {
+          dispatch(fetchSubscriptions());
+        }
+        handleResultErrors(error);
+      });
   }
 );
 
