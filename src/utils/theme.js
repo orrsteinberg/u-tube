@@ -1,17 +1,33 @@
-export const theme = {
+const baseTheme = {
   sizes: {
     headerHeight: "9vh",
     decorBarHeight: "3px",
   },
   colors: {
     general: {
-      light: "#fff",
+      light: "#ffffff",
       dark: "#222222",
       red: "#e82f2f",
+      orange: "#e47440",
+      blue: "#0b7aff",
       faded: "#5f6d8c",
       accent1: "#9fd1fb",
       accent2: "#ce83f7",
     },
+  },
+  breakpoints: {
+    sm: "576px",
+    md: "768px",
+    lg: "992px",
+    xl: "1200px",
+  },
+};
+
+export const darkTheme = {
+  ...baseTheme,
+  name: "dark",
+  colors: {
+    ...baseTheme.colors,
     text: {
       primary: "#d8deed",
       secondary: "#979fb4",
@@ -21,30 +37,26 @@ export const theme = {
       primary: "#101c36",
       secondary: "#2a3658",
       tertiary: "#223054",
-      darker: "#040912",
+      content: "#040912",
     },
   },
-  typography: {
-    h1: "2.75rem",
-    h2: "2.25rem",
-    h3: "1.75rem",
-    h4: "1.5rem",
-    h5: "1.25rem",
-    h6: "1rem",
-  },
-  spacing: {
-    xxs: "0.25rem",
-    xs: "0.5rem",
-    sm: "0.75rem",
-    md: "1rem",
-    lg: "1.25rem",
-    xl: "1.5rem",
-    xxl: "1.75rem",
-  },
-  breakpoints: {
-    sm: "576px",
-    md: "768px",
-    lg: "992px",
-    xl: "1200px",
+};
+
+export const lightTheme = {
+  ...baseTheme,
+  name: "light",
+  colors: {
+    ...baseTheme.colors,
+    text: {
+      primary: "#222222",
+      secondary: "#404040",
+      tertiary: "#888888",
+    },
+    bg: {
+      primary: "#ffffff",
+      secondary: "#e8eeed",
+      tertiary: "#eeeeee",
+      content: "#f8f8f8",
+    },
   },
 };

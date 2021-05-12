@@ -1,70 +1,33 @@
-# Getting Started with Create React App
+# U-Tube
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+YouTube client-side clone. This is a showcase project inspired by the original YouTube website with some customization.
+Built with React and Redux (using RTK, which is now recommended as the [official standard way to write Redux logic](https://redux.js.org/redux-toolkit/overview)).
 
-## Available Scripts
+## Live demo
 
-In the project directory, you can run:
+Will be added.
 
-### `yarn start`
+### API proxy
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+In order to hide the app's private API key, I put together a bare-bones [API proxy](https://www.github.com/orrsteinberg/u-tube-api-proxy) to pass incoming requests to the official YouTube API and add the secret key to them.
+Because YouTube has a daily quota for requests, the proxy also includes a rate limiter.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### About the app
 
-### `yarn test`
+This single-page web app uses YouTube Data API v3 for interacting with YouTube data, and Google OAuth2 for signing in/out and persisting authentication state.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Some of the features so far include
 
-### `yarn build`
+- [x] Browsing the most popular videos chart on the home screen.
+- [x] Watching videos, along with a list of related videos and comments.
+- [x] Commenting and rating videos.
+- [x] Viewing and subscribing to channels.
+- [x] Searching for channels and videos.
+- [x] An explorer section where users can explore the most popular videos under different categories.
+- [x] Subscriptions page where authenticated users can track their subscriptions.
+- [x] Persistent auth using Google OAuth2.
+- [x] Light/dark theme modes, persisting in local storage.
+- [x] Custom and fully responsive design to support different devices.
+- [x] Infinite scroll and lazy image loading for optimization and better UX.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Have fun exploring** ✨

@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { shade } from "polished";
 
-import { ReactComponent as YouTubeLogo } from "../../logo.svg";
-import { IconButton } from "../shared";
+import { ReactComponent as YouTubeLogo } from "../../assets/logo.svg";
+import IconButton from "../IconButton/IconButton";
 
-export const HeaderElement = styled.header`
+export const StyledHeader = styled.header`
   position: fixed;
   z-index: 4;
   top: 0;
@@ -17,6 +16,7 @@ export const HeaderElement = styled.header`
   padding-left: 1rem;
   padding-right: 1.25rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.bg.secondary};
+  transition: background 0.2s;
 `;
 
 export const HeaderLogo = styled(YouTubeLogo)`
@@ -36,9 +36,6 @@ export const HeaderIcons = styled.div`
   justify-content: space-between;
 
   img {
-    width: 40px;
-    object-fit: contain;
-    border-radius: 50%;
     margin-left: 0.2rem;
 
     @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -56,59 +53,9 @@ export const HeaderIcons = styled.div`
 `;
 
 export const ToggleButton = styled(IconButton)`
-  font-size: 3rem;
+  font-size: 2.2rem;
+
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
-  }
-`;
-
-export const SearchForm = styled.form`
-  display: flex;
-  background: ${({ theme }) => theme.colors.bg.darker};
-  border: 1px solid ${({ theme }) => theme.colors.bg.secondary};
-  border-radius: 3px;
-
-  input {
-    border: none;
-    background: none;
-    color: ${({ theme }) => theme.colors.text.primary};
-    padding-left: 1rem;
-    font-size: 1.1rem;
-
-    &::placeholder {
-      color: ${({ theme }) => theme.colors.text.secondary};
-    }
-
-    &:focus {
-      outline: none;
-    }
-
-    @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
-      width: 100%;
-    }
-  }
-
-  button {
-    background: ${({ theme }) => shade(0.4, theme.colors.bg.primary)};
-    border: none;
-    color: ${({ theme }) => theme.colors.text.secondary};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.75rem;
-    cursor: pointer;
-    padding: 0.25rem 1rem;
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    flex: 0.6;
-  }
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    flex: 0.5;
   }
 `;

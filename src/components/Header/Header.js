@@ -1,46 +1,38 @@
-import React from "react";
-import { MdMenu, MdSearch, MdApps } from "react-icons/md";
+import React, { useContext } from "react";
+import { ThemeContext } from "styled-components";
+import { useSelector } from "react-redux";
+import { MdMenu } from "react-icons/md";
+import { IoMdSunny, IoMdMoon } from "react-icons/io";
 
-import { IconButton } from "../shared";
+import { selectUser } from "../../features/auth/authSlice";
 import {
-  HeaderElement,
+  StyledHeader,
   ToggleButton,
   HeaderLogo,
   HeaderIcons,
-  SearchForm,
 } from "./Header.styled";
+import HeaderSearch from "./HeaderSearch";
+import Avatar from "../Avatar/Avatar";
+import IconButton from "../IconButton/IconButton";
 
-const HeaderSearch = () => {
-  return (
-    <SearchForm>
-      <input
-        type="text"
-        name="search"
-        placeholder={"Search"}
-        autoComplete="off"
-      />
-      <button type="submit">
-        <MdSearch />
-      </button>
-    </SearchForm>
-  );
-};
+const Header = ({ toggleMenu, toggleTheme }) => {
+  const theme = useContext(ThemeContext);
+  const user = useSelector(selectUser);
 
-const Header = ({ handleMenuToggle }) => {
   return (
-    <HeaderElement>
-      <ToggleButton onClick={handleMenuToggle}>
+    <StyledHeader>
+      <ToggleButton onClick={toggleMenu}>
         <MdMenu />
       </ToggleButton>
       <HeaderLogo />
       <HeaderSearch />
       <HeaderIcons>
-        <IconButton>
-          <MdApps />
+        <IconButton onClick={toggleTheme}>
+          {theme.name === "light" ? <IoMdMoon /> : <IoMdSunny />}
         </IconButton>
-        <img src="https://picsum.photos/40" alt="avatar" />
+        <Avatar size="md" src={user?.avatar} alt={user?.name} />
       </HeaderIcons>
-    </HeaderElement>
+    </StyledHeader>
   );
 };
 

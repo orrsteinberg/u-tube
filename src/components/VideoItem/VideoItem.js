@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { MdPlayArrow } from "react-icons/md";
+import moment from "moment";
+import numeral from "numeral";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 
+import { truncateText } from "../../utils/helpers";
 import {
   VideoItemContainer,
   Thumbnail,
@@ -10,36 +15,56 @@ import {
   Meta,
   Statistics,
 } from "./VideoItem.styled";
+import Avatar from "../Avatar/Avatar";
 
-const VideoItem = ({ hideChannel }) => {
-  const title =
-    Math.floor(Math.random() * 10) > 5
-      ? "Video Title"
-      : "Video Title Can Actually Be a Prettttttttttttty Long One!";
+const VideoItem = ({ video, hideChannel }) => {
+  // Destructure
+  const { id, thumbnail, channelId, channelTitle, channelAvatar } = video;
+
+  // Format data
+  const title = truncateText("title", video.title);
+
+  const viewCount = numeral(video.viewCount).format("0.a");
+
+  const publishedAt = moment(video.publishedAt).fromNow();
+
+  const durationInSeconds = moment.duration(video.duration).asSeconds();
+  const duration = moment.utc(durationInSeconds * 1000).format("mm:ss");
 
   return (
     <VideoItemContainer>
-      <Link to="/watch">
+      <Link to={`/watch/${id}`}>
         <Thumbnail>
-          <img src="https://picsum.photos/275/155" alt="video thumbnail" />
-          <Duration>3:52</Duration>
+          <LazyLoadImage
+            alt={`${title} video thumbnail`}
+            src={thumbnail}
+            effect="opacity"
+            wrapperProps={{ style: { display: "block" } }}
+          />
+          <Duration>{duration}</Duration>
           <MdPlayArrow />
         </Thumbnail>
       </Link>
       <Details>
         {!hideChannel && (
-          <Link to="/">
-            <img src="https://picsum.photos/40" alt="channel avatar" />
+          <Link to={`/channel/${channelId}`} title={channelTitle}>
+            <Avatar size="sm" src={channelAvatar} alt={channelTitle} />
           </Link>
         )}
-        <Meta>
-          <Link to="/watch">
+        <Meta hideChannel={hideChannel}>
+          <Link to={`/watch/${id}`} title={video.title}>
             <h3>{title}</h3>
           </Link>
-          {!hideChannel && <Link to="/">Channel Title</Link>}
+          {!hideChannel && (
+            <Link to={`/channel/${channelId}`}>{channelTitle}</Link>
+          )}
           <Statistics>
-            <span>18M views{" • "}</span>
-            <span>2 months ago</span>
+            <span>
+              <span className="count">{viewCount}</span>
+              {" views "}
+              {" • "}
+            </span>
+            <span>{publishedAt}</span>
           </Statistics>
         </Meta>
       </Details>

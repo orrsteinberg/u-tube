@@ -3,22 +3,33 @@ import { Link } from "react-router-dom";
 
 import {
   HorizontalChannelItemContainer,
-  ChannelAvatar,
   ChannelDetails,
 } from "./HorizontalChannelItem.styled";
+import Avatar from "../Avatar/Avatar";
+import ChannelStatCount from "../ChannelStatCount/ChannelStatCount";
 
-const HorizontalChannelItem = () => {
+const HorizontalChannelItem = ({ channel, subscription }) => {
+  const { id, title, avatar } = channel;
+
   return (
     <HorizontalChannelItemContainer>
-      <ChannelAvatar>
-        <img src="https://picsum.photos/130" alt="Channel avatar" />
-      </ChannelAvatar>
+      <Link to={`/channel/${id}`}>
+        <Avatar src={avatar} alt={title} />
+      </Link>
       <ChannelDetails>
-        <Link to="/channel">
-          <h3>Channel Title</h3>
+        <Link to={`/channel/${id}`}>
+          <h3>{title}</h3>
         </Link>
-        <p>230 videos</p>
-        <p>20K subscribers</p>
+        <ChannelStatCount name="video" count={channel.videoCount} />
+        {subscription ? (
+          <ChannelStatCount
+            name="new video"
+            count={channel.newVideoCount}
+            style={channel.newVideoCount > 0 ? { fontWeight: "bold" } : null}
+          />
+        ) : (
+          <ChannelStatCount name="subscriber" count={channel.subscriberCount} />
+        )}
       </ChannelDetails>
     </HorizontalChannelItemContainer>
   );

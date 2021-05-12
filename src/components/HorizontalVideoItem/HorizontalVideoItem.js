@@ -1,45 +1,78 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { MdPlayArrow } from "react-icons/md";
+import moment from "moment";
+import numeral from "numeral";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 
+import { truncateText } from "../../utils/helpers";
 import {
   HorizontalVideoItemContainer,
-  Thumbnail,
+  ThumbnailLink,
   Duration,
   ItemBody,
   MetadataBox,
+  Text,
 } from "./HorizontalVideoItem.styled";
 
-const Metadata = () => {
+const Metadata = ({ channelId, channelTitle, viewCount, publishedAt }) => {
   return (
     <MetadataBox>
-      <Link to="/">
-        <p>Channel Name</p>
+      <Link to={`/channel/${channelId}`}>
+        <p>{channelTitle}</p>
       </Link>
-      <span>18M views{" • "}</span>
-      <span>2 months ago</span>
+      <span>
+        <span className="count">{viewCount}</span>
+        {" views "}
+        {" • "}
+      </span>
+      <span>{publishedAt}</span>
     </MetadataBox>
   );
 };
 
-const HorizontalVideoItem = ({ fullWidth }) => {
-  const title =
-    Math.floor(Math.random() * 10) > 5
-      ? "Video Title"
-      : "Video Title Can Actually Be a Long One!";
+const HorizontalVideoItem = ({ video, fullWidth }) => {
+  // Destructure
+  const { id, thumbnail, channelId, channelTitle } = video;
+
+  // Format data
+  const title = truncateText("title", video.title);
+
+  const viewCount = numeral(video.viewCount).format("0.a");
+
+  const publishedAt = moment(video.publishedAt).fromNow();
+
+  const durationInSeconds = moment.duration(video.duration).asSeconds();
+  const duration = moment.utc(durationInSeconds * 1000).format("mm:ss");
+
+  // Only display description on fullWidth version for search results
+  const description =
+    fullWidth && truncateText("description", video.description);
 
   return (
     <HorizontalVideoItemContainer fullWidth={fullWidth}>
-      <Thumbnail>
-        <img src="https://picsum.photos/275/155" alt="Media thumbnail" />
-        <Duration>3:52</Duration>
+      <ThumbnailLink to={`/watch/${id}`}>
+        <LazyLoadImage
+          alt={`${title} video thumbnail`}
+          src={thumbnail}
+          effect="opacity"
+          wrapperProps={{ style: { display: "block" } }}
+        />
+        <Duration>{duration}</Duration>
         <MdPlayArrow />
-      </Thumbnail>
-      <ItemBody>
-        <Link to="/watch">
+      </ThumbnailLink>
+      <ItemBody fullWidth={fullWidth}>
+        <Link to={`/watch/${id}`} title={video.title}>
           <h3>{title}</h3>
         </Link>
-        <Metadata />
+        <Metadata
+          channelId={channelId}
+          channelTitle={channelTitle}
+          viewCount={viewCount}
+          publishedAt={publishedAt}
+        />
+        <Text>{description}</Text>
       </ItemBody>
     </HorizontalVideoItemContainer>
   );
