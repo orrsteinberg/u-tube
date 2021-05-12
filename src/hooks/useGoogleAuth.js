@@ -56,11 +56,11 @@ const useGoogleAuth = () => {
   }, [authInstance, dispatch]);
 
   const signIn = () => {
-    window.gapi.auth2.getAuthInstance().signIn();
+    window.gapi?.auth2?.getAuthInstance().signIn();
   };
 
   const signOut = () => {
-    window.gapi.auth2.getAuthInstance().signOut();
+    window.gapi?.auth2?.getAuthInstance().signOut();
   };
 
   return { signIn, signOut };
