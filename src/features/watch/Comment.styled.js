@@ -19,6 +19,17 @@ export const CommentContainer = styled.div`
 
 export const CommentBody = styled.div`
   padding-top: 0.25rem;
+
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0.25rem 0 0 0;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: ${({ theme }) => theme.colors.text.tertiary};
+    cursor: pointer;
+  }
 `;
 
 export const Author = styled.div`
