@@ -5,14 +5,18 @@ Built with React and Redux (using RTK, which is now recommended as the [official
 
 ## Live demo
 
-Will be added.
+### 👉 [Click to view live demo](https://u-tube-app.netlify.app/)
 
-### API proxy
+<p align="center">
+  <img src="https://i.postimg.cc/mgkQVzph/screenshot-1.png" alt="U-Tube screenshot" width="380"> <img src="https://i.postimg.cc/HsBwQ42f/screenshot-2.png" alt="U-Tube screenshot" width="380">
+</p>
 
-In order to hide the app's private API key, I put together a bare-bones [API proxy](https://www.github.com/orrsteinberg/u-tube-api-proxy) to pass incoming requests to the official YouTube API and add the secret key to them.
+## API proxy
+
+In order to hide the app's private API key, I put together a bare-bones [API proxy](https://www.github.com/orrsteinberg/u-tube-api-proxy) to pass incoming requests to the official YouTube API along with the secret key.
 Because YouTube has a daily quota for requests, the proxy also includes a rate limiter.
 
-### About the app
+## About the app
 
 This single-page web app uses YouTube Data API v3 for interacting with YouTube data, and Google OAuth2 for signing in/out and persisting authentication state.
 
