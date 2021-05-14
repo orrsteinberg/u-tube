@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import GuestAvatar from "../../assets/guest.svg";
 import { AvatarImg } from "./Avatar.styled";
@@ -20,5 +21,12 @@ const Avatar = ({ src, alt, size, highlight }) => {
     />
   );
 };
+
+Avatar.propTypes = {
+  src: PropTypes.string,
+  alt: PropTypes.string,
+  size: PropTypes.string,
+  highlight: PropTypes.bool
+}
 
 export default Avatar;

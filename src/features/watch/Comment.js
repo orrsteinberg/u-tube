@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
@@ -36,5 +37,9 @@ const Comment = ({ comment }) => {
     </CommentContainer>
   );
 };
+
+Comment.propTypes = {
+  comment: PropTypes.object.isRequired
+}
 
 export default Comment;

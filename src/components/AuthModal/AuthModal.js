@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { MdPerson, MdClose } from "react-icons/md";
 
@@ -75,5 +76,9 @@ const AuthModal = ({ closeModal }) => {
     document.getElementById("modal-root")
   );
 };
+
+AuthModal.propTypes = {
+  closeModal: PropTypes.func.isRequired
+}
 
 export default AuthModal;

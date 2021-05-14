@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import styled, { ThemeContext } from "styled-components";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
@@ -45,5 +46,9 @@ const SkeletonVideoItem = ({ hideChannel }) => {
     </SkeletonContainer>
   );
 };
+
+SkeletonVideoItem.propTypes = {
+  hideChannel: PropTypes.bool
+}
 
 export default SkeletonVideoItem;

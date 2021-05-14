@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -125,5 +126,13 @@ const Sidemenu = React.forwardRef(
     );
   }
 );
+
+Sidemenu.propTypes = {
+    showOnMobile: PropTypes.bool,
+    toggleMenu: PropTypes.func.isRequired,
+    toggleTheme: PropTypes.func.isRequired,
+    activeTab: PropTypes.string,
+    compact: PropTypes.bool,
+}
 
 export default Sidemenu;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { confirmAlert } from "react-confirm-alert";
 
@@ -72,5 +73,9 @@ const SubscribeButton = ({ channelId }) => {
     </>
   );
 };
+
+SubscribeButton.propTypes = {
+  channelId: PropTypes.string.isRequired
+}
 
 export default SubscribeButton;

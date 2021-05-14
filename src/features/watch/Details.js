@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import numeral from "numeral";
@@ -102,5 +103,25 @@ const Details = ({ video }) => {
     </DetailsContainer>
   );
 };
+
+Statistics.propTypes = {
+  videoId: PropTypes.string.isRequired,
+  likeCount: PropTypes.string.isRequired,
+  dislikeCount: PropTypes.string.isRequired,
+  viewCount: PropTypes.string.isRequired,
+  publishedAt: PropTypes.string.isRequired,
+}
+
+ChannelDetails.propTypes = {
+  channel: PropTypes.object.isRequired,
+}
+
+Description.propTypes = {
+  description: PropTypes.string.isRequired,
+}
+
+Details.propTypes = {
+  video: PropTypes.object.isRequired,
+}
 
 export default Details;

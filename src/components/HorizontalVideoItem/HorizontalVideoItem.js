@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { MdPlayArrow } from "react-icons/md";
 import moment from "moment";
@@ -77,5 +78,17 @@ const HorizontalVideoItem = ({ video, fullWidth }) => {
     </HorizontalVideoItemContainer>
   );
 };
+
+HorizontalVideoItem.propTypes = {
+  video: PropTypes.object.isRequired,
+  fullWidth: PropTypes.bool
+}
+
+Metadata.propTypes = {
+  channelId: PropTypes.string.isRequired,
+  channelTitle: PropTypes.string.isRequired,
+  viewCount: PropTypes.string.isRequired,
+  publishedAt: PropTypes.string.isRequired,
+}
 
 export default HorizontalVideoItem;

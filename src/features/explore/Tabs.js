@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
 
@@ -12,7 +13,7 @@ import {
 import { selectExplore } from "./exploreSlice";
 import { TabsContainer, TabLink, StyledTab } from "./Tabs.styled";
 
-const Tab = ({ title, icon, isActive }) => {
+const Tab = ({ title, icon }) => {
   const { currentCategory } = useSelector(selectExplore);
   const { url } = useRouteMatch();
 
@@ -36,5 +37,10 @@ const Tabs = () => {
     </TabsContainer>
   );
 };
+
+Tab.propTypes = {
+  title: PropTypes.string.isRequired,
+  icon: PropTypes.element.isRequired,
+}
 
 export default Tabs;
