@@ -9,7 +9,7 @@ import VideoItem from "../../components/VideoItem/VideoItem";
 import SkeletonVideoItem from "../../components/skeletons/SkeletonVideoItem";
 import Error from "../../components/Error/Error";
 
-const HomeView = () => {
+const Home = () => {
   const { status, videos, error, hasMoreVideos, pageToken } = useSelector(
     selectHome
   );
@@ -57,4 +57,4 @@ const HomeView = () => {
   );
 };
 
-export default HomeView;
+export default Home;
