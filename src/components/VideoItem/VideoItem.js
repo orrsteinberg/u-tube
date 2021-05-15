@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { MdPlayArrow } from "react-icons/md";
 import moment from "moment";
@@ -71,5 +72,10 @@ const VideoItem = ({ video, hideChannel }) => {
     </VideoItemContainer>
   );
 };
+
+VideoItem.propTypes = {
+  video: PropTypes.object.isRequired,
+  hideChannel: PropTypes.bool
+}
 
 export default VideoItem;

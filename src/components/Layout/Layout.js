@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useRef } from "react";
+import PropTypes from "prop-types";
 
 import { useMobileMenu } from "../../hooks";
 import Header from "../Header/Header";
@@ -41,5 +42,12 @@ const Layout = ({ children, activeTab, watchView, toggleTheme }) => {
     </>
   );
 };
+
+Layout.propTypes = {
+   children: PropTypes.element.isRequired,
+   activeTab: PropTypes.string,
+   watchView: PropTypes.bool,
+   toggleTheme: PropTypes.func.isRequired
+}
 
 export default Layout;

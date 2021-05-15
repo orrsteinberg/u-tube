@@ -13,8 +13,7 @@ export const AvatarImg = styled.img`
       : "auto"};
   border-radius: 50%;
 
-  // Highlight avatar
-  ${({ highlight, theme }) =>
+  ${({ highlight }) =>
     highlight &&
     css`
       box-shadow: var(--highlight);

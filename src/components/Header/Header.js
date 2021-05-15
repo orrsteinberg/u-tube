@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import { ThemeContext } from "styled-components";
 import { useSelector } from "react-redux";
 import { MdMenu } from "react-icons/md";
@@ -35,5 +36,10 @@ const Header = ({ toggleMenu, toggleTheme }) => {
     </StyledHeader>
   );
 };
+
+Header.propTypes = {
+  toggleMenu: PropTypes.func.isRequired,
+  toggleTheme: PropTypes.func.isRequired,
+}
 
 export default Header;

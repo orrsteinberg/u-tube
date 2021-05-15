@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import {
@@ -34,5 +35,10 @@ const HorizontalChannelItem = ({ channel, subscription }) => {
     </HorizontalChannelItemContainer>
   );
 };
+
+HorizontalChannelItem.propTypes = {
+  channel: PropTypes.object.isRequired,
+  subscription: PropTypes.bool,
+}
 
 export default HorizontalChannelItem;

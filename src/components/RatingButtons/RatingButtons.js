@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { MdThumbUp, MdThumbDown } from "react-icons/md";
 
@@ -86,5 +87,11 @@ const RatingButtons = ({ videoId, likeCount, dislikeCount }) => {
     </>
   );
 };
+
+RatingButtons.propTypes = {
+  videoId: PropTypes.string.isRequired,
+  likeCount: PropTypes.string.isRequired,
+  dislikeCount: PropTypes.string.isRequired,
+}
 
 export default RatingButtons;

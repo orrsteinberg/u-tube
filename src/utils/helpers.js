@@ -47,20 +47,27 @@ export const handleResultErrors = (error) => {
 };
 
 // Return new object with search results arranged by item type
-const filterResultByType = (obj, item) => {
-  if (item.id.kind === "youtube#channel") {
-    return {
-      ...obj,
-      channels: [...obj.channels, item.id.channelId],
-    };
-  } else if (item.id.kind === "youtube#video") {
-    return {
-      ...obj,
-      videos: [...obj.videos, item.id.videoId],
-    };
-  }
-
-  return obj;
+const sortSearchResults = (results) => {
+  return results.reduce(
+    (obj, item) => {
+      if (item.id.kind === "youtube#channel") {
+        return {
+          ...obj,
+          channels: [...obj.channels, item.id.channelId],
+        };
+      } else if (item.id.kind === "youtube#video") {
+        return {
+          ...obj,
+          videos: [...obj.videos, item.id.videoId],
+        };
+      }
+      return obj;
+    },
+    {
+      channels: [],
+      videos: [],
+    }
+  );
 };
 
 /*
@@ -277,11 +284,8 @@ export const getSearchResults = async (query) => {
     throw new Error("No results found");
   }
 
-  // Arrange results by type (channel or video) as array of IDs
-  const results = searchResponse.data.items.reduce(filterResultByType, {
-    channels: [],
-    videos: [],
-  });
+  // Arrange results by type (channel or video) as different arrays of item IDs
+  const results = sortSearchResults(searchResponse.data.items);
 
   const channels =
     results.channels.length > 0 ? await getChannelsById(results.channels) : [];
