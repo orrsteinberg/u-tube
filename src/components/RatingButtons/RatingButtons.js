@@ -25,9 +25,9 @@ const RatingButtons = ({ videoId, likeCount, dislikeCount }) => {
   useEffect(() => {
     if (user) {
       // Check current rating on user state change
-      const liked = ratings.likedVideos.find((id) => id === videoId);
+      const liked = ratings.likedVideos.includes(videoId);
       const disliked =
-        !liked && ratings.dislikedVideos.find((id) => id === videoId);
+        !liked && ratings.dislikedVideos.includes(videoId);
 
       setRating(liked ? "liked" : disliked ? "disliked" : "none");
     }
