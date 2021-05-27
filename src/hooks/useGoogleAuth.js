@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 
 import { loadUserData, clearUserData } from "../features/auth/authSlice";
@@ -40,12 +40,13 @@ const useGoogleAuth = () => {
       const isSignedIn = authInstance.isSignedIn.get();
 
       if (isSignedIn) {
-        const profile = authInstance.currentUser.get().getBasicProfile();
+        const { currentUser } = authInstance;
 
+        const profile = currentUser.get().getBasicProfile();
         const userData = {
           name: profile.getName(),
           avatar: profile.getImageUrl(),
-          accessToken: authInstance.currentUser.fe.qc.access_token,
+          accessToken: currentUser.get().getAuthResponse(true).access_token,
         };
 
         dispatch(loadUserData(userData));
@@ -55,13 +56,13 @@ const useGoogleAuth = () => {
     }
   }, [authInstance, dispatch]);
 
-  const signIn = () => {
+  const signIn = useCallback(() => {
     window.gapi?.auth2?.getAuthInstance().signIn();
-  };
+  }, []);
 
-  const signOut = () => {
+  const signOut = useCallback(() => {
     window.gapi?.auth2?.getAuthInstance().signOut();
-  };
+  }, []);
 
   return { signIn, signOut };
 };
