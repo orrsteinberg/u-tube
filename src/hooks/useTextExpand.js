@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 
 import { truncateText } from "../utils/helpers";
 
 const useTextExpand = (type, originalText) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const handleToggle = () => setIsExpanded(!isExpanded);
+  const handleToggle = useCallback(() => setIsExpanded(!isExpanded), [
+    isExpanded,
+  ]);
 
-  const truncatedText = truncateText(type, originalText);
+  const truncatedText = useMemo(() => truncateText(type, originalText), [
+    type,
+    originalText,
+  ]);
 
   let showToggle;
   let content;

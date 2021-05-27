@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 // Manage mobile menu state
 // and detects outside click events in order to close it
@@ -27,7 +27,7 @@ const useMobileMenu = (elementRef, initialState) => {
     };
   });
 
-  const toggle = () => setIsOpen(!isOpen);
+  const toggle = useCallback(() => setIsOpen(!isOpen), [isOpen]);
 
   return [isOpen, toggle];
 };
