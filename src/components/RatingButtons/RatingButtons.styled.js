@@ -6,7 +6,10 @@ export const LikeButton = styled(IconButton)`
   ${({ highlight, theme }) =>
     highlight &&
     css`
-      color: ${({ theme }) => theme.colors.bg.primary};
+      color: ${({ theme }) =>
+        theme.name === "dark"
+          ? theme.colors.bg.primary
+          : theme.colors.bg.secondary};
     `}
 
   &:disabled: {
@@ -18,7 +21,10 @@ export const DislikeButton = styled(IconButton)`
   ${({ highlight, theme }) =>
     highlight &&
     css`
-      color: ${({ theme }) => theme.colors.bg.primary};
+      color: ${({ theme }) =>
+        theme.name === "dark"
+          ? theme.colors.bg.primary
+          : theme.colors.bg.secondary};
     `}
 
   &:disabled: {
